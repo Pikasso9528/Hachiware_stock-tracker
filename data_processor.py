@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 台股強勢股分析 - 資料處理核心
-讀取每日分類截圖 -> OCR 辨識股票代號 -> 爬取三大法人買賣超 -> 更新 tracker_db.json
+讀取每日分類截圖 -> OCR 辨識股票代號與清單 -> 從 super/update 個股詳細頁 OCR 出的
+『相對強度』表作為強度唯一真實來源 -> 更新 tracker_db.json
 -> 輸出瘦身後的 docs/today_summary.json 供 GitHub Pages 儀表板使用。
+
+三大法人買賣超（外資/主力）資料僅用於：(1) 交叉驗證清單型截圖 OCR 出的候選代號是否為
+當日真實有效的股票代號，(2) 提供股票中文名稱與上市/上櫃別對照。
 """
 import argparse
+import difflib
 import json
 import re
 import sys
@@ -28,14 +33,36 @@ TRACKER_DB_PATH = ROOT / "tracker_db.json"
 SUMMARY_PATH = DOCS_DIR / "today_summary.json"
 
 CATEGORIES = ["focus", "alpha", "pullback", "super"]
+LIST_CATEGORIES = ["focus", "alpha", "pullback"]  # 清單型截圖（多檔股票／頁），僅用於辨識當日名單
 IMAGE_EXTS = (".png", ".jpg", ".jpeg")
 
-STRONG_THRESHOLD = 1000   # 張，超過視為偏強/偏弱訊號門檻
-EXTREME_THRESHOLD = 5000  # 張，超過視為極強/弱訊號門檻
-
 STRONG_LEVELS = {"極強", "偏強"}
-WEAK_LEVELS = {"弱", "偏弱"}
 UNKNOWN_LEVEL = "未更新"
+
+# 「強度」完全以 super / update 截圖內來源 App 自己算出的『相對強度』欄位為準，
+# 不再用三大法人買賣超數字自行估算等級。
+STRENGTH_LABELS = ["極強", "偏強", "中立", "偏弱", "弱"]
+# 常見 OCR 誤判字元對照（依實測截圖校準）
+_STRENGTH_CHAR_FIX = {"椏": "極", "偶": "偏", "便": "偏", "彊": "強", "弼": "弱"}
+
+
+def nearest_strength_label(raw_text):
+    """將 OCR 讀到的『相對強度指標』文字，校正並對應到五個標準等級之一。"""
+    s = (raw_text or "").strip()
+    if not s:
+        return None
+    for bad, good in _STRENGTH_CHAR_FIX.items():
+        s = s.replace(bad, good)
+    s = re.sub(r"[^極偏中立弱強]", "", s)
+    if not s:
+        return None
+    if s in STRENGTH_LABELS:
+        return s
+    for lbl in STRENGTH_LABELS:
+        if lbl in s or s in lbl:
+            return lbl
+    best = difflib.get_close_matches(s, STRENGTH_LABELS, n=1, cutoff=0)
+    return best[0] if best else None
 
 UA_HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) StockTrackerBot/1.0"}
 
@@ -170,22 +197,8 @@ def fetch_institutional_master(date_str):
     return master
 
 
-def classify_strength(net_lots):
-    if net_lots is None:
-        return UNKNOWN_LEVEL
-    if net_lots >= EXTREME_THRESHOLD:
-        return "極強"
-    if net_lots >= STRONG_THRESHOLD:
-        return "偏強"
-    if net_lots <= -EXTREME_THRESHOLD:
-        return "弱"
-    if net_lots <= -STRONG_THRESHOLD:
-        return "偏弱"
-    return "中立"
-
-
 # ---------------------------------------------------------------------------
-# OCR：從截圖左側「股票名稱/代號」欄位擷取股票代號
+# OCR：清單型截圖（focus / alpha / pullback）－ 從左側「股票名稱/代號」欄位擷取股票代號
 # ---------------------------------------------------------------------------
 def ocr_extract_codes(image_path):
     """回傳截圖中辨識出的候選股票代號集合（未經有效代號過濾）。"""
@@ -229,18 +242,105 @@ def scan_category_folder(date_dir, category, valid_codes):
     return codes
 
 
+# ---------------------------------------------------------------------------
+# OCR：個股詳細頁截圖（super / update）－ 擷取股票代號 + 「相對強度」歷史表
+# ---------------------------------------------------------------------------
+def ocr_super_detail(image_path, valid_codes=None):
+    """解析單檔股票的『相對強度』詳細頁截圖。
+    回傳 (code, {"YYYY-MM-DD": 強度標籤, ...})，失敗則回傳 (None, {})。
+
+    數字 OCR 對某些字型的「3」「2」等偶爾會誤判，因此擷取到的代號候選一律需與
+    valid_codes（當日三大法人資料的真實代號主檔）比對，非有效代號則視為辨識失敗，
+    避免將強度資料誤植到錯誤的股票上。
+    """
+    if not OCR_AVAILABLE:
+        return None, {}
+    try:
+        img = Image.open(image_path)
+        w, h = img.size
+
+        code = None
+        for x0, x1 in ((0.42, 0.58), (0.35, 0.65), (0.30, 0.70)):
+            crop = img.crop((int(w * x0), int(h * 0.085), int(w * x1), int(h * 0.105))).convert("L")
+            inv = ImageOps.invert(crop)
+            inv = inv.resize((inv.width * 4, inv.height * 4), Image.LANCZOS)
+            txt = pytesseract.image_to_string(
+                inv, lang="eng", config="--psm 6 -c tessedit_char_whitelist=0123456789"
+            )
+            candidates = re.findall(r"\d{4,6}", txt)
+            if valid_codes:
+                match = next((c for c in candidates if c in valid_codes), None)
+            else:
+                match = candidates[0] if candidates else None
+            if match:
+                code = match
+                break
+
+        table_crop = img.crop((0, int(h * 0.52), int(w * 0.62), h)).convert("L")
+        inv2 = ImageOps.invert(table_crop)
+        inv2 = inv2.point(lambda p: 255 if p > 90 else 0)
+        inv2 = inv2.resize((inv2.width * 2, inv2.height * 2), Image.LANCZOS)
+        table_txt = pytesseract.image_to_string(inv2, lang="chi_tra+eng", config="--psm 6")
+
+        labels = {}
+        for line in table_txt.splitlines():
+            m = re.search(r"(20\d{6})", line)
+            if not m:
+                continue
+            raw_date = m.group(1)
+            date_str = f"{raw_date[0:4]}-{raw_date[4:6]}-{raw_date[6:8]}"
+            rest = re.sub(r"[\d.\s,%\-]", "", line[m.end():])
+            label = nearest_strength_label(rest)
+            if label:
+                labels[date_str] = label
+
+        if code is None:
+            print(f"[WARN] 無法辨識股票代號 ({image_path.name})，請確認截圖或改放到 update/代號.png",
+                  file=sys.stderr)
+        return code, labels
+    except Exception as e:
+        print(f"[WARN] 個股詳細頁 OCR 失敗 ({image_path.name}): {e}", file=sys.stderr)
+        return None, {}
+
+
+def scan_super_folder(date_dir, valid_codes):
+    """回傳 (codes, detail)：codes 為當日 super 資料夾辨識出的股票代號集合，
+    detail 為 {code: {date: 強度標籤}} 的相對強度歷史表彙整結果。"""
+    folder = date_dir / "super"
+    codes = set()
+    detail = {}
+    if not folder.exists():
+        return codes, detail
+    for img_path in sorted(folder.iterdir()):
+        if img_path.suffix.lower() not in IMAGE_EXTS:
+            continue
+        code, labels = ocr_super_detail(img_path, valid_codes)
+        if not code or not labels:
+            continue
+        codes.add(code)
+        detail.setdefault(code, {}).update(labels)
+    return codes, detail
+
+
 def scan_update_folder():
-    """補漏資料夾：檔名即股票代號，例如 8358.png。"""
-    codes = {}
+    """補漏資料夾：檔名即股票代號（例如 8358.png），內容比照 super 的個股詳細頁格式。
+    回傳 (paths, detail)：paths 為 {code: Path}，detail 為 {code: {date: 強度標籤}}。"""
+    paths = {}
+    detail = {}
     if not UPDATE_DIR.exists():
-        return codes
+        return paths, detail
     for img_path in sorted(UPDATE_DIR.iterdir()):
         if img_path.suffix.lower() not in IMAGE_EXTS:
             continue
         m = re.match(r"(\d{4,6})", img_path.stem)
-        if m:
-            codes[m.group(1)] = img_path
-    return codes
+        if not m:
+            continue
+        code = m.group(1)
+        paths[code] = img_path
+        _, labels = ocr_super_detail(img_path)  # 代號採信檔名，這裡僅取相對強度表
+        if labels:
+            detail[code] = labels
+    return paths, detail
 
 
 # ---------------------------------------------------------------------------
@@ -258,74 +358,78 @@ def save_tracker_db(db):
         json.dump(db, f, ensure_ascii=False, indent=2)
 
 
-def process_day(db, date_str, master, category_codes, update_codes):
-    today_all_category_codes = set()
+def process_day(db, date_str, master, category_codes, detail_updates, update_paths):
+    """
+    category_codes: {focus, alpha, pullback, super} -> 當日辨識出的股票代號集合（僅供分頁清單顯示）
+    detail_updates: {code: {date: 強度標籤}}，來自 super/update 截圖 OCR 出的『相對強度』表，為強度的唯一真實來源
+    update_paths:   {code: Path}，當日 update/ 資料夾內的補漏截圖
+    """
+    all_codes_today = set()
     for codes in category_codes.values():
-        today_all_category_codes |= codes
+        all_codes_today |= codes
+    all_codes_today |= set(detail_updates.keys())
+    all_codes_today |= set(update_paths.keys())
 
-    pool_active_codes = {
-        code for code, info in db["stocks"].items()
-        if info.get("pool", {}).get("active")
-    }
-
-    codes_needing_entry = today_all_category_codes | pool_active_codes | set(update_codes.keys())
-
-    for code in codes_needing_entry:
-        entry = db["stocks"].setdefault(code, {
-            "name": master.get(code, {}).get("name", "—"),
-            "market": master.get(code, {}).get("market", "TW"),
-            "history": [],
-        })
+    for code in all_codes_today:
+        entry = db["stocks"].setdefault(code, {"name": "—", "market": "TW", "history": []})
         if code in master:
             entry["name"] = master[code]["name"]
             entry["market"] = master[code]["market"]
 
-        if code in category_codes.get("super", set()):
-            source, has_shot = "super", True
-        elif code in update_codes:
-            source, has_shot = "update", True
-        elif code in today_all_category_codes:
-            source, has_shot = "category", True
-        else:
-            source, has_shot = "missing", False
+    # 將截圖 OCR 出的『相對強度』表，逐日 upsert 進各股歷史（可一次回補多天）
+    for code, day_labels in detail_updates.items():
+        hist = db["stocks"][code]["history"]
+        by_date = {h["date"]: h for h in hist}
+        for d, label in day_labels.items():
+            if d in by_date:
+                by_date[d]["strength"] = label
+                by_date[d]["source"] = "super"
+            else:
+                hist.append({"date": d, "strength": label, "source": "super"})
+        hist.sort(key=lambda h: h["date"])
 
-        if has_shot:
-            net = None
-            if code in master:
-                net = master[code]["foreign_lots"] + master[code]["main_lots"]
-            strength = classify_strength(net)
-        else:
-            strength = UNKNOWN_LEVEL
-
-        hist = entry["history"]
-        record = {"date": date_str, "strength": strength, "source": source}
-        if hist and hist[-1]["date"] == date_str:
-            hist[-1] = record
-        else:
-            hist.append(record)
-
-        pool = entry.setdefault("pool", {"active": False, "warned": False, "added_date": None})
-        if code in category_codes.get("super", set()) and not pool["active"]:
+    # 當日出現在 super 資料夾的股票，自動納入累加型監控池
+    for code in category_codes.get("super", set()):
+        pool = db["stocks"][code].setdefault("pool", {"active": False, "warned": False, "added_date": None})
+        if not pool["active"]:
             pool["active"] = True
             pool["warned"] = False
             if pool.get("added_date") is None:
                 pool["added_date"] = date_str
 
+    pool_active_codes = {
+        code for code, info in db["stocks"].items() if info.get("pool", {}).get("active")
+    }
+
+    # 監控池中的股票，若當日既無 super 也無 update 截圖可確認強度，標記為未更新（❓）
+    for code in pool_active_codes:
+        hist = db["stocks"][code]["history"]
+        if not (hist and hist[-1]["date"] == date_str):
+            source = "update" if code in update_paths else "missing"
+            hist.append({"date": date_str, "strength": UNKNOWN_LEVEL, "source": source})
+
+    # 剔除規則：連續5日無偏強/極強 -> 當日標記警示保留，隔天更新時才正式剔除
+    for code in pool_active_codes:
+        entry = db["stocks"][code]
+        hist = entry["history"]
+        pool = entry["pool"]
+        today_strength = hist[-1]["strength"] if hist and hist[-1]["date"] == date_str else UNKNOWN_LEVEL
+
+        if pool["warned"]:
+            if today_strength in STRONG_LEVELS:
+                pool["warned"] = False
+            else:
+                pool["active"] = False
+                pool["warned"] = False
+
         if pool["active"]:
-            if pool["warned"]:
-                if strength in STRONG_LEVELS:
-                    pool["warned"] = False
-                else:
-                    pool["active"] = False
-                    pool["warned"] = False
-            if pool["active"]:
-                streak = 0
-                for h in reversed(hist):
-                    if h["strength"] in STRONG_LEVELS:
-                        break
-                    streak += 1
-                if streak >= 5:
-                    pool["warned"] = True
+            streak = 0
+            for h in reversed(hist):
+                if h["strength"] in STRONG_LEVELS:
+                    break
+                streak += 1
+            if streak >= 5:
+                pool["warned"] = True
 
     db["last_updated"] = date_str
     return db
@@ -360,14 +464,15 @@ def build_tab_list(codes, db):
     items = []
     for code in sorted(codes):
         entry = db["stocks"].get(code)
-        if not entry or not entry["history"]:
+        if not entry:
             continue
+        history = entry.get("history", [])
         items.append({
             "code": code,
             "name": entry.get("name", "—"),
             "market": entry.get("market", "TW"),
-            "today_strength": entry["history"][-1]["strength"],
-            "stars": last5_stars(entry["history"]),
+            "today_strength": history[-1]["strength"] if history else UNKNOWN_LEVEL,
+            "stars": last5_stars(history),
         })
     items.sort(key=lambda x: (_STRENGTH_RANK.get(x["today_strength"], 5), x["code"]))
     return items
@@ -412,23 +517,34 @@ def run_pipeline(date_str=None):
     print(f"=== 處理日期: {date_str} ===")
     date_dir = SCREENSHOTS_DIR / date_str
 
-    print("抓取三大法人買賣超資料（外資 / 主力）...")
+    print("抓取三大法人買賣超資料（外資 / 主力，僅作為代號有效性校驗與名稱對照）...")
     master = fetch_institutional_master(date_str)
     print(f"  取得 {len(master)} 檔股票的籌碼資料。")
     valid_codes = set(master.keys())
 
     category_codes = {}
-    for cat in CATEGORIES:
+    for cat in LIST_CATEGORIES:
         codes = scan_category_folder(date_dir, cat, valid_codes)
         category_codes[cat] = codes
         print(f"  [{cat}] 辨識出 {len(codes)} 檔: {sorted(codes)}")
 
-    update_codes = scan_update_folder()
-    if update_codes:
-        print(f"  [update 補漏] {len(update_codes)} 檔: {sorted(update_codes.keys())}")
+    print("解析 super 個股詳細頁（強度完全以此為準）...")
+    super_codes, super_detail = scan_super_folder(date_dir, valid_codes)
+    category_codes["super"] = super_codes
+    print(f"  [super] 辨識出 {len(super_codes)} 檔: {sorted(super_codes)}")
+
+    update_paths, update_detail = scan_update_folder()
+    if update_paths:
+        print(f"  [update 補漏] {len(update_paths)} 檔: {sorted(update_paths.keys())}")
+
+    detail_updates = {}
+    for code, labels in super_detail.items():
+        detail_updates.setdefault(code, {}).update(labels)
+    for code, labels in update_detail.items():
+        detail_updates.setdefault(code, {}).update(labels)
 
     db = load_tracker_db()
-    db = process_day(db, date_str, master, category_codes, update_codes)
+    db = process_day(db, date_str, master, category_codes, detail_updates, update_paths)
     save_tracker_db(db)
     print(f"tracker_db.json 已更新，共追蹤 {len(db['stocks'])} 檔股票。")
 
