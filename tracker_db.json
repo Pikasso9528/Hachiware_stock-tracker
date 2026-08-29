@@ -1,0 +1,1029 @@
+{
+  "last_updated": "2026-08-28",
+  "stocks": {
+    "2441": {
+      "name": "超豐",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "8358": {
+      "name": "金居",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏弱",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6727": {
+      "name": "亞泰金屬",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6933": {
+      "name": "AMAX-KY",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2368": {
+      "name": "金像電",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "8021": {
+      "name": "尖點",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "4764": {
+      "name": "雙鍵",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3661": {
+      "name": "世芯-KY",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3533": {
+      "name": "嘉澤",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6257": {
+      "name": "矽格",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6913": {
+      "name": "鴻呈",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2481": {
+      "name": "強茂",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "極強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3167": {
+      "name": "大量",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "8210": {
+      "name": "勤誠",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6693": {
+      "name": "廣閎科",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "7788": {
+      "name": "松川精密",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3715": {
+      "name": "定穎投控",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2327": {
+      "name": "國巨*",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏弱",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6239": {
+      "name": "力成",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "極強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "1203": {
+      "name": "味王",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3406": {
+      "name": "玉晶光",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3324": {
+      "name": "雙鴻",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3605": {
+      "name": "宏致",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6669": {
+      "name": "緯穎",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2467": {
+      "name": "志聖",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "5443": {
+      "name": "均豪",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "8027": {
+      "name": "鈦昇",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2449": {
+      "name": "京元電子",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "極強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2881": {
+      "name": "富邦金",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3491": {
+      "name": "昇達科",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3532": {
+      "name": "台勝科",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3693": {
+      "name": "營邦",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2301": {
+      "name": "光寶科",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "極強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "1597": {
+      "name": "直得",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3026": {
+      "name": "禾伸堂",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2428": {
+      "name": "興勤",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2454": {
+      "name": "聯發科",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3305": {
+      "name": "昇貿",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3264": {
+      "name": "欣銓",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6274": {
+      "name": "台燿",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2455": {
+      "name": "全新",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2308": {
+      "name": "台達電",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6584": {
+      "name": "南俊國際",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3665": {
+      "name": "貿聯-KY",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6173": {
+      "name": "信昌電",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "1815": {
+      "name": "富喬",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "極強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6831": {
+      "name": "邁科",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2421": {
+      "name": "建準",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3450": {
+      "name": "聯鈞",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6805": {
+      "name": "富世達",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "8042": {
+      "name": "金山電",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3374": {
+      "name": "精材",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "極強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "7795": {
+      "name": "長廣",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "8043": {
+      "name": "蜜望實",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2303": {
+      "name": "聯電",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "極強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3376": {
+      "name": "新日興",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "6213": {
+      "name": "聯茂",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2492": {
+      "name": "華新科",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "2478": {
+      "name": "大毅",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "偏弱",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3017": {
+      "name": "奇鋐",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "4977": {
+      "name": "眾達-KY",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "1201": {
+      "name": "味全",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3008": {
+      "name": "大立光",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    },
+    "3494": {
+      "name": "誠研",
+      "market": "TW",
+      "history": [
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "category"
+        }
+      ],
+      "pool": {
+        "active": false,
+        "warned": false,
+        "added_date": null
+      }
+    }
+  }
+}

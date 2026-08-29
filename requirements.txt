@@ -1,0 +1,8 @@
+requests>=2.31
+Pillow>=10.0
+pytesseract>=0.3.10
+
+# 注意：pytesseract 只是 Python 綁定，OCR 引擎本體 Tesseract-OCR 需另外安裝：
+#   Windows: https://github.com/UB-Mannheim/tesseract/wiki
+#   安裝後若未加入 PATH，data_processor.py 會自動嘗試
+#   "C:\Program Files\Tesseract-OCR\tesseract.exe"

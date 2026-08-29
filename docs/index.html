@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>台股強勢股分析儀表板</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+<style>
+  body { background:#0b1120; }
+  ::-webkit-scrollbar { height:6px; width:6px; }
+  ::-webkit-scrollbar-thumb { background:#334155; border-radius:4px; }
+  .tab-btn { transition: all .15s ease; }
+  .card { transition: transform .12s ease, box-shadow .12s ease; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+</style>
+</head>
+<body class="min-h-screen text-slate-100">
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useMemo } = React;
+
+const TABS = [
+  { key: "focus",    label: "焦點監控",   icon: "🎯" },
+  { key: "alpha",    label: "α動能",      icon: "⚡" },
+  { key: "pullback", label: "回檔型",     icon: "📉" },
+  { key: "super",    label: "當日 Super", icon: "🌟" },
+  { key: "pool",     label: "累加型監控池", icon: "🗂️" },
+];
+
+const STRENGTH_STYLE = {
+  "極強": "bg-amber-400/15 text-amber-300 border border-amber-400/40",
+  "偏強": "bg-rose-500/15 text-rose-300 border border-rose-500/40",
+  "中立": "bg-slate-500/15 text-slate-300 border border-slate-500/40",
+  "偏弱": "bg-emerald-500/15 text-emerald-300 border border-emerald-500/40",
+  "弱":   "bg-emerald-600/15 text-emerald-400 border border-emerald-600/40",
+  "未更新": "bg-slate-700/40 text-slate-400 border border-slate-600/40",
+};
+
+const STAR_COLOR = {
+  gold: "text-amber-400",
+  neutral: "text-slate-500",
+  dark: "text-emerald-500",
+  unknown: "text-slate-600",
+};
+
+function yahooUrl(code, market) {
+  const suffix = market === "TWO" ? "TWO" : "TW";
+  return `https://tw.stock.yahoo.com/quote/${code}.${suffix}`;
+}
+
+function StrengthBadge({ level }) {
+  const cls = STRENGTH_STYLE[level] || STRENGTH_STYLE["未更新"];
+  return <span className={`px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${cls}`}>{level}</span>;
+}
+
+function StarRow({ stars }) {
+  return (
+    <div className="flex items-center gap-1" title="近5日強度（左：今日 → 右：4日前）">
+      {stars.map((s, i) => (
+        <span
+          key={i}
+          className={`text-base leading-none ${STAR_COLOR[s.color] || "text-slate-600"} ${i === 0 ? "scale-110" : "opacity-80"}`}
+        >
+          {s.symbol}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function StockCard({ stock, isPool }) {
+  return (
+    <div className="card bg-slate-900/70 border border-slate-800 rounded-xl p-4 flex flex-col gap-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <a
+            href={yahooUrl(stock.code, stock.market)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-slate-100 hover:text-sky-400 hover:underline truncate block"
+          >
+            {stock.name}
+          </a>
+          <div className="text-xs text-slate-500 mt-0.5">
+            {stock.code} · {stock.market === "TWO" ? "上櫃" : "上市"}
+          </div>
+        </div>
+        <div className="flex flex-col items-end gap-1 shrink-0">
+          <StrengthBadge level={stock.today_strength} />
+          {isPool && stock.warned && (
+            <span className="text-[11px] px-2 py-0.5 rounded-full bg-red-500/15 text-red-300 border border-red-500/40 whitespace-nowrap">
+              ⚠ 即將剔除
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center justify-between">
+        <StarRow stars={stock.stars} />
+        {isPool && stock.added_date && (
+          <span className="text-[11px] text-slate-500">納入 {stock.added_date}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function EmptyState({ text }) {
+  return (
+    <div className="text-center py-16 text-slate-500">
+      <div className="text-4xl mb-3">📭</div>
+      <p>{text}</p>
+    </div>
+  );
+}
+
+function App() {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState("focus");
+
+  useEffect(() => {
+    fetch("./today_summary.json", { cache: "no-store" })
+      .then((res) => {
+        if (!res.ok) throw new Error("找不到 today_summary.json");
+        return res.json();
+      })
+      .then(setData)
+      .catch((e) => setError(e.message));
+  }, []);
+
+  const activeList = useMemo(() => {
+    if (!data) return [];
+    return data.tabs?.[activeTab] || [];
+  }, [data, activeTab]);
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-6 sm:py-10">
+      <header className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
+          台股強勢股分析儀表板
+        </h1>
+        <p className="text-slate-400 text-sm mt-1">
+          {data ? `資料日期：${data.date}　更新時間：${data.generated_at}` : "載入中..."}
+        </p>
+      </header>
+
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/40 text-red-300 rounded-lg p-4 mb-6 text-sm">
+          載入資料失敗：{error}（請確認 today_summary.json 是否存在於 docs/ 目錄）
+        </div>
+      )}
+
+      <nav className="flex gap-2 overflow-x-auto pb-2 mb-6 -mx-4 px-4 sm:mx-0 sm:px-0">
+        {TABS.map((t) => {
+          const count = data?.tabs?.[t.key]?.length ?? 0;
+          const active = activeTab === t.key;
+          return (
+            <button
+              key={t.key}
+              onClick={() => setActiveTab(t.key)}
+              className={`tab-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium border
+                ${active
+                  ? "bg-sky-500/15 border-sky-400/50 text-sky-300"
+                  : "bg-slate-900/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700"}`}
+            >
+              <span>{t.icon}</span>
+              <span>{t.label}</span>
+              {data && <span className="text-xs opacity-70">({count})</span>}
+            </button>
+          );
+        })}
+      </nav>
+
+      {data && activeList.length === 0 && (
+        <EmptyState text="目前此分頁尚無資料，請確認截圖資料夾或稍後再試。" />
+      )}
+
+      {data && activeList.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {activeList.map((s) => (
+            <StockCard key={s.code} stock={s} isPool={activeTab === "pool"} />
+          ))}
+        </div>
+      )}
+
+      <footer className="mt-12 text-center text-xs text-slate-600">
+        <p>近5日強度星星：左（今日）→ 右（4日前）　★金＝偏強/極強　☆灰＝中立　★深＝偏弱/弱　❓＝未更新</p>
+        <p className="mt-1">資料來源：TWSE / TPEX 三大法人買賣超公開資訊，僅供參考，不構成投資建議。</p>
+      </footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
