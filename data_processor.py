@@ -388,7 +388,7 @@ def process_day(db, date_str, master, category_codes, detail_updates, update_pat
                 hist.append({"date": d, "strength": label, "source": "super"})
         hist.sort(key=lambda h: h["date"])
 
-    # 當日出現在 super 資料夾的股票，自動納入累加型監控池
+    # 當日出現在 super 資料夾的股票，自動納入監控股池
     for code in category_codes.get("super", set()):
         pool = db["stocks"][code].setdefault("pool", {"active": False, "warned": False, "added_date": None})
         if not pool["active"]:
@@ -557,7 +557,7 @@ def run_pipeline(date_str=None):
           f"α動能: {len(summary['tabs']['alpha'])} 檔 / "
           f"回檔型: {len(summary['tabs']['pullback'])} 檔 / "
           f"當日Super: {len(summary['tabs']['super'])} 檔 / "
-          f"累加型監控池: {len(summary['tabs']['pool'])} 檔")
+          f"監控股池: {len(summary['tabs']['pool'])} 檔")
 
     return SUMMARY_PATH, date_str
 
