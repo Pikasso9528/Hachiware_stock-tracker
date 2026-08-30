@@ -181,7 +181,13 @@
     "3017": {
       "name": "奇鋐",
       "market": "TW",
-      "history": []
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
     },
     "3167": {
       "name": "大量",
@@ -242,7 +248,13 @@
     "2368": {
       "name": "金像電",
       "market": "TW",
-      "history": []
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
     },
     "3494": {
       "name": "誠研",
@@ -328,7 +340,13 @@
     "3324": {
       "name": "雙鴻",
       "market": "TWO",
-      "history": []
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
     },
     "8210": {
       "name": "勤誠",
@@ -719,7 +737,8 @@
       "pool": {
         "active": true,
         "warned": false,
-        "added_date": "2026-08-28"
+        "added_date": "2026-08-28",
+        "pinned": true
       }
     },
     "2492": {
@@ -817,7 +836,13 @@
     "2308": {
       "name": "台達電",
       "market": "TW",
-      "history": []
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
     },
     "6584": {
       "name": "南俊國際",
@@ -944,12 +969,24 @@
     "6274": {
       "name": "台燿",
       "market": "TWO",
-      "history": []
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
     },
     "8021": {
       "name": "尖點",
       "market": "TW",
-      "history": []
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
     },
     "4764": {
       "name": "雙鍵",
@@ -984,7 +1021,13 @@
     "2330": {
       "name": "台積電",
       "market": "TW",
-      "history": []
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
     },
     "2409": {
       "name": "友達",
@@ -1005,6 +1048,160 @@
       "name": "華南金",
       "market": "TW",
       "history": []
+    },
+    "2313": {
+      "name": "華通",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "2383": {
+      "name": "台光電",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "3037": {
+      "name": "欣興",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "3081": {
+      "name": "聯亞",
+      "market": "TWO",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "3108": {
+      "name": "—",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "3189": {
+      "name": "景碩",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "4749": {
+      "name": "新應材",
+      "market": "TWO",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "4989": {
+      "name": "榮科",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "6442": {
+      "name": "光聖",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "6789": {
+      "name": "采鈺",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "7928": {
+      "name": "—",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "8046": {
+      "name": "南電",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "8996": {
+      "name": "高力",
+      "market": "TW",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
+    },
+    "8431": {
+      "name": "匯鑽科",
+      "market": "TWO",
+      "history": [],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28",
+        "pinned": true
+      }
     }
   }
 }
