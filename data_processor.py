@@ -76,7 +76,7 @@ UA_HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) StockTrac
 OCR_AVAILABLE = False
 try:
     import pytesseract
-    from PIL import Image, ImageOps, ImageStat
+    from PIL import Image, ImageOps
 
     _TESSERACT_CANDIDATES = [
         "tesseract",
@@ -466,27 +466,42 @@ def build_stock_future_list(date_str, master, db):
 
 
 # ---------------------------------------------------------------------------
-# OCR：族群熱力圖截圖（group/overall.jpg）－ 擷取族群名稱與漲跌幅(%)
+# OCR：族群清單截圖（group/<日期>/）－ 擷取族群 / 個股名稱與日漲跌幅(%)
+#
+# App 這兩個畫面（市場總覽→熱力圖→清單模式；點進單一族群後的成分股→清單模式）都是
+# 排版一致的清單，而非熱力圖色塊，逐列位置可直接用固定間距推算，比色塊拼接的
+# treemap 排版簡單、可靠得多。
 # ---------------------------------------------------------------------------
 _GROUP_NOISE_RE = re.compile(r"[﹣﹍‥。﹒｜|:：'’,，)）(（\[\]{}『』﹚﹛ˍ︰…=~`^\s]+")
 _GROUP_PCT_VALUE_RE = re.compile(r"^([+-])?(\d+)\.(\d{2,})")
-_GROUP_NAME_XTOL = 140  # 名稱列文字與漲跌幅的 x 座標容許誤差（依實測截圖校準）
-GROUP_TOP_N = 6  # 族群分頁只顯示漲幅前 N 名
+GROUP_TOP_N = 10  # 族群分頁只顯示漲幅前 N 名
+GROUP_DETAIL_TOP_N = 10  # 每個族群展開後只顯示成分股前 N 名
+GROUP_DETAIL_NAME_CUTOFF = 0.6
 
-# 依實測截圖校準的已知族群名稱表：熱力圖色塊的中文名稱常因字體小、色塊擁擠而 OCR
-# 失準，因此對辨識結果做「像 STRENGTH_LABELS 一樣的模糊比對校正」，snap 到最接近的
-# 已知名稱；若比對信心不足則保留原始 OCR 文字，讓使用者自行核對。
+# 依實測截圖校準：市場總覽（overall.jpg）清單第一列資料距圖片頂端、族群明細清單
+# 第一列資料距圖片頂端的相對位置不同（總覽多一段產業彙總列，明細少一段），因此
+# 分開校準；每列高度與漲跌幅副行相對列頂端的垂直位移則兩種畫面相同。
+GROUP_OVERALL_ROW0_FRAC = 505 / 1884
+GROUP_DETAIL_ROW0_FRAC = 416 / 1884
+GROUP_ROW_HEIGHT_FRAC = 137.7 / 1884
+GROUP_PCT_Y_OFFSET = 28
+GROUP_PCT_BAND_HEIGHT = 35
+GROUP_LIST_MAX_ROWS = 12  # 抓多一點再各自篩選/排序取前 N，容錯漏抓或誤判的列
+
+# 依實測截圖校準的已知族群名稱表：清單文字偶爾因字體、截圖壓縮而 OCR 失準，因此對
+# 辨識結果做「像 STRENGTH_LABELS 一樣的模糊比對校正」，snap 到最接近的已知名稱；
+# 若比對信心不足則保留原始 OCR 文字，讓使用者自行核對。
 GROUP_SECTOR_WHITELIST = [
-    "IC-代工", "被動元件", "IC-封測", "PCB-製造", "PCB-材料設備", "記憶體製造", "ABF",
-    "光學鏡片", "IC-設計", "晶圓材料", "EMS", "LCD-TF...", "IC-半導體", "連接元件",
-    "金控", "儀器設備...", "塑膠", "電機", "電源供應器", "IP/ASIC", "航運", "通訊設備",
+    "IC-代工", "IC-製造", "被動元件", "IC-封測", "PCB-製造", "PCB-材料設備", "記憶體製造", "ABF",
+    "光學鏡片", "IC-設計", "晶圓材料", "EMS", "LCD-TF...", "IC-半導體", "連接元件", "照明",
+    "金控", "儀器設備...", "塑膠", "電機", "電源供應器", "IP/ASIC", "航運", "通訊設備", "散熱零組件",
 ]
 
 
 def _normalize_group_pct(raw):
     """OCR 常把 +/- 與小數點辨識成全形變體（﹢﹣﹒），偶爾還會夾帶雜訊數字，
-    依「族群漲跌幅固定顯示兩位小數」的版面特性做正規化；超出熱力圖色階上限
-    （圖例僅到 ±5%）甚多者視為 OCR 雜訊，回傳 None。"""
+    依「漲跌幅固定顯示兩位小數」的版面特性做正規化；超出合理範圍（±15%）甚多者
+    視為 OCR 雜訊，回傳 None。"""
     s = raw.strip().replace("﹢", "+").replace("﹣", "-").replace("．", ".").replace("﹒", ".").replace("％", "%")
     if "%" not in s:
         return None
@@ -516,118 +531,88 @@ def _snap_to_sector_name(name):
     return match[0], difflib.SequenceMatcher(None, name, match[0]).ratio()
 
 
-def _isolated_sector_ocr(img, box, y_offset):
-    """對單一色塊的名稱區域重新獨立裁切放大辨識，比整張熱力圖一次 OCR 更準，
-    但只在整張圖辨識結果對不上已知族群名稱表時才使用（單獨裁切對大色塊反而
-    常常變差，依實測截圖校準）。"""
-    l, t, r, b = box
-    pad = 8
+def _ocr_sector_detail_title(img):
+    """族群明細截圖最上方置中的白色族群名稱標題，字體大、位置固定，比清單內文字更好辨識。"""
     w, h = img.size
-    crop = img.crop((max(0, l - pad), max(0, t + y_offset - pad),
-                      min(w, r + pad), min(h, b + y_offset + pad)))
-    big = crop.convert("L")
-    big = big.resize((big.width * 3, big.height * 3), Image.LANCZOS)
-    txt = pytesseract.image_to_string(big, lang="chi_tra+eng", config="--psm 13").strip()
+    crop = img.crop((int(w * 0.10), int(h * 0.055), int(w * 0.90), int(h * 0.115)))
+    g = crop.convert("L")
+    big = g.resize((g.width * 3, g.height * 3), Image.LANCZOS)
+    txt = pytesseract.image_to_string(big, lang="chi_tra+eng", config="--psm 7").strip()
     return _GROUP_NOISE_RE.sub("", txt.replace("\n", ""))
 
 
-def scan_group_overall(date_str):
-    """解析 group/<日期>/overall.jpg（熱力圖截圖），擷取每個族群色塊的名稱與漲跌幅(%)，
-    僅保留漲幅 > 0% 的族群，依漲幅由高到低排序，取前 GROUP_TOP_N 名並附上名次。
+def _ocr_group_row_name(img, box):
+    l, t, r, b = box
+    crop = img.crop((int(l), int(t), int(r), int(b)))
+    g = crop.convert("L")
+    big = g.resize((g.width * 3, g.height * 3), Image.LANCZOS)
+    txt = pytesseract.image_to_string(big, lang="chi_tra+eng", config="--psm 7").strip()
+    return _GROUP_NOISE_RE.sub("", txt.replace("\n", ""))
 
-    熱力圖為不規則大小色塊拼接而成的 treemap，無法單純依固定座標切欄取值，因此採
-    「文字列聚類＋依水平座標就近配對」策略：先把 OCR 文字依 y 座標分行，對每一行
-    「漲跌幅(%)」文字，往上（限制搜尋範圍內）找最近一行「x 座標與該漲跌幅相近」的
-    文字當作名稱列，再依各漲跌幅的 x 座標把名稱列的文字分配給最近的漲跌幅。名稱最終
-    會與 GROUP_SECTOR_WHITELIST 模糊比對校正；比對信心不足時，改用單獨裁切放大重新
-    辨識該色塊再比對一次，兩次都對不上已知名稱才保留原始 OCR 文字。"""
+
+def _ocr_group_row_pct(img, box):
+    """漲跌幅副行為紅字（漲）或綠字（跌），灰階常因對比不足漏辨識，改用色版二值化：
+    先試紅色版，抓不到再試綠色版並判定為負值（比 OCR 認出的 +/- 小三角圖示更可靠）。"""
+    l, t, r, b = box
+    crop = img.crop((int(l), int(t), int(r), int(b)))
+    for channel_idx in (0, 1):
+        ch = crop.split()[channel_idx]
+        th = ch.point(lambda p: 255 if p > 150 else 0)
+        big = th.resize((th.width * 4, th.height * 4), Image.LANCZOS)
+        txt = _ocr_single_line(big, "0123456789.%")
+        if not txt:
+            continue
+        val = _normalize_group_pct(txt if "%" in txt else txt + "%")
+        if val is not None:
+            return -abs(val) if channel_idx == 1 else abs(val)
+    return None
+
+
+def _scan_group_list_rows(img, row0_frac, name_x_frac, max_rows=GROUP_LIST_MAX_ROWS):
+    """依固定列高逐列擷取清單畫面（族群總覽或族群明細皆適用），回傳
+    [{"name": 原始 OCR 名稱, "pct_change": 漲跌幅}, ...]，抓不到漲跌幅的列直接略過
+    （名稱可能因被 UI 浮動元件遮擋等因素辨識失敗，仍保留該列、名稱為空字串）。"""
+    w, h = img.size
+    row0_top = h * row0_frac
+    row_h = h * GROUP_ROW_HEIGHT_FRAC
+    rows = []
+    for i in range(max_rows):
+        top = row0_top + i * row_h
+        if top + row_h > h * 0.97:
+            break
+        name_box = (name_x_frac[0] * w, top - row_h * 0.08, name_x_frac[1] * w, top + row_h * 0.30)
+        pct_box = (w * 0.76, top + GROUP_PCT_Y_OFFSET - 6, w * 0.97, top + GROUP_PCT_Y_OFFSET + GROUP_PCT_BAND_HEIGHT)
+        pct = _ocr_group_row_pct(img, pct_box)
+        if pct is None:
+            continue
+        name = _ocr_group_row_name(img, name_box)
+        rows.append({"name": name, "pct_change": pct})
+    return rows
+
+
+def scan_group_overall(date_str):
+    """解析 group/<日期>/overall.jpg（App 市場總覽→熱力圖→清單模式截圖），擷取每個
+    產業／族群列的名稱與日漲跌幅(%)，僅保留漲幅 > 0% 的族群，依漲幅由高到低排序，
+    取前 GROUP_TOP_N 名並附上名次。名稱與 GROUP_SECTOR_WHITELIST 模糊比對校正，
+    比對信心不足則保留原始 OCR 文字，讓使用者自行核對。"""
     path = SCREENSHOTS_DIR / "group" / date_str / "overall.jpg"
     if not path.exists():
         return []
     img = Image.open(path)
-    w, h = img.size
-    y_offset = int(h * 0.20)
-    crop = img.crop((0, y_offset, w, int(h * 0.865)))
-    g = crop.convert("L")
-    data = pytesseract.image_to_data(
-        g, lang="chi_tra+eng", config="--psm 6", output_type=pytesseract.Output.DICT
-    )
-
-    words = []
-    for i, raw in enumerate(data["text"]):
-        t = raw.strip()
-        if not t:
-            continue
-        words.append({"text": t, "left": data["left"][i], "top": data["top"][i],
-                       "width": data["width"][i], "height": data["height"][i],
-                       "pct": _normalize_group_pct(raw)})
-    words.sort(key=lambda x: x["top"])
-
-    lines = []
-    for wd in words:
-        placed = False
-        for ln in lines:
-            if abs(ln["top"] - wd["top"]) < 15:
-                ln["words"].append(wd)
-                ln["top"] = sum(x["top"] for x in ln["words"]) / len(ln["words"])
-                placed = True
-                break
-        if not placed:
-            lines.append({"top": wd["top"], "words": [wd]})
-    lines.sort(key=lambda l: l["top"])
-    for ln in lines:
-        ln["words"].sort(key=lambda x: x["left"])
+    rows = _scan_group_list_rows(img, GROUP_OVERALL_ROW0_FRAC, (0.0, 0.35))
 
     results = []
-    for idx, ln in enumerate(lines):
-        pct_words = [wd for wd in ln["words"] if wd["pct"] is not None]
-        if not pct_words:
+    for r in rows:
+        match, score = _snap_to_sector_name(r["name"])
+        name = match if (match and score >= 0.6) else r["name"]
+        if not name:
+            print(f"[WARN] 族群清單有一列（漲跌幅 {r['pct_change']:+.2f}%）名稱無法辨識，已略過",
+                  file=sys.stderr)
             continue
-        pct_centers = [p["left"] + p["width"] / 2 for p in pct_words]
-
-        name_line = None
-        relevant = None
-        for j in range(idx - 1, max(-1, idx - 8), -1):
-            cand = [wd for wd in lines[j]["words"] if wd["pct"] is None]
-            rel = [c for c in cand if any(abs((c["left"] + c["width"] / 2) - pc) < _GROUP_NAME_XTOL
-                                           for pc in pct_centers)]
-            text = _GROUP_NOISE_RE.sub("", "".join(c["text"] for c in rel))
-            if len(text) >= 2:
-                name_line, relevant = lines[j], rel
-                break
-        if not name_line:
-            continue
-
-        buckets = {i: [] for i in range(len(pct_words))}
-        for nwd in relevant:
-            ncx = nwd["left"] + nwd["width"] / 2
-            k = min(range(len(pct_centers)), key=lambda k2: abs(pct_centers[k2] - ncx))
-            buckets[k].append(nwd)
-
-        for i, p in enumerate(pct_words):
-            group = buckets[i]
-            if not group:
-                continue
-            raw_name = _GROUP_NOISE_RE.sub(
-                "", "".join(x["text"] for x in sorted(group, key=lambda x: x["left"]))
-            )
-            match, score = _snap_to_sector_name(raw_name)
-            if not match or score < 0.6:
-                box = (min(x["left"] for x in group), min(x["top"] for x in group),
-                       max(x["left"] + x["width"] for x in group), max(x["top"] + x["height"] for x in group))
-                iso_name = _isolated_sector_ocr(img, box, y_offset)
-                match2, score2 = _snap_to_sector_name(iso_name)
-                if match2 and score2 >= 0.6:
-                    match, score = match2, score2
-            name = match if (match and score >= 0.6) else raw_name
-            if not name:
-                print(f"[WARN] 族群熱力圖有一色塊只辨識出漲跌幅 {p['pct']:+.2f}%，"
-                      f"名稱無法辨識，已略過", file=sys.stderr)
-                continue
-            if not (match and score >= 0.6):
-                print(f"[WARN] 族群熱力圖有一色塊（漲跌幅 {p['pct']:+.2f}%）名稱與已知族群表比對信心不足，"
-                      f"保留原始辨識結果 {name!r}，建議人工核對", file=sys.stderr)
-            results.append({"sector": name, "pct_change": p["pct"]})
+        if not (match and score >= 0.6):
+            print(f"[WARN] 族群清單有一列（漲跌幅 {r['pct_change']:+.2f}%）名稱與已知族群表比對信心不足，"
+                  f"保留原始辨識結果 {name!r}，建議人工核對", file=sys.stderr)
+        results.append({"sector": name, "pct_change": r["pct_change"]})
 
     results = [r for r in results if r["pct_change"] > 0]
     results.sort(key=lambda r: -r["pct_change"])
@@ -637,146 +622,11 @@ def scan_group_overall(date_str):
     return results
 
 
-# ---------------------------------------------------------------------------
-# OCR：族群明細截圖（group/<日期>/ 底下除 overall.jpg 外的其他截圖）
-# 每張對應點進某一個族群後看到的成分股熱力圖，用來讓前端點擊族群列時展開排行
-# ---------------------------------------------------------------------------
-GROUP_DETAIL_XTOL = 160  # 個股明細色塊較大，名稱列與漲跌幅的 x 座標容許誤差也放寬
-GROUP_DETAIL_NAME_CUTOFF = 0.6
-
-
-def _tile_gain_sign(color_crop, box, margin=8):
-    """依色塊背景的紅／綠分量比較判斷漲跌方向（紅漲、綠跌），比 OCR 認出的正負號
-    小圖示更可靠——實測小數點附近的 +/- 常被完全漏辨識。"""
-    l, t, r, b = box
-    l, t = max(0, int(l)), max(0, int(t))
-    r, b = min(color_crop.width, int(r)), min(color_crop.height, int(b))
-    if r <= l or b <= t:
-        return None
-    stat = ImageStat.Stat(color_crop.crop((l, t, r, b)))
-    avg_r, avg_g = stat.mean[0], stat.mean[1]
-    if avg_r - avg_g > margin:
-        return "+"
-    if avg_g - avg_r > margin:
-        return "-"
-    return None
-
-
-def _ocr_sector_detail_title(img):
-    """族群明細截圖最上方置中的白色族群名稱標題，字體大、位置固定，比熱力圖內文字更好辨識。"""
-    w, h = img.size
-    crop = img.crop((int(w * 0.10), int(h * 0.055), int(w * 0.90), int(h * 0.115)))
-    g = crop.convert("L")
-    big = g.resize((g.width * 3, g.height * 3), Image.LANCZOS)
-    txt = pytesseract.image_to_string(big, lang="chi_tra+eng", config="--psm 7").strip()
-    return _GROUP_NOISE_RE.sub("", txt.replace("\n", ""))
-
-
-def _scan_sector_detail_body(img, name_to_code):
-    """掃描單一族群明細截圖的色塊本體，擷取該族群內個股名稱與漲跌幅(%)，依漲跌幅
-    排序取前 6 名。色塊為白字＋彩色底，改用藍色版（相對灰階更能與紅/綠/灰底拉開對比，
-    依實測截圖校準）整張二值化後 OCR，比逐色塊個別裁切更能一次讀到大小混合的字體。
-    股票名稱與三大法人主檔（name_to_code）模糊比對校正，比對信心不足或原始文字太短
-    （單一字元常是誤配）則保留原始辨識結果、不附代號，前端不會顯示個股連結。"""
-    w, h = img.size
-    y_offset = int(h * 0.20)
-    crop = img.crop((0, y_offset, w, int(h * 0.94)))
-    b_channel = crop.split()[2]
-    th = b_channel.point(lambda p: 255 if p > 150 else 0)
-    data = pytesseract.image_to_data(
-        th, lang="chi_tra+eng", config="--psm 6", output_type=pytesseract.Output.DICT
-    )
-
-    words = []
-    for i, raw in enumerate(data["text"]):
-        t = raw.strip()
-        if not t:
-            continue
-        cy = data["top"][i] + data["height"][i] / 2
-        words.append({"text": t, "left": data["left"][i], "top": data["top"][i], "cy": cy,
-                       "width": data["width"][i], "height": data["height"][i],
-                       "pct": _normalize_group_pct(raw)})
-    words.sort(key=lambda x: x["cy"])
-
-    # 依中心 y 座標分行（用中心點而非上緣，避免同一行內不同字元的字高差異把
-    # 同一個名稱拆成兩行，實測校準）
-    lines = []
-    for wd in words:
-        placed = False
-        for ln in lines:
-            if abs(ln["cy"] - wd["cy"]) < 25:
-                ln["words"].append(wd)
-                ln["cy"] = sum(x["cy"] for x in ln["words"]) / len(ln["words"])
-                placed = True
-                break
-        if not placed:
-            lines.append({"cy": wd["cy"], "words": [wd]})
-    lines.sort(key=lambda l: l["cy"])
-    for ln in lines:
-        ln["words"].sort(key=lambda x: x["left"])
-
-    master_names = list(name_to_code.keys())
-    results = []
-    for idx, ln in enumerate(lines):
-        pct_words = [wd for wd in ln["words"] if wd["pct"] is not None]
-        if not pct_words:
-            continue
-        pct_centers = [p["left"] + p["width"] / 2 for p in pct_words]
-
-        name_line, relevant = None, None
-        for j in range(idx - 1, max(-1, idx - 6), -1):
-            cand = [wd for wd in lines[j]["words"] if wd["pct"] is None]
-            rel = [c for c in cand if any(abs((c["left"] + c["width"] / 2) - pc) < GROUP_DETAIL_XTOL
-                                           for pc in pct_centers)]
-            text = _GROUP_NOISE_RE.sub("", "".join(c["text"] for c in rel))
-            if text:
-                name_line, relevant = lines[j], rel
-                break
-        if not name_line:
-            continue
-
-        buckets = {i: [] for i in range(len(pct_words))}
-        for nwd in relevant:
-            ncx = nwd["left"] + nwd["width"] / 2
-            k = min(range(len(pct_centers)), key=lambda k2: abs(pct_centers[k2] - ncx))
-            buckets[k].append(nwd)
-
-        for i, p in enumerate(pct_words):
-            group = buckets[i]
-            if not group:
-                continue
-            raw_name = _GROUP_NOISE_RE.sub(
-                "", "".join(x["text"] for x in sorted(group, key=lambda x: x["left"]))
-            )
-            if not raw_name:
-                continue
-
-            match = None
-            if len(raw_name) >= 2 and master_names:
-                close = difflib.get_close_matches(raw_name, master_names, n=1, cutoff=GROUP_DETAIL_NAME_CUTOFF)
-                if close and difflib.SequenceMatcher(None, raw_name, close[0]).ratio() >= GROUP_DETAIL_NAME_CUTOFF:
-                    match = close[0]
-
-            pct = p["pct"]
-            sign = _tile_gain_sign(crop, (p["left"], p["top"], p["left"] + p["width"], p["top"] + p["height"]))
-            if sign == "-" and pct > 0:
-                pct = -pct
-            elif sign == "+" and pct < 0:
-                pct = -pct
-
-            code, market = name_to_code.get(match, (None, None))
-            results.append({"name": match or raw_name, "code": code, "market": market, "pct_change": pct})
-
-    results.sort(key=lambda r: -r["pct_change"])
-    results = results[:6]
-    for i, r in enumerate(results):
-        r["rank"] = i + 1
-    return results
-
-
 def scan_group_sector_details(date_str, master):
-    """掃描 group/<日期>/ 底下除 overall.jpg 外的個別族群明細截圖，依標題辨識所屬族群，
-    回傳 {族群名稱: [該族群前6大個股, ...]}，供前端點擊某個族群時展開其成分股排行。
+    """掃描 group/<日期>/ 底下除 overall.jpg 外的個別族群明細截圖（點進某一族群後看到
+    的成分股清單），依標題辨識所屬族群，擷取該族群內個股名稱與日漲跌幅(%)、與三大
+    法人主檔模糊比對校正取得代號，取前 GROUP_DETAIL_TOP_N 名，回傳
+    {族群名稱: [個股排行, ...]}，供前端點擊某個族群時展開其成分股排行。
     若某個族群沒有對應的明細截圖，該族群不會出現在回傳結果中——前端遇到查無資料的
     族群時會顯示「No more Information, please update」。"""
     folder = SCREENSHOTS_DIR / "group" / date_str
@@ -787,6 +637,7 @@ def scan_group_sector_details(date_str, master):
     name_to_code = {}
     for code, info in (master or {}).items():
         name_to_code.setdefault(info["name"], (code, info["market"]))
+    master_names = list(name_to_code.keys())
 
     for img_path in sorted(folder.iterdir()):
         if img_path.suffix.lower() not in IMAGE_EXTS or img_path.name.lower() == "overall.jpg":
@@ -798,7 +649,24 @@ def scan_group_sector_details(date_str, master):
             print(f"[WARN] 族群明細截圖 {img_path.name} 無法辨識所屬族群（標題辨識為 {title!r}），已略過",
                   file=sys.stderr)
             continue
-        stocks = _scan_sector_detail_body(img, name_to_code)
+
+        rows = _scan_group_list_rows(img, GROUP_DETAIL_ROW0_FRAC, (0.0, 0.30))
+        stocks = []
+        for r in rows:
+            raw_name = r["name"]
+            match = None
+            if len(raw_name) >= 2 and master_names:
+                close = difflib.get_close_matches(raw_name, master_names, n=1, cutoff=GROUP_DETAIL_NAME_CUTOFF)
+                if close and difflib.SequenceMatcher(None, raw_name, close[0]).ratio() >= GROUP_DETAIL_NAME_CUTOFF:
+                    match = close[0]
+            code, market = name_to_code.get(match, (None, None))
+            stocks.append({"name": match or raw_name, "code": code, "market": market,
+                            "pct_change": r["pct_change"]})
+        stocks.sort(key=lambda s: -s["pct_change"])
+        stocks = stocks[:GROUP_DETAIL_TOP_N]
+        for i, s in enumerate(stocks):
+            s["rank"] = i + 1
+
         if not stocks:
             print(f"[WARN] 族群明細截圖 {img_path.name}（{sector}）辨識不出任何個股資料", file=sys.stderr)
             continue
