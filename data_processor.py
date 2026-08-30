@@ -468,25 +468,79 @@ def build_stock_future_list(date_str, master, db):
 # ---------------------------------------------------------------------------
 # OCR：族群熱力圖截圖（group/overall.jpg）－ 擷取族群名稱與漲跌幅(%)
 # ---------------------------------------------------------------------------
-_GROUP_PCT_RE = re.compile(r"^[+-]\d+\.\d+%$")
-_GROUP_NOISE_RE = re.compile(r"[﹣﹍‥。﹒｜|:：'’,，)）(（\[\]{}『』﹚﹛ˍ︰]+")
+_GROUP_NOISE_RE = re.compile(r"[﹣﹍‥。﹒｜|:：'’,，)）(（\[\]{}『』﹚﹛ˍ︰…\s]+")
+_GROUP_PCT_VALUE_RE = re.compile(r"^([+-])?(\d+)\.(\d{2,})")
+_GROUP_NAME_XTOL = 140  # 名稱列文字與漲跌幅的 x 座標容許誤差（依實測截圖校準）
+GROUP_TOP_N = 6  # 族群分頁只顯示漲幅前 N 名
+
+# 依實測截圖校準的已知族群名稱表：熱力圖色塊的中文名稱常因字體小、色塊擁擠而 OCR
+# 失準，因此對辨識結果做「像 STRENGTH_LABELS 一樣的模糊比對校正」，snap 到最接近的
+# 已知名稱；若比對信心不足則保留原始 OCR 文字，讓使用者自行核對。
+GROUP_SECTOR_WHITELIST = [
+    "IC-代工", "被動元件", "IC-封測", "PCB-製造", "PCB-材料設備", "記憶體製造", "ABF",
+    "光學鏡片", "IC-設計", "晶圓材料", "EMS", "LCD-TF...", "IC-半導體", "連接元件",
+    "金控", "儀器設備...", "塑膠", "電機", "電源供應器", "IP/ASIC", "航運", "通訊設備",
+]
+
+
+def _normalize_group_pct(raw):
+    """OCR 常把 +/- 與小數點辨識成全形變體（﹢﹣﹒），偶爾還會夾帶雜訊數字，
+    依「族群漲跌幅固定顯示兩位小數」的版面特性做正規化；超出熱力圖色階上限
+    （圖例僅到 ±5%）甚多者視為 OCR 雜訊，回傳 None。"""
+    s = raw.strip().replace("﹢", "+").replace("﹣", "-").replace("．", ".").replace("﹒", ".").replace("％", "%")
+    if "%" not in s:
+        return None
+    m = _GROUP_PCT_VALUE_RE.match(s)
+    if not m:
+        return None
+    sign, intpart, frac = m.groups()
+    val = float(f"{intpart}.{frac[:2]}")
+    if sign == "-":
+        val = -val
+    return val if abs(val) <= 15 else None
+
+
+def _snap_to_sector_name(name):
+    if not name:
+        return None, 0.0
+    match = difflib.get_close_matches(name, GROUP_SECTOR_WHITELIST, n=1, cutoff=0)
+    if not match:
+        return None, 0.0
+    return match[0], difflib.SequenceMatcher(None, name, match[0]).ratio()
+
+
+def _isolated_sector_ocr(img, box, y_offset):
+    """對單一色塊的名稱區域重新獨立裁切放大辨識，比整張熱力圖一次 OCR 更準，
+    但只在整張圖辨識結果對不上已知族群名稱表時才使用（單獨裁切對大色塊反而
+    常常變差，依實測截圖校準）。"""
+    l, t, r, b = box
+    pad = 8
+    w, h = img.size
+    crop = img.crop((max(0, l - pad), max(0, t + y_offset - pad),
+                      min(w, r + pad), min(h, b + y_offset + pad)))
+    big = crop.convert("L")
+    big = big.resize((big.width * 3, big.height * 3), Image.LANCZOS)
+    txt = pytesseract.image_to_string(big, lang="chi_tra+eng", config="--psm 13").strip()
+    return _GROUP_NOISE_RE.sub("", txt.replace("\n", ""))
 
 
 def scan_group_overall(date_str):
     """解析 group/<日期>/overall.jpg（熱力圖截圖），擷取每個族群色塊的名稱與漲跌幅(%)，
-    僅保留漲幅 > 0% 的族群，依漲幅由高到低排序並附上名次。
+    僅保留漲幅 > 0% 的族群，依漲幅由高到低排序，取前 GROUP_TOP_N 名並附上名次。
 
     熱力圖為不規則大小色塊拼接而成的 treemap，無法單純依固定座標切欄取值，因此採
     「文字列聚類＋依水平座標就近配對」策略：先把 OCR 文字依 y 座標分行，對每一行
-    「漲跌幅(%)」文字，往上找最近一行有效文字當作名稱列，再依各漲跌幅的 x 座標把
-    名稱列的文字分配給最近的漲跌幅。越密集的小色塊區域（熱力圖下半部）配對可能失準
-    或留白，屬已知限制，遇到辨識不出名稱的色塊會印出 [WARN] 並略過該筆。"""
+    「漲跌幅(%)」文字，往上（限制搜尋範圍內）找最近一行「x 座標與該漲跌幅相近」的
+    文字當作名稱列，再依各漲跌幅的 x 座標把名稱列的文字分配給最近的漲跌幅。名稱最終
+    會與 GROUP_SECTOR_WHITELIST 模糊比對校正；比對信心不足時，改用單獨裁切放大重新
+    辨識該色塊再比對一次，兩次都對不上已知名稱才保留原始 OCR 文字。"""
     path = SCREENSHOTS_DIR / "group" / date_str / "overall.jpg"
     if not path.exists():
         return []
     img = Image.open(path)
     w, h = img.size
-    crop = img.crop((0, int(h * 0.20), w, int(h * 0.865)))
+    y_offset = int(h * 0.20)
+    crop = img.crop((0, y_offset, w, int(h * 0.865)))
     g = crop.convert("L")
     data = pytesseract.image_to_data(
         g, lang="chi_tra+eng", config="--psm 6", output_type=pytesseract.Output.DICT
@@ -498,7 +552,8 @@ def scan_group_overall(date_str):
         if not t:
             continue
         words.append({"text": t, "left": data["left"][i], "top": data["top"][i],
-                       "width": data["width"][i], "height": data["height"][i]})
+                       "width": data["width"][i], "height": data["height"][i],
+                       "pct": _normalize_group_pct(raw)})
     words.sort(key=lambda x: x["top"])
 
     lines = []
@@ -518,39 +573,58 @@ def scan_group_overall(date_str):
 
     results = []
     for idx, ln in enumerate(lines):
-        pct_words = [wd for wd in ln["words"] if _GROUP_PCT_RE.match(wd["text"])]
+        pct_words = [wd for wd in ln["words"] if wd["pct"] is not None]
         if not pct_words:
             continue
+        pct_centers = [p["left"] + p["width"] / 2 for p in pct_words]
+
         name_line = None
-        for j in range(idx - 1, -1, -1):
-            cand = [wd for wd in lines[j]["words"] if not _GROUP_PCT_RE.match(wd["text"])]
-            text = _GROUP_NOISE_RE.sub("", "".join(c["text"] for c in cand))
+        relevant = None
+        for j in range(idx - 1, max(-1, idx - 8), -1):
+            cand = [wd for wd in lines[j]["words"] if wd["pct"] is None]
+            rel = [c for c in cand if any(abs((c["left"] + c["width"] / 2) - pc) < _GROUP_NAME_XTOL
+                                           for pc in pct_centers)]
+            text = _GROUP_NOISE_RE.sub("", "".join(c["text"] for c in rel))
             if len(text) >= 2:
-                name_line = lines[j]
+                name_line, relevant = lines[j], rel
                 break
         if not name_line:
             continue
-        name_words = [wd for wd in name_line["words"] if not _GROUP_PCT_RE.match(wd["text"])]
 
-        pct_centers = [p["left"] + p["width"] / 2 for p in pct_words]
         buckets = {i: [] for i in range(len(pct_words))}
-        for nwd in name_words:
+        for nwd in relevant:
             ncx = nwd["left"] + nwd["width"] / 2
             k = min(range(len(pct_centers)), key=lambda k2: abs(pct_centers[k2] - ncx))
             buckets[k].append(nwd)
 
         for i, p in enumerate(pct_words):
-            name = _GROUP_NOISE_RE.sub(
-                "", "".join(x["text"] for x in sorted(buckets[i], key=lambda x: x["left"]))
-            )
-            if not name:
-                print(f"[WARN] 族群熱力圖有一色塊只辨識出漲跌幅 {p['text']}，名稱無法辨識，已略過",
-                      file=sys.stderr)
+            group = buckets[i]
+            if not group:
                 continue
-            results.append({"sector": name, "pct_change": float(p["text"].replace("%", ""))})
+            raw_name = _GROUP_NOISE_RE.sub(
+                "", "".join(x["text"] for x in sorted(group, key=lambda x: x["left"]))
+            )
+            match, score = _snap_to_sector_name(raw_name)
+            if not match or score < 0.6:
+                box = (min(x["left"] for x in group), min(x["top"] for x in group),
+                       max(x["left"] + x["width"] for x in group), max(x["top"] + x["height"] for x in group))
+                iso_name = _isolated_sector_ocr(img, box, y_offset)
+                match2, score2 = _snap_to_sector_name(iso_name)
+                if match2 and score2 >= 0.6:
+                    match, score = match2, score2
+            name = match if (match and score >= 0.6) else raw_name
+            if not name:
+                print(f"[WARN] 族群熱力圖有一色塊只辨識出漲跌幅 {p['pct']:+.2f}%，"
+                      f"名稱無法辨識，已略過", file=sys.stderr)
+                continue
+            if not (match and score >= 0.6):
+                print(f"[WARN] 族群熱力圖有一色塊（漲跌幅 {p['pct']:+.2f}%）名稱與已知族群表比對信心不足，"
+                      f"保留原始辨識結果 {name!r}，建議人工核對", file=sys.stderr)
+            results.append({"sector": name, "pct_change": p["pct"]})
 
     results = [r for r in results if r["pct_change"] > 0]
     results.sort(key=lambda r: -r["pct_change"])
+    results = results[:GROUP_TOP_N]
     for i, r in enumerate(results):
         r["rank"] = i + 1
     return results

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-30T18:32:43",
+  "generated_at": "2026-08-30T20:13:11",
   "date": "2026-08-28",
   "tabs": {
     "focus": [
@@ -3887,54 +3887,29 @@
         "rank": 1
       },
       {
-        "sector": "重…妾衢F",
+        "sector": "連接元件",
         "pct_change": 5.23,
         "rank": 2
       },
       {
-        "sector": "IC封測PCB裹造",
-        "pct_change": 2.91,
+        "sector": "電源供應器",
+        "pct_change": 3.57,
         "rank": 3
       },
       {
-        "sector": "LCDTF",
-        "pct_change": 2.89,
+        "sector": "PCB-製造",
+        "pct_change": 3.11,
         "rank": 4
       },
       {
-        "sector": "金控",
-        "pct_change": 1.81,
+        "sector": "IC-封測",
+        "pct_change": 2.91,
         "rank": 5
       },
       {
-        "sector": "PCB材料設備",
-        "pct_change": 1.8,
+        "sector": "LCD-TF...",
+        "pct_change": 2.89,
         "rank": 6
-      },
-      {
-        "sector": "﹞已戶皇舍】慧井6Ic陳Bstat七抑TEs晶圓材料EMS",
-        "pct_change": 1.65,
-        "rank": 7
-      },
-      {
-        "sector": "﹢357%%asso",
-        "pct_change": 1.61,
-        "rank": 8
-      },
-      {
-        "sector": "IG半導",
-        "pct_change": 0.95,
-        "rank": 9
-      },
-      {
-        "sector": "IC代工",
-        "pct_change": 0.64,
-        "rank": 10
-      },
-      {
-        "sector": "儀器設備",
-        "pct_change": 0.52,
-        "rank": 11
       }
     ]
   },
