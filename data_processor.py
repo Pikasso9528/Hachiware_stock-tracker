@@ -823,7 +823,7 @@ def build_pool_list(db):
             "pinned": pool.get("pinned", False),
             "added_date": pool.get("added_date"),
         })
-    items.sort(key=lambda x: (not x["warned"], not x["pinned"], _STRENGTH_RANK.get(x["today_strength"], 5), x["code"]))
+    items.sort(key=lambda x: (_STRENGTH_RANK.get(x["today_strength"], 5), x["code"]))
     return items
 
 
