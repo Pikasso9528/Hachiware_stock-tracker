@@ -9,12 +9,12 @@ description: Run a full 台股強勢股分析儀表板 refresh — updates all f
 
 ## 執行步驟
 
-1. 確認當天各截圖資料夾已備妥（依需要放入即可，缺哪個資料夾就代表那個分頁當天沒有新名單）：
-   - `screenshots/<日期>/focus/`
-   - `screenshots/<日期>/alpha/`
-   - `screenshots/<日期>/pullback/`
-   - `screenshots/<日期>/super/`
-   - `screenshots/update/`（監控股池的補漏截圖，非日期資料夾）
+1. 確認當天各截圖資料夾已備妥（依需要放入即可，缺哪個資料夾就代表那個分頁當天沒有新名單）。截圖資料夾佈局為「分類資料夾底下放日期資料夾」：
+   - `screenshots/focus/<日期>/`
+   - `screenshots/alpha/<日期>/`
+   - `screenshots/pullback/<日期>/`
+   - `screenshots/super/<日期>/`
+   - `screenshots/update/`（監控股池的補漏截圖，檔名即股票代號，非日期資料夾）
 2. 在 `screenshots/` 目錄下執行：
    ```
    python data_processor.py --date <日期>

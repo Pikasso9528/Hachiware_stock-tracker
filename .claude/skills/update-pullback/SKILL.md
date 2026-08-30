@@ -5,11 +5,11 @@ description: Reprocess the 回檔型 (pullback) screenshot folder for a given da
 
 # 更新「回檔型」分頁
 
-只重新掃描 `screenshots/<日期>/pullback/` 資料夾內的截圖，更新台股強勢股分析儀表板中的**回檔型**分頁。不會動到焦點監控、α動能、當日Super、監控股池既有的資料。
+只重新掃描 `screenshots/pullback/<日期>/` 資料夾內的截圖，更新台股強勢股分析儀表板中的**回檔型**分頁。不會動到焦點監控、α動能、當日Super、監控股池既有的資料。
 
 ## 執行步驟
 
-1. 確認股票截圖已放進 `screenshots/<日期>/pullback/`（日期預設為今天，格式 `YYYY-MM-DD`；若使用者要處理別的日期，改用那個日期）。
+1. 確認股票截圖已放進 `screenshots/pullback/<日期>/`（日期資料夾在分類資料夾底下，例如 `screenshots/pullback/2026-08-30/`；日期預設為今天，格式 `YYYY-MM-DD`，若使用者提到某個日期，就只處理那個日期資料夾內命名為該日期的截圖）。
 2. 在 `screenshots/` 目錄下執行：
    ```
    python data_processor.py --category pullback --date <日期>

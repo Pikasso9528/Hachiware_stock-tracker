@@ -226,8 +226,9 @@ def ocr_extract_codes(image_path):
         return set()
 
 
-def scan_category_folder(date_dir, category, valid_codes):
-    folder = date_dir / category
+def scan_category_folder(category, date_str, valid_codes):
+    """截圖資料夾佈局為 screenshots/<分類>/<日期>/，例如 screenshots/focus/2026-08-30/。"""
+    folder = SCREENSHOTS_DIR / category / date_str
     codes = set()
     if not folder.exists():
         return codes
@@ -304,10 +305,11 @@ def ocr_super_detail(image_path, valid_codes=None):
         return None, {}
 
 
-def scan_super_folder(date_dir, valid_codes):
+def scan_super_folder(date_str, valid_codes):
     """回傳 (codes, detail)：codes 為當日 super 資料夾辨識出的股票代號集合，
-    detail 為 {code: {date: 強度標籤}} 的相對強度歷史表彙整結果。"""
-    folder = date_dir / "super"
+    detail 為 {code: {date: 強度標籤}} 的相對強度歷史表彙整結果。
+    截圖資料夾佈局為 screenshots/super/<日期>/，例如 screenshots/super/2026-08-30/。"""
+    folder = SCREENSHOTS_DIR / "super" / date_str
     codes = set()
     detail = {}
     if not folder.exists():
@@ -560,9 +562,8 @@ def update_list_category(date_str, category):
     print(f"=== [{category}] 處理日期: {date_str} ===")
     master = fetch_institutional_master(date_str)
     valid_codes = set(master.keys())
-    date_dir = SCREENSHOTS_DIR / date_str
 
-    codes = scan_category_folder(date_dir, category, valid_codes)
+    codes = scan_category_folder(category, date_str, valid_codes)
     print(f"  辨識出 {len(codes)} 檔: {sorted(codes)}")
 
     db = load_tracker_db()
@@ -583,9 +584,8 @@ def update_super(date_str):
     print(f"=== [super] 處理日期: {date_str} ===")
     master = fetch_institutional_master(date_str)
     valid_codes = set(master.keys())
-    date_dir = SCREENSHOTS_DIR / date_str
 
-    super_codes, super_detail = scan_super_folder(date_dir, valid_codes)
+    super_codes, super_detail = scan_super_folder(date_str, valid_codes)
     print(f"  辨識出 {len(super_codes)} 檔: {sorted(super_codes)}")
 
     db = load_tracker_db()

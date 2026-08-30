@@ -5,11 +5,11 @@ description: Reprocess the α動能 (alpha momentum) screenshot folder for a giv
 
 # 更新「α動能」分頁
 
-只重新掃描 `screenshots/<日期>/alpha/` 資料夾內的截圖，更新台股強勢股分析儀表板中的**α動能**分頁。不會動到焦點監控、回檔型、當日Super、監控股池既有的資料。
+只重新掃描 `screenshots/alpha/<日期>/` 資料夾內的截圖，更新台股強勢股分析儀表板中的**α動能**分頁。不會動到焦點監控、回檔型、當日Super、監控股池既有的資料。
 
 ## 執行步驟
 
-1. 確認股票截圖已放進 `screenshots/<日期>/alpha/`（日期預設為今天，格式 `YYYY-MM-DD`；若使用者要處理別的日期，改用那個日期）。
+1. 確認股票截圖已放進 `screenshots/alpha/<日期>/`（日期資料夾在分類資料夾底下，例如 `screenshots/alpha/2026-08-30/`；日期預設為今天，格式 `YYYY-MM-DD`，若使用者提到某個日期，就只處理那個日期資料夾內命名為該日期的截圖）。
 2. 在 `screenshots/` 目錄下執行：
    ```
    python data_processor.py --category alpha --date <日期>
