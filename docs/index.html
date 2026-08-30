@@ -166,6 +166,17 @@
   .row-field { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; flex-shrink: 0; }
   .row-field .field-label { font-size: 0.65rem; color: var(--muted2); }
 
+  .row-tags { flex: 1 1 160px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .tag-chip {
+    font-size: 0.72rem;
+    padding: 2px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+    background: rgba(148,163,184,0.12);
+    color: var(--muted);
+    border: 1px solid var(--border-hover);
+  }
+
   .badge {
     padding: 2px 10px;
     border-radius: 999px;
@@ -346,6 +357,39 @@
     return row;
   }
 
+  var POOL_CROSS_CHECK_KEYS = ["focus", "alpha", "pullback", "stock_future"]; // group（族群）另外檢查成分股
+
+  function poolCrossTabs(code) {
+    var d = state.byDate[state.selectedDate];
+    if (!d || !d.tabs) return [];
+    var found = [];
+    POOL_CROSS_CHECK_KEYS.forEach(function (key) {
+      var list = d.tabs[key] || [];
+      var hit = list.some(function (item) { return item.code === code; });
+      if (hit) {
+        var tabDef = TABS.filter(function (t) { return t.key === key; })[0];
+        if (tabDef) found.push(tabDef);
+      }
+    });
+    var groupList = d.tabs.group || [];
+    var inGroup = groupList.some(function (sector) {
+      return (sector.stocks || []).some(function (s) { return s.code === code; });
+    });
+    if (inGroup) {
+      var groupTab = TABS.filter(function (t) { return t.key === "group"; })[0];
+      if (groupTab) found.push(groupTab);
+    }
+    return found;
+  }
+
+  function renderPoolTagsBlock(code) {
+    var box = el("div", { class: "row-tags" });
+    poolCrossTabs(code).forEach(function (t) {
+      box.appendChild(el("span", { class: "tag-chip", text: t.icon + " " + t.label }));
+    });
+    return box;
+  }
+
   function renderRow(stock, isPool) {
     var badgeStyle = STRENGTH_STYLE[stock.today_strength] || STRENGTH_STYLE["未更新"];
 
@@ -369,7 +413,11 @@
       renderStars(stock.stars)
     ]);
 
-    var children = [idBlock, strengthBlock, starsBlock];
+    var children = [idBlock];
+    if (isPool) {
+      children.push(renderPoolTagsBlock(stock.code));
+    }
+    children.push(strengthBlock, starsBlock);
 
     if (isPool) {
       children.push(el("div", { class: "row-field" }, [
