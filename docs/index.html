@@ -132,6 +132,15 @@
   }
   .stock-row:hover { border-color: var(--border-hover); }
 
+  .row-rank {
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
   .row-id { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1 1 220px; }
   .row-market {
     flex-shrink: 0;
@@ -164,6 +173,26 @@
     white-space: nowrap;
     border: 1px solid;
   }
+  .pct-badge {
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border: 1px solid;
+    font-variant-numeric: tabular-nums;
+  }
+  .pct-up {
+    background: rgba(244,63,94,0.15);
+    color: #fda4af;
+    border-color: rgba(244,63,94,0.4);
+  }
+  .pct-down {
+    background: rgba(16,185,129,0.15);
+    color: #6ee7b7;
+    border-color: rgba(16,185,129,0.4);
+  }
+
   .badge-warn {
     padding: 2px 8px;
     border-radius: 999px;
@@ -222,8 +251,10 @@
     { key: "focus",    label: "焦點監控",     icon: "🎯" },
     { key: "alpha",    label: "α動能",        icon: "⚡" },
     { key: "pullback", label: "回檔型",       icon: "📉" },
-    { key: "super",    label: "當日 Super",   icon: "🌟" },
-    { key: "pool",     label: "監控股池",     icon: "🗂️" }
+    { key: "super",        label: "當日 Super", icon: "🌟" },
+    { key: "stock_future", label: "股期",       icon: "📈" },
+    { key: "group",        label: "族群",       icon: "🧩" },
+    { key: "pool",         label: "監控股池",   icon: "🗂️" }
   ];
 
   var STRENGTH_STYLE = {
@@ -242,7 +273,7 @@
     unknown: "#475569"
   };
 
-  var DATE_TABS = ["focus", "alpha", "pullback", "super"]; // 依所選日期變化的分頁；監控股池為累加型，不受日期影響
+  var DATE_TABS = ["focus", "alpha", "pullback", "super", "stock_future", "group"]; // 依所選日期變化的分頁；監控股池為累加型，不受日期影響
 
   var state = {
     error: null,
@@ -323,6 +354,53 @@
     return el("div", { class: "stock-row" }, children);
   }
 
+  function renderPctBadge(pct) {
+    var up = pct >= 0;
+    return el("span", {
+      class: "pct-badge " + (up ? "pct-up" : "pct-down"),
+      text: (up ? "+" : "") + pct.toFixed(2) + "%"
+    });
+  }
+
+  function renderFutureRow(item) {
+    var idBlock = el("div", { class: "row-id" }, [
+      el("span", { class: "row-market", text: item.market === "TWO" ? "上櫃" : "上市" }),
+      el("span", { class: "row-code", text: item.code }),
+      el("a", {
+        class: "stock-name", href: yahooUrl(item.code, item.market),
+        target: "_blank", rel: "noopener noreferrer", text: item.name
+      })
+    ]);
+
+    var pctBlock = el("div", { class: "row-field" }, [
+      el("span", { class: "field-label", text: "期漲幅" }),
+      renderPctBadge(item.pct_change)
+    ]);
+
+    return el("div", { class: "stock-row" }, [
+      el("span", { class: "row-rank", text: String(item.rank) }),
+      idBlock,
+      pctBlock
+    ]);
+  }
+
+  function renderGroupRow(item) {
+    var nameBlock = el("div", { class: "row-id" }, [
+      el("span", { class: "stock-name", text: item.sector })
+    ]);
+
+    var pctBlock = el("div", { class: "row-field" }, [
+      el("span", { class: "field-label", text: "漲跌幅" }),
+      renderPctBadge(item.pct_change)
+    ]);
+
+    return el("div", { class: "stock-row" }, [
+      el("span", { class: "row-rank", text: String(item.rank) }),
+      nameBlock,
+      pctBlock
+    ]);
+  }
+
   function listForTab(key) {
     if (key === "pool") return state.poolTab;
     var d = state.byDate[state.selectedDate];
@@ -361,8 +439,14 @@
     }
 
     var rows = el("div", { class: "rows" });
-    list.forEach(function (stock) {
-      rows.appendChild(renderRow(stock, state.activeTab === "pool"));
+    list.forEach(function (item) {
+      if (state.activeTab === "stock_future") {
+        rows.appendChild(renderFutureRow(item));
+      } else if (state.activeTab === "group") {
+        rows.appendChild(renderGroupRow(item));
+      } else {
+        rows.appendChild(renderRow(item, state.activeTab === "pool"));
+      }
     });
     content.appendChild(rows);
   }

@@ -955,6 +955,56 @@
       "name": "雙鍵",
       "market": "TW",
       "history": []
+    },
+    "1605": {
+      "name": "華新",
+      "market": "TW",
+      "history": []
+    },
+    "1717": {
+      "name": "長興",
+      "market": "TW",
+      "history": []
+    },
+    "1802": {
+      "name": "台玻",
+      "market": "TW",
+      "history": []
+    },
+    "2317": {
+      "name": "鴻海",
+      "market": "TW",
+      "history": []
+    },
+    "2324": {
+      "name": "仁寶",
+      "market": "TW",
+      "history": []
+    },
+    "2330": {
+      "name": "台積電",
+      "market": "TW",
+      "history": []
+    },
+    "2409": {
+      "name": "友達",
+      "market": "TW",
+      "history": []
+    },
+    "2489": {
+      "name": "瑞軒",
+      "market": "TW",
+      "history": []
+    },
+    "2605": {
+      "name": "新興",
+      "market": "TW",
+      "history": []
+    },
+    "2880": {
+      "name": "華南金",
+      "market": "TW",
+      "history": []
     }
   }
 }

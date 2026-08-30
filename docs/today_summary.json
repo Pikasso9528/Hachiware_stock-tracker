@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-30T17:45:54",
+  "generated_at": "2026-08-30T18:32:43",
   "date": "2026-08-28",
   "tabs": {
     "focus": [
@@ -3736,6 +3736,205 @@
         ],
         "warned": false,
         "added_date": "2026-08-28"
+      }
+    ],
+    "stock_future": [
+      {
+        "rank": 1,
+        "code": "1605",
+        "name": "華新",
+        "market": "TW",
+        "pct_change": 0.64
+      },
+      {
+        "rank": 2,
+        "code": "1717",
+        "name": "長興",
+        "market": "TW",
+        "pct_change": 3.43
+      },
+      {
+        "rank": 3,
+        "code": "1802",
+        "name": "台玻",
+        "market": "TW",
+        "pct_change": 2.88
+      },
+      {
+        "rank": 4,
+        "code": "2301",
+        "name": "光寶科",
+        "market": "TW",
+        "pct_change": 4.79
+      },
+      {
+        "rank": 5,
+        "code": "2303",
+        "name": "聯電",
+        "market": "TW",
+        "pct_change": 9.66
+      },
+      {
+        "rank": 6,
+        "code": "2308",
+        "name": "台達電",
+        "market": "TW",
+        "pct_change": 3.83
+      },
+      {
+        "rank": 7,
+        "code": "2317",
+        "name": "鴻海",
+        "market": "TW",
+        "pct_change": 0.6
+      },
+      {
+        "rank": 8,
+        "code": "2324",
+        "name": "仁寶",
+        "market": "TW",
+        "pct_change": 0.63
+      },
+      {
+        "rank": 9,
+        "code": "2327",
+        "name": "國巨*",
+        "market": "TW",
+        "pct_change": 8.26
+      },
+      {
+        "rank": 10,
+        "code": "2330",
+        "name": "台積電",
+        "market": "TW",
+        "pct_change": 0.41
+      },
+      {
+        "rank": 11,
+        "code": "2368",
+        "name": "金像電",
+        "market": "TW",
+        "pct_change": 9.88
+      },
+      {
+        "rank": 12,
+        "code": "2409",
+        "name": "友達",
+        "market": "TW",
+        "pct_change": 3.19
+      },
+      {
+        "rank": 13,
+        "code": "2449",
+        "name": "京元電子",
+        "market": "TW",
+        "pct_change": 9.68
+      },
+      {
+        "rank": 14,
+        "code": "2454",
+        "name": "聯發科",
+        "market": "TW",
+        "pct_change": 3.22
+      },
+      {
+        "rank": 15,
+        "code": "2455",
+        "name": "全新",
+        "market": "TW",
+        "pct_change": 0.11
+      },
+      {
+        "rank": 16,
+        "code": "2481",
+        "name": "強茂",
+        "market": "TW",
+        "pct_change": 4.6
+      },
+      {
+        "rank": 17,
+        "code": "2489",
+        "name": "瑞軒",
+        "market": "TW",
+        "pct_change": 1.24
+      },
+      {
+        "rank": 18,
+        "code": "2492",
+        "name": "華新科",
+        "market": "TW",
+        "pct_change": 9.93
+      },
+      {
+        "rank": 19,
+        "code": "2605",
+        "name": "新興",
+        "market": "TW",
+        "pct_change": 1.88
+      },
+      {
+        "rank": 20,
+        "code": "2880",
+        "name": "華南金",
+        "market": "TW",
+        "pct_change": 2.53
+      }
+    ],
+    "group": [
+      {
+        "sector": "被動元件",
+        "pct_change": 6.35,
+        "rank": 1
+      },
+      {
+        "sector": "重…妾衢F",
+        "pct_change": 5.23,
+        "rank": 2
+      },
+      {
+        "sector": "IC封測PCB裹造",
+        "pct_change": 2.91,
+        "rank": 3
+      },
+      {
+        "sector": "LCDTF",
+        "pct_change": 2.89,
+        "rank": 4
+      },
+      {
+        "sector": "金控",
+        "pct_change": 1.81,
+        "rank": 5
+      },
+      {
+        "sector": "PCB材料設備",
+        "pct_change": 1.8,
+        "rank": 6
+      },
+      {
+        "sector": "﹞已戶皇舍】慧井6Ic陳Bstat七抑TEs晶圓材料EMS",
+        "pct_change": 1.65,
+        "rank": 7
+      },
+      {
+        "sector": "﹢357%%asso",
+        "pct_change": 1.61,
+        "rank": 8
+      },
+      {
+        "sector": "IG半導",
+        "pct_change": 0.95,
+        "rank": 9
+      },
+      {
+        "sector": "IC代工",
+        "pct_change": 0.64,
+        "rank": 10
+      },
+      {
+        "sector": "儀器設備",
+        "pct_change": 0.52,
+        "rank": 11
       }
     ]
   },

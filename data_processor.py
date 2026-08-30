@@ -35,6 +35,9 @@ SUMMARY_PATH = DOCS_DIR / "today_summary.json"
 
 CATEGORIES = ["focus", "alpha", "pullback", "super"]
 LIST_CATEGORIES = ["focus", "alpha", "pullback"]  # 清單型截圖（多檔股票／頁），僅用於辨識當日名單
+# 股期／族群為排行榜型分頁（依日期切換，但沒有強度／五日星星欄位，
+# 不納入 refresh_tab_strengths 的重算範圍）
+RANKED_CATEGORIES = ["stock_future", "group"]
 IMAGE_EXTS = (".png", ".jpg", ".jpeg")
 
 STRONG_LEVELS = {"極強", "偏強"}
@@ -347,6 +350,213 @@ def scan_update_folder():
 
 
 # ---------------------------------------------------------------------------
+# OCR：股期排行榜截圖（stock_future_top）－ 擷取排行、股票代號、期漲幅(%)
+# ---------------------------------------------------------------------------
+def _threshold_channel(crop, channel=None, thresh=150, scale=4):
+    """裁切後二值化＋放大，供單行數字/文字辨識使用。
+    channel=None 取灰階（白字，用於排名/代號欄）；channel=0/1/2 取 R/G/B 單一色版
+    （用於紅字＝多方上漲、綠字＝空方下跌的期漲幅(%)欄，避免與深色背景灰階值太接近）。"""
+    band = crop.convert("L") if channel is None else crop.split()[channel]
+    th = band.point(lambda p: 255 if p > thresh else 0)
+    return th.resize((th.width * scale, th.height * scale), Image.LANCZOS)
+
+
+def _ocr_single_line(img, whitelist):
+    """先試 psm7（單行），若辨識不到再退而試 psm6，依實測截圖校準。"""
+    for psm in (7, 6):
+        txt = pytesseract.image_to_string(
+            img, lang="eng", config=f"--psm {psm} -c tessedit_char_whitelist={whitelist}"
+        ).strip()
+        if txt:
+            return txt
+    return ""
+
+
+def _future_row_centers(img, w, h):
+    """量大股期排行榜每一列的「期量比」欄固定顯示 100.00，以此定位每列中心 y 座標，
+    比直接辨識排名數字更穩定（實測排名欄在整欄一次 OCR 時常漏掉最後一列）。"""
+    band = img.crop((int(w * 0.42), int(h * 0.15), int(w * 0.60), int(h * 0.95)))
+    g = band.convert("L")
+    inv = ImageOps.invert(g)
+    inv = inv.point(lambda p: 255 if p > 90 else 0)
+    inv = inv.resize((inv.width * 4, inv.height * 4), Image.LANCZOS)
+    data = pytesseract.image_to_data(
+        inv, lang="eng", config="--psm 6 -c tessedit_char_whitelist=0123456789.",
+        output_type=pytesseract.Output.DICT,
+    )
+    centers = []
+    for i, t in enumerate(data["text"]):
+        t = t.strip()
+        if re.fullmatch(r"\d{2,3}\.\d{2}", t):
+            top = data["top"][i] / 4 + int(h * 0.15)
+            height = data["height"][i] / 4
+            centers.append(top + height / 2)
+    centers.sort()
+    return centers
+
+
+def _future_row_fields(img, w, center, row_h):
+    """在單一列的 y 範圍內，分別裁切「代號」與「期漲幅(%)」兩個欄位辨識。"""
+    y0, y1 = int(center - row_h * 0.42), int(center + row_h * 0.42)
+    code_crop = img.crop((int(w * 0.20), int(center - 5), int(w * 0.34), y1))
+    pct_crop = img.crop((int(w * 0.60), y0, int(w * 0.84), y1))
+
+    code = _ocr_single_line(_threshold_channel(code_crop), "0123456789")
+
+    pct_txt = _ocr_single_line(_threshold_channel(pct_crop, channel=0), "0123456789.")  # 紅字：上漲
+    sign = 1
+    if not pct_txt:
+        pct_txt = _ocr_single_line(_threshold_channel(pct_crop, channel=1), "0123456789.")  # 綠字：下跌
+        sign = -1
+
+    pct = sign * float(pct_txt) if re.fullmatch(r"\d{1,3}\.\d{1,2}", pct_txt) else None
+    code = code if re.fullmatch(r"\d{4,6}", code) else None
+    return code, pct
+
+
+def scan_stock_future_folder(date_str, valid_codes):
+    """掃描 stock_future_top/<日期>/ 內的「量大股期」排行榜截圖（可能為捲動後的多張截圖）。
+    依截圖檔名排序（即拍攝／捲動先後順序）逐張辨識每一列的股票代號與期漲幅(%)，
+    以代號去重（保留第一次出現的位置）串接成完整排行，回傳 [(code, pct_change), ...]。"""
+    folder = SCREENSHOTS_DIR / "stock_future_top" / date_str
+    ordered = []
+    seen = set()
+    if not folder.exists():
+        return ordered
+    for img_path in sorted(folder.iterdir()):
+        if img_path.suffix.lower() not in IMAGE_EXTS:
+            continue
+        img = Image.open(img_path)
+        w, h = img.size
+        centers = _future_row_centers(img, w, h)
+        if len(centers) < 2:
+            continue
+        diffs = [centers[i + 1] - centers[i] for i in range(len(centers) - 1)]
+        row_h = sum(diffs) / len(diffs)
+        for c in centers:
+            code, pct = _future_row_fields(img, w, c, row_h)
+            if not code or pct is None:
+                print(f"[WARN] 股期排行截圖 {img_path.name} 有一列無法辨識代號或期漲幅，已略過",
+                      file=sys.stderr)
+                continue
+            if valid_codes and code not in valid_codes:
+                continue
+            if code in seen:
+                continue
+            seen.add(code)
+            ordered.append((code, pct))
+    return ordered
+
+
+def build_stock_future_list(date_str, master, db):
+    valid_codes = set(master.keys())
+    rows = scan_stock_future_folder(date_str, valid_codes)
+    ensure_stock_entries(db, [code for code, _ in rows], master)
+    items = []
+    for i, (code, pct) in enumerate(rows):
+        entry = db["stocks"].get(code, {})
+        items.append({
+            "rank": i + 1,
+            "code": code,
+            "name": entry.get("name", "—"),
+            "market": entry.get("market", "TW"),
+            "pct_change": pct,
+        })
+    return items
+
+
+# ---------------------------------------------------------------------------
+# OCR：族群熱力圖截圖（group/overall.jpg）－ 擷取族群名稱與漲跌幅(%)
+# ---------------------------------------------------------------------------
+_GROUP_PCT_RE = re.compile(r"^[+-]\d+\.\d+%$")
+_GROUP_NOISE_RE = re.compile(r"[﹣﹍‥。﹒｜|:：'’,，)）(（\[\]{}『』﹚﹛ˍ︰]+")
+
+
+def scan_group_overall(date_str):
+    """解析 group/<日期>/overall.jpg（熱力圖截圖），擷取每個族群色塊的名稱與漲跌幅(%)，
+    僅保留漲幅 > 0% 的族群，依漲幅由高到低排序並附上名次。
+
+    熱力圖為不規則大小色塊拼接而成的 treemap，無法單純依固定座標切欄取值，因此採
+    「文字列聚類＋依水平座標就近配對」策略：先把 OCR 文字依 y 座標分行，對每一行
+    「漲跌幅(%)」文字，往上找最近一行有效文字當作名稱列，再依各漲跌幅的 x 座標把
+    名稱列的文字分配給最近的漲跌幅。越密集的小色塊區域（熱力圖下半部）配對可能失準
+    或留白，屬已知限制，遇到辨識不出名稱的色塊會印出 [WARN] 並略過該筆。"""
+    path = SCREENSHOTS_DIR / "group" / date_str / "overall.jpg"
+    if not path.exists():
+        return []
+    img = Image.open(path)
+    w, h = img.size
+    crop = img.crop((0, int(h * 0.20), w, int(h * 0.865)))
+    g = crop.convert("L")
+    data = pytesseract.image_to_data(
+        g, lang="chi_tra+eng", config="--psm 6", output_type=pytesseract.Output.DICT
+    )
+
+    words = []
+    for i, raw in enumerate(data["text"]):
+        t = raw.strip()
+        if not t:
+            continue
+        words.append({"text": t, "left": data["left"][i], "top": data["top"][i],
+                       "width": data["width"][i], "height": data["height"][i]})
+    words.sort(key=lambda x: x["top"])
+
+    lines = []
+    for wd in words:
+        placed = False
+        for ln in lines:
+            if abs(ln["top"] - wd["top"]) < 15:
+                ln["words"].append(wd)
+                ln["top"] = sum(x["top"] for x in ln["words"]) / len(ln["words"])
+                placed = True
+                break
+        if not placed:
+            lines.append({"top": wd["top"], "words": [wd]})
+    lines.sort(key=lambda l: l["top"])
+    for ln in lines:
+        ln["words"].sort(key=lambda x: x["left"])
+
+    results = []
+    for idx, ln in enumerate(lines):
+        pct_words = [wd for wd in ln["words"] if _GROUP_PCT_RE.match(wd["text"])]
+        if not pct_words:
+            continue
+        name_line = None
+        for j in range(idx - 1, -1, -1):
+            cand = [wd for wd in lines[j]["words"] if not _GROUP_PCT_RE.match(wd["text"])]
+            text = _GROUP_NOISE_RE.sub("", "".join(c["text"] for c in cand))
+            if len(text) >= 2:
+                name_line = lines[j]
+                break
+        if not name_line:
+            continue
+        name_words = [wd for wd in name_line["words"] if not _GROUP_PCT_RE.match(wd["text"])]
+
+        pct_centers = [p["left"] + p["width"] / 2 for p in pct_words]
+        buckets = {i: [] for i in range(len(pct_words))}
+        for nwd in name_words:
+            ncx = nwd["left"] + nwd["width"] / 2
+            k = min(range(len(pct_centers)), key=lambda k2: abs(pct_centers[k2] - ncx))
+            buckets[k].append(nwd)
+
+        for i, p in enumerate(pct_words):
+            name = _GROUP_NOISE_RE.sub(
+                "", "".join(x["text"] for x in sorted(buckets[i], key=lambda x: x["left"]))
+            )
+            if not name:
+                print(f"[WARN] 族群熱力圖有一色塊只辨識出漲跌幅 {p['text']}，名稱無法辨識，已略過",
+                      file=sys.stderr)
+                continue
+            results.append({"sector": name, "pct_change": float(p["text"].replace("%", ""))})
+
+    results = [r for r in results if r["pct_change"] > 0]
+    results.sort(key=lambda r: -r["pct_change"])
+    for i, r in enumerate(results):
+        r["rank"] = i + 1
+    return results
+
+
+# ---------------------------------------------------------------------------
 # tracker_db.json 持久化狀態
 # ---------------------------------------------------------------------------
 def load_tracker_db():
@@ -603,6 +813,40 @@ def update_super(date_str):
     return super_codes
 
 
+def update_stock_future(date_str):
+    """股期：掃描 stock_future_top/<日期>/ 的量大股期排行榜截圖，依代號去重後的
+    出現順序排名，並記錄期漲幅(%)。此分頁依日期切換（寫入 docs/history/<日期>.json），
+    不涉及強度歷史，不影響其他分頁。"""
+    print(f"=== [stock_future] 處理日期: {date_str} ===")
+    master = fetch_institutional_master(date_str)
+
+    db = load_tracker_db()
+    items = build_stock_future_list(date_str, master, db)
+    save_tracker_db(db)
+
+    tabs = load_date_tabs(date_str)
+    tabs["stock_future"] = items
+    save_date_tabs(date_str, tabs, db)
+
+    print(f"  股期排行榜共 {len(items)} 檔，已重新輸出 {SUMMARY_PATH}")
+    return items
+
+
+def update_group(date_str):
+    """族群：解析 group/<日期>/overall.jpg 熱力圖，僅保留漲幅 > 0% 的族群並依漲幅排名。
+    此分頁依日期切換（寫入 docs/history/<日期>.json），不涉及強度歷史，不影響其他分頁。"""
+    print(f"=== [group] 處理日期: {date_str} ===")
+    items = scan_group_overall(date_str)
+
+    db = load_tracker_db()
+    tabs = load_date_tabs(date_str)
+    tabs["group"] = items
+    save_date_tabs(date_str, tabs, db)
+
+    print(f"  漲幅 > 0% 的族群共 {len(items)} 個，已重新輸出 {SUMMARY_PATH}")
+    return items
+
+
 def update_pool(date_str):
     """監控股池：讀取 update/ 補漏截圖、更新相對強度歷史，並執行❓補記與5日剔除規則。
     此分頁為累加型、不依日期切換，因此不寫入 docs/history/，只重新輸出 docs/today_summary.json。"""
@@ -627,21 +871,24 @@ UPDATE_FUNCS = {
     "alpha": lambda d: update_list_category(d, "alpha"),
     "pullback": lambda d: update_list_category(d, "pullback"),
     "super": update_super,
+    "stock_future": update_stock_future,
+    "group": update_group,
     "pool": update_pool,
 }
 
 
 # ---------------------------------------------------------------------------
-# 主流程：一次更新全部五個分頁
+# 主流程：一次更新全部七個分頁
 # ---------------------------------------------------------------------------
 def run_pipeline(date_str=None):
-    """依序更新：焦點監控 -> α動能 -> 回檔型 -> 當日Super -> 監控股池。
+    """依序更新：焦點監控 -> α動能 -> 回檔型 -> 當日Super -> 股期 -> 族群 -> 監控股池。
     Super 必須先於監控股池執行，才能讓當日 super 掃到的股票即時納入監控池；
-    監控股池最後執行，才能套用當日最終、完整的強度資料做5日剔除判斷。"""
+    監控股池最後執行，才能套用當日最終、完整的強度資料做5日剔除判斷。
+    股期／族群不涉及強度歷史，順序上不影響其他分頁，排在 super 之後、pool 之前即可。"""
     if date_str is None:
         date_str = datetime.now().strftime("%Y-%m-%d")
 
-    for category in ("focus", "alpha", "pullback", "super", "pool"):
+    for category in ("focus", "alpha", "pullback", "super", "stock_future", "group", "pool"):
         UPDATE_FUNCS[category](date_str)
 
     with open(SUMMARY_PATH, "r", encoding="utf-8") as f:
@@ -651,6 +898,8 @@ def run_pipeline(date_str=None):
           f"α動能: {len(summary['tabs']['alpha'])} 檔 / "
           f"回檔型: {len(summary['tabs']['pullback'])} 檔 / "
           f"當日Super: {len(summary['tabs']['super'])} 檔 / "
+          f"股期: {len(summary['tabs'].get('stock_future', []))} 檔 / "
+          f"族群: {len(summary['tabs'].get('group', []))} 個 / "
           f"監控股池: {len(summary['tabs']['pool'])} 檔")
 
     return SUMMARY_PATH, date_str
@@ -660,8 +909,11 @@ def main():
     parser = argparse.ArgumentParser(description="台股強勢股分析資料處理")
     parser.add_argument("--date", default=None, help="指定處理日期 YYYY-MM-DD，預設為今天")
     parser.add_argument(
-        "--category", choices=["focus", "alpha", "pullback", "super", "pool", "all"], default="all",
-        help="只更新單一分頁（focus/alpha/pullback/super/pool），預設 all 依序更新全部五個分頁",
+        "--category",
+        choices=["focus", "alpha", "pullback", "super", "stock_future", "group", "pool", "all"],
+        default="all",
+        help="只更新單一分頁（focus/alpha/pullback/super/stock_future/group/pool），"
+             "預設 all 依序更新全部七個分頁",
     )
     args = parser.parse_args()
     date_str = args.date or datetime.now().strftime("%Y-%m-%d")
