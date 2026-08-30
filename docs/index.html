@@ -204,6 +204,17 @@
     flex-shrink: 0;
     margin-left: auto;
   }
+  .badge-pinned {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    white-space: nowrap;
+    background: rgba(56,189,248,0.15);
+    color: #7dd3fc;
+    border: 1px solid rgba(56,189,248,0.4);
+    flex-shrink: 0;
+    margin-left: auto;
+  }
 
   .stars { display: flex; align-items: center; gap: 3px; font-size: 1.05rem; line-height: 1; }
   .stars span.dim { opacity: 0.8; }
@@ -375,7 +386,9 @@
         el("span", { class: "field-label", text: "納入日期" }),
         el("span", { class: "added-date", text: stock.added_date || "—" })
       ]));
-      if (stock.warned) {
+      if (stock.pinned) {
+        children.push(el("span", { class: "badge-pinned", text: "🔭 觀察中" }));
+      } else if (stock.warned) {
         children.push(el("span", { class: "badge-warn", text: "⚠ 即將剔除" }));
       }
     }

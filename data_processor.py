@@ -737,10 +737,14 @@ def recompute_pool_state(db, date_str, update_paths):
             hist.append({"date": date_str, "strength": UNKNOWN_LEVEL, "source": source})
 
     # 剔除規則：連續5日無偏強/極強 -> 當日標記警示保留，隔天更新時才正式剔除
+    # 觀察中（pinned）股票不套用這條規則，永遠不會被自動剔除，需靠 unpin 手動解除。
     for code in pool_active_codes:
         entry = db["stocks"][code]
         hist = entry["history"]
         pool = entry["pool"]
+        if pool.get("pinned"):
+            pool["warned"] = False
+            continue
         today_strength = hist[-1]["strength"] if hist and hist[-1]["date"] == date_str else UNKNOWN_LEVEL
 
         if pool["warned"]:
@@ -816,9 +820,10 @@ def build_pool_list(db):
             "today_strength": entry["history"][-1]["strength"] if entry["history"] else UNKNOWN_LEVEL,
             "stars": last5_stars(entry["history"]),
             "warned": pool.get("warned", False),
+            "pinned": pool.get("pinned", False),
             "added_date": pool.get("added_date"),
         })
-    items.sort(key=lambda x: (not x["warned"], _STRENGTH_RANK.get(x["today_strength"], 5), x["code"]))
+    items.sort(key=lambda x: (not x["warned"], not x["pinned"], _STRENGTH_RANK.get(x["today_strength"], 5), x["code"]))
     return items
 
 
@@ -993,6 +998,47 @@ def update_pool(date_str):
     return update_paths
 
 
+def pin_stock(code, date_str):
+    """手動將股票加入監控股池並標記為觀察中（pinned）：不受『連續5日無偏強/極強』
+    剔除規則影響，永遠不會被自動剔除。若該股票尚未在池中，會直接建立池成員紀錄
+    （不需要先出現在 super 截圖中）；已在池中的股票只是補上觀察中標記。
+    強度歷史仍需靠平常的 super/update 截圖持續更新，pin 本身不提供每日資料。"""
+    master = fetch_institutional_master(date_str)
+    db = load_tracker_db()
+    ensure_stock_entries(db, [code], master)
+
+    entry = db["stocks"].setdefault(code, {"name": "—", "market": "TW", "history": []})
+    pool = entry.setdefault("pool", {"active": False, "warned": False, "added_date": None})
+    was_active = pool["active"]
+    pool["active"] = True
+    pool["warned"] = False
+    pool["pinned"] = True
+    if pool.get("added_date") is None:
+        pool["added_date"] = date_str
+
+    db["last_updated"] = date_str
+    save_tracker_db(db)
+    finalize_summary(db)
+
+    action = "已標記為觀察中" if was_active else "已加入監控股池並標記為觀察中"
+    print(f"{code}（{entry.get('name', '—')}）{action}，不受5日剔除規則影響。")
+
+
+def unpin_stock(code):
+    """取消某股票的觀察中（pinned）標記，恢復套用一般的『連續5日無偏強/極強』剔除規則。
+    不會把它從池中移除——若它目前的強度已經連續多日不強，下次執行 update-pool 時
+    就會依一般規則被標記警示、隔天再未轉強才正式剔除。"""
+    db = load_tracker_db()
+    entry = db["stocks"].get(code)
+    if not entry or not entry.get("pool", {}).get("active"):
+        print(f"[WARN] {code} 目前不在監控股池中，無需取消觀察標記", file=sys.stderr)
+        return
+    entry["pool"]["pinned"] = False
+    save_tracker_db(db)
+    finalize_summary(db)
+    print(f"{code}（{entry.get('name', '—')}）已取消觀察中標記，恢復套用一般剔除規則。")
+
+
 UPDATE_FUNCS = {
     "focus": lambda d: update_list_category(d, "focus"),
     "alpha": lambda d: update_list_category(d, "alpha"),
@@ -1042,10 +1088,18 @@ def main():
         help="只更新單一分頁（focus/alpha/pullback/super/stock_future/group/pool），"
              "預設 all 依序更新全部七個分頁",
     )
+    parser.add_argument("--pin", metavar="CODE", default=None,
+                         help="將股票代號加入監控股池並標記為觀察中，不受5日剔除規則影響")
+    parser.add_argument("--unpin", metavar="CODE", default=None,
+                         help="取消某股票代號的觀察中標記，恢復套用一般5日剔除規則")
     args = parser.parse_args()
     date_str = args.date or datetime.now().strftime("%Y-%m-%d")
 
-    if args.category == "all":
+    if args.pin:
+        pin_stock(args.pin, date_str)
+    elif args.unpin:
+        unpin_stock(args.unpin)
+    elif args.category == "all":
         run_pipeline(date_str)
     else:
         UPDATE_FUNCS[args.category](date_str)
