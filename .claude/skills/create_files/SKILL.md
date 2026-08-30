@@ -30,5 +30,5 @@ create_files 2026-08-29
 
 - 這個技能只建立空資料夾，不會建立或搬動任何截圖檔案。
 - `group/<日期>/` 資料夾建立後，使用者要把熱力圖截圖存成 `overall.jpg` 放進去，`update-group` 只會讀取這個檔名。
-- 不要建立 `screenshots/update/` 的日期子資料夾——`update/` 資料夾是監控股池補漏截圖專用的，直接以股票代號命名檔案，本身不分日期。
+- 不要建立 `screenshots/update/` 的日期子資料夾——`update/` 資料夾是監控股池補漏截圖專用的，本身不分日期。檔名建議以股票代號命名（例如 `8358.png`），但不是手機截圖預設檔名也沒關係，`update-pool` 會自動從截圖內容 OCR 辨識代號。
 - 建立的資料夾是本機個人截圖來源，`.gitignore` 已經設定會忽略 `focus|alpha|pullback|super|stock_future_top|group/<日期>/`，不需要額外處理版本控制。

@@ -16,7 +16,7 @@ description: Run a full 台股強勢股分析儀表板 refresh — updates all s
    - `screenshots/super/<日期>/`
    - `screenshots/stock_future_top/<日期>/`（量大股期排行榜截圖，可多張）
    - `screenshots/group/<日期>/overall.jpg`（熱力圖截圖，檔名須為 overall.jpg）
-   - `screenshots/update/`（監控股池的補漏截圖，檔名即股票代號，非日期資料夾）
+   - `screenshots/update/`（監控股池的補漏截圖，非日期資料夾；檔名建議以股票代號開頭如 `8358.png`，程式會直接採信，若是手機截圖預設檔名如 `S__12345678_0.jpg` 也會自動改用截圖內容 OCR 辨識代號，不強制要求改檔名）
 2. 在 `screenshots/` 目錄下執行：
    ```
    python data_processor.py --date <日期>
