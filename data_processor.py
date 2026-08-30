@@ -29,6 +29,7 @@ ROOT = Path(__file__).resolve().parent
 SCREENSHOTS_DIR = ROOT
 UPDATE_DIR = ROOT / "update"
 DOCS_DIR = ROOT / "docs"
+HISTORY_DIR = DOCS_DIR / "history"
 TRACKER_DB_PATH = ROOT / "tracker_db.json"
 SUMMARY_PATH = DOCS_DIR / "today_summary.json"
 
@@ -358,27 +359,19 @@ def save_tracker_db(db):
         json.dump(db, f, ensure_ascii=False, indent=2)
 
 
-def process_day(db, date_str, master, category_codes, detail_updates, update_paths):
-    """
-    category_codes: {focus, alpha, pullback, super} -> 當日辨識出的股票代號集合（僅供分頁清單顯示）
-    detail_updates: {code: {date: 強度標籤}}，來自 super/update 截圖 OCR 出的『相對強度』表，為強度的唯一真實來源
-    update_paths:   {code: Path}，當日 update/ 資料夾內的補漏截圖
-    """
-    all_codes_today = set()
-    for codes in category_codes.values():
-        all_codes_today |= codes
-    all_codes_today |= set(detail_updates.keys())
-    all_codes_today |= set(update_paths.keys())
-
-    for code in all_codes_today:
+def ensure_stock_entries(db, codes, master):
+    for code in codes:
         entry = db["stocks"].setdefault(code, {"name": "—", "market": "TW", "history": []})
         if code in master:
             entry["name"] = master[code]["name"]
             entry["market"] = master[code]["market"]
 
-    # 將截圖 OCR 出的『相對強度』表，逐日 upsert 進各股歷史（可一次回補多天）
+
+def apply_detail_updates(db, detail_updates):
+    """將截圖 OCR 出的『相對強度』表，逐日 upsert 進各股歷史（可一次回補多天）。"""
     for code, day_labels in detail_updates.items():
-        hist = db["stocks"][code]["history"]
+        entry = db["stocks"].setdefault(code, {"name": "—", "market": "TW", "history": []})
+        hist = entry["history"]
         by_date = {h["date"]: h for h in hist}
         for d, label in day_labels.items():
             if d in by_date:
@@ -388,8 +381,10 @@ def process_day(db, date_str, master, category_codes, detail_updates, update_pat
                 hist.append({"date": d, "strength": label, "source": "super"})
         hist.sort(key=lambda h: h["date"])
 
-    # 當日出現在 super 資料夾的股票，自動納入監控股池
-    for code in category_codes.get("super", set()):
+
+def activate_pool_codes(db, codes, date_str):
+    """當日出現在 super 資料夾的股票，自動納入監控股池。"""
+    for code in codes:
         pool = db["stocks"][code].setdefault("pool", {"active": False, "warned": False, "added_date": None})
         if not pool["active"]:
             pool["active"] = True
@@ -397,6 +392,9 @@ def process_day(db, date_str, master, category_codes, detail_updates, update_pat
             if pool.get("added_date") is None:
                 pool["added_date"] = date_str
 
+
+def recompute_pool_state(db, date_str, update_paths):
+    """監控股池的❓補記，以及『連續5日無偏強/極強』剔除規則。由監控股池技能負責維護。"""
     pool_active_codes = {
         code for code, info in db["stocks"].items() if info.get("pool", {}).get("active")
     }
@@ -431,12 +429,9 @@ def process_day(db, date_str, master, category_codes, detail_updates, update_pat
             if streak >= 5:
                 pool["warned"] = True
 
-    db["last_updated"] = date_str
-    return db
-
 
 # ---------------------------------------------------------------------------
-# 輸出 docs/today_summary.json
+# 輸出 docs/today_summary.json ＋ docs/history/{date}.json
 # ---------------------------------------------------------------------------
 def star_info(strength):
     if strength in ("極強", "偏強"):
@@ -497,62 +492,161 @@ def build_pool_list(db):
     return items
 
 
-def build_summary(date_str, db, category_codes):
-    tabs = {cat: build_tab_list(category_codes.get(cat, set()), db) for cat in CATEGORIES}
-    tabs["pool"] = build_pool_list(db)
-    return {
+def load_date_tabs(date_str):
+    """讀取（或初始化）某日期在 docs/history/ 的分頁快照，讓各分類技能可各自獨立更新。"""
+    path = HISTORY_DIR / f"{date_str}.json"
+    if path.exists():
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)["tabs"]
+    return {cat: [] for cat in CATEGORIES}
+
+
+def refresh_tab_strengths(db, tabs):
+    """強度資料（super／監控股池補漏）更新後，重算既有分頁內每檔股票的當日強度與五日星星，
+    避免焦點監控／α動能／回檔型／當日Super 分頁殘留過期的強度快照。"""
+    for cat in CATEGORIES:
+        items = tabs.get(cat, [])
+        for item in items:
+            history = db["stocks"].get(item["code"], {}).get("history", [])
+            item["today_strength"] = history[-1]["strength"] if history else UNKNOWN_LEVEL
+            item["stars"] = last5_stars(history)
+        items.sort(key=lambda x: (_STRENGTH_RANK.get(x["today_strength"], 5), x["code"]))
+    return tabs
+
+
+def save_date_tabs(date_str, tabs, db):
+    DOCS_DIR.mkdir(parents=True, exist_ok=True)
+    HISTORY_DIR.mkdir(parents=True, exist_ok=True)
+    snapshot = {
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "date": date_str,
         "tabs": tabs,
     }
+    with open(HISTORY_DIR / f"{date_str}.json", "w", encoding="utf-8") as f:
+        json.dump(snapshot, f, ensure_ascii=False, indent=2)
+    finalize_summary(db)
+
+
+def finalize_summary(db):
+    """依 docs/history/ 內既有日期快照，重新輸出 docs/today_summary.json：
+    tabs.focus/alpha/pullback/super 取「最新日期」快照；tabs.pool 為累加型，
+    不論由哪個分類技能觸發，一律取當下最新的監控股池狀態。"""
+    HISTORY_DIR.mkdir(parents=True, exist_ok=True)
+    dates = sorted((p.stem for p in HISTORY_DIR.glob("*.json")), reverse=True)
+    if not dates:
+        return
+    latest = dates[0]
+    with open(HISTORY_DIR / f"{latest}.json", "r", encoding="utf-8") as f:
+        snapshot = json.load(f)
+
+    refresh_tab_strengths(db, snapshot["tabs"])
+    snapshot["tabs"]["pool"] = build_pool_list(db)
+    snapshot["generated_at"] = datetime.now().isoformat(timespec="seconds")
+
+    with open(HISTORY_DIR / f"{latest}.json", "w", encoding="utf-8") as f:
+        json.dump(snapshot, f, ensure_ascii=False, indent=2)
+
+    summary = dict(snapshot, dates=dates)
+    with open(SUMMARY_PATH, "w", encoding="utf-8") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=2)
 
 
 # ---------------------------------------------------------------------------
-# 主流程
+# 五個可獨立執行的更新技能：焦點監控／α動能／回檔型／當日Super／監控股池
 # ---------------------------------------------------------------------------
-def run_pipeline(date_str=None):
-    if date_str is None:
-        date_str = datetime.now().strftime("%Y-%m-%d")
-
-    print(f"=== 處理日期: {date_str} ===")
+def update_list_category(date_str, category):
+    """焦點監控／α動能／回檔型 共用：僅掃描清單型截圖辨識當日名單，強度沿用既有歷史資料。"""
+    assert category in LIST_CATEGORIES
+    print(f"=== [{category}] 處理日期: {date_str} ===")
+    master = fetch_institutional_master(date_str)
+    valid_codes = set(master.keys())
     date_dir = SCREENSHOTS_DIR / date_str
 
-    print("抓取三大法人買賣超資料（外資 / 主力，僅作為代號有效性校驗與名稱對照）...")
+    codes = scan_category_folder(date_dir, category, valid_codes)
+    print(f"  辨識出 {len(codes)} 檔: {sorted(codes)}")
+
+    db = load_tracker_db()
+    ensure_stock_entries(db, codes, master)
+
+    tabs = load_date_tabs(date_str)
+    tabs[category] = build_tab_list(codes, db)
+    save_date_tabs(date_str, tabs, db)
+
+    db["last_updated"] = date_str
+    save_tracker_db(db)
+    print(f"  已更新 {category} 分頁（{len(codes)} 檔），並重新輸出 {SUMMARY_PATH}")
+    return codes
+
+
+def update_super(date_str):
+    """當日Super：掃描個股詳細頁，強度完全以此為準，並自動將當日出現的股票納入監控股池。"""
+    print(f"=== [super] 處理日期: {date_str} ===")
     master = fetch_institutional_master(date_str)
-    print(f"  取得 {len(master)} 檔股票的籌碼資料。")
     valid_codes = set(master.keys())
+    date_dir = SCREENSHOTS_DIR / date_str
 
-    category_codes = {}
-    for cat in LIST_CATEGORIES:
-        codes = scan_category_folder(date_dir, cat, valid_codes)
-        category_codes[cat] = codes
-        print(f"  [{cat}] 辨識出 {len(codes)} 檔: {sorted(codes)}")
-
-    print("解析 super 個股詳細頁（強度完全以此為準）...")
     super_codes, super_detail = scan_super_folder(date_dir, valid_codes)
-    category_codes["super"] = super_codes
-    print(f"  [super] 辨識出 {len(super_codes)} 檔: {sorted(super_codes)}")
+    print(f"  辨識出 {len(super_codes)} 檔: {sorted(super_codes)}")
 
+    db = load_tracker_db()
+    ensure_stock_entries(db, super_codes, master)
+    apply_detail_updates(db, super_detail)
+    activate_pool_codes(db, super_codes, date_str)
+
+    tabs = load_date_tabs(date_str)
+    tabs["super"] = build_tab_list(super_codes, db)
+    save_date_tabs(date_str, tabs, db)
+
+    db["last_updated"] = date_str
+    save_tracker_db(db)
+    print(f"  已更新 super 分頁（{len(super_codes)} 檔），並重新輸出 {SUMMARY_PATH}")
+    return super_codes
+
+
+def update_pool(date_str):
+    """監控股池：讀取 update/ 補漏截圖、更新相對強度歷史，並執行❓補記與5日剔除規則。
+    此分頁為累加型、不依日期切換，因此不寫入 docs/history/，只重新輸出 docs/today_summary.json。"""
+    print(f"=== [pool] 處理日期: {date_str} ===")
     update_paths, update_detail = scan_update_folder()
     if update_paths:
         print(f"  [update 補漏] {len(update_paths)} 檔: {sorted(update_paths.keys())}")
 
-    detail_updates = {}
-    for code, labels in super_detail.items():
-        detail_updates.setdefault(code, {}).update(labels)
-    for code, labels in update_detail.items():
-        detail_updates.setdefault(code, {}).update(labels)
-
     db = load_tracker_db()
-    db = process_day(db, date_str, master, category_codes, detail_updates, update_paths)
-    save_tracker_db(db)
-    print(f"tracker_db.json 已更新，共追蹤 {len(db['stocks'])} 檔股票。")
+    apply_detail_updates(db, update_detail)
+    recompute_pool_state(db, date_str, update_paths)
 
-    DOCS_DIR.mkdir(parents=True, exist_ok=True)
-    summary = build_summary(date_str, db, category_codes)
-    with open(SUMMARY_PATH, "w", encoding="utf-8") as f:
-        json.dump(summary, f, ensure_ascii=False, indent=2)
-    print(f"已輸出 {SUMMARY_PATH}")
+    db["last_updated"] = date_str
+    save_tracker_db(db)
+    finalize_summary(db)
+    print(f"  監控股池目前共 {len(build_pool_list(db))} 檔，已重新輸出 {SUMMARY_PATH}")
+    return update_paths
+
+
+UPDATE_FUNCS = {
+    "focus": lambda d: update_list_category(d, "focus"),
+    "alpha": lambda d: update_list_category(d, "alpha"),
+    "pullback": lambda d: update_list_category(d, "pullback"),
+    "super": update_super,
+    "pool": update_pool,
+}
+
+
+# ---------------------------------------------------------------------------
+# 主流程：一次更新全部五個分頁
+# ---------------------------------------------------------------------------
+def run_pipeline(date_str=None):
+    """依序更新：焦點監控 -> α動能 -> 回檔型 -> 當日Super -> 監控股池。
+    Super 必須先於監控股池執行，才能讓當日 super 掃到的股票即時納入監控池；
+    監控股池最後執行，才能套用當日最終、完整的強度資料做5日剔除判斷。"""
+    if date_str is None:
+        date_str = datetime.now().strftime("%Y-%m-%d")
+
+    for category in ("focus", "alpha", "pullback", "super", "pool"):
+        UPDATE_FUNCS[category](date_str)
+
+    with open(SUMMARY_PATH, "r", encoding="utf-8") as f:
+        summary = json.load(f)
+    print(f"=== 全部分頁更新完成（{date_str}） ===")
     print(f"  焦點監控: {len(summary['tabs']['focus'])} 檔 / "
           f"α動能: {len(summary['tabs']['alpha'])} 檔 / "
           f"回檔型: {len(summary['tabs']['pullback'])} 檔 / "
@@ -565,8 +659,17 @@ def run_pipeline(date_str=None):
 def main():
     parser = argparse.ArgumentParser(description="台股強勢股分析資料處理")
     parser.add_argument("--date", default=None, help="指定處理日期 YYYY-MM-DD，預設為今天")
+    parser.add_argument(
+        "--category", choices=["focus", "alpha", "pullback", "super", "pool", "all"], default="all",
+        help="只更新單一分頁（focus/alpha/pullback/super/pool），預設 all 依序更新全部五個分頁",
+    )
     args = parser.parse_args()
-    run_pipeline(args.date)
+    date_str = args.date or datetime.now().strftime("%Y-%m-%d")
+
+    if args.category == "all":
+        run_pipeline(date_str)
+    else:
+        UPDATE_FUNCS[args.category](date_str)
 
 
 if __name__ == "__main__":

@@ -39,7 +39,28 @@
   }
   @media (min-width: 640px) { header h1 { font-size: 2rem; } }
   header p { color: var(--muted); font-size: 0.85rem; margin: 6px 0 0; }
-  header { margin-bottom: 24px; }
+  header {
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .date-picker { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .date-picker label { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+  .date-picker select {
+    background: rgba(15,23,42,0.7);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .date-picker select:hover { border-color: var(--border-hover); }
+  .date-picker select:disabled { opacity: 0.5; cursor: default; }
 
   .error-box {
     background: rgba(239,68,68,0.1);
@@ -92,40 +113,49 @@
   }
   .empty .icon { font-size: 2.5rem; margin-bottom: 10px; }
 
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  @media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1024px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
-
-  .card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
+  .rows {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    transition: transform .12s ease, box-shadow .12s ease;
+    gap: 8px;
   }
-  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.35); }
 
-  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .stock-row {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    transition: border-color .12s ease;
+  }
+  .stock-row:hover { border-color: var(--border-hover); }
+
+  .row-id { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1 1 220px; }
+  .row-market {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    color: var(--muted2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1px 6px;
+  }
+  .row-code { flex-shrink: 0; font-size: 0.8rem; color: var(--muted); }
   .stock-name {
     font-weight: 600;
     color: var(--text);
     text-decoration: none;
-    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    min-width: 0;
   }
   .stock-name:hover { color: var(--accent); text-decoration: underline; }
-  .stock-sub { font-size: 0.75rem; color: var(--muted2); margin-top: 2px; }
 
-  .badges { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+  .row-field { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; flex-shrink: 0; }
+  .row-field .field-label { font-size: 0.65rem; color: var(--muted2); }
+
   .badge {
     padding: 2px 10px;
     border-radius: 999px;
@@ -142,12 +172,13 @@
     background: rgba(239,68,68,0.15);
     color: #fca5a5;
     border: 1px solid rgba(239,68,68,0.4);
+    flex-shrink: 0;
+    margin-left: auto;
   }
 
-  .card-bottom { display: flex; align-items: center; justify-content: space-between; }
   .stars { display: flex; align-items: center; gap: 3px; font-size: 1.05rem; line-height: 1; }
   .stars span.dim { opacity: 0.8; }
-  .added-date { font-size: 0.68rem; color: var(--muted2); }
+  .added-date { font-size: 0.78rem; color: var(--text); }
 
   footer {
     margin-top: 48px;
@@ -161,8 +192,14 @@
 <body>
 <div class="wrap">
   <header>
-    <h1>台股強勢股分析儀表板</h1>
-    <p id="meta">載入中...</p>
+    <div>
+      <h1>台股強勢股分析儀表板</h1>
+      <p id="meta">載入中...</p>
+    </div>
+    <div class="date-picker">
+      <label for="dateSelect">資料日期</label>
+      <select id="dateSelect" disabled></select>
+    </div>
   </header>
 
   <div id="errorBox" style="display:none" class="error-box"></div>
@@ -205,7 +242,17 @@
     unknown: "#475569"
   };
 
-  var state = { data: null, error: null, activeTab: "focus" };
+  var DATE_TABS = ["focus", "alpha", "pullback", "super"]; // 依所選日期變化的分頁；監控股池為累加型，不受日期影響
+
+  var state = {
+    error: null,
+    activeTab: "focus",
+    dates: [],
+    selectedDate: null,
+    byDate: {},   // date -> { date, generated_at, tabs: {focus, alpha, pullback, super} }
+    poolTab: [],  // 監控股池：累加型，固定使用最新一次的資料，不隨日期切換
+    loaded: false
+  };
 
   function el(tag, attrs, children) {
     var node = document.createElement(tag);
@@ -239,37 +286,54 @@
     return row;
   }
 
-  function renderCard(stock, isPool) {
+  function renderRow(stock, isPool) {
     var badgeStyle = STRENGTH_STYLE[stock.today_strength] || STRENGTH_STYLE["未更新"];
-    var badges = el("div", { class: "badges" }, [
-      el("span", { class: "badge", style: badgeStyle, text: stock.today_strength }),
-      (isPool && stock.warned) ? el("span", { class: "badge-warn", text: "⚠ 即將剔除" }) : null
+
+    var idBlock = el("div", { class: "row-id" }, [
+      el("span", { class: "row-market", text: stock.market === "TWO" ? "上櫃" : "上市" }),
+      el("span", { class: "row-code", text: stock.code }),
+      el("a", {
+        class: "stock-name", href: yahooUrl(stock.code, stock.market),
+        target: "_blank", rel: "noopener noreferrer", text: stock.name
+      })
     ]);
 
-    var top = el("div", { class: "card-top" }, [
-      el("div", { style: "min-width:0" }, [
-        el("a", {
-          class: "stock-name", href: yahooUrl(stock.code, stock.market),
-          target: "_blank", rel: "noopener noreferrer", text: stock.name
-        }),
-        el("div", { class: "stock-sub", text: stock.code + " · " + (stock.market === "TWO" ? "上櫃" : "上市") })
-      ]),
-      badges
+    var strengthBlock = el("div", { class: "row-field" }, [
+      el("span", { class: "field-label", text: "當日強度" }),
+      el("span", { class: "badge", style: badgeStyle, text: stock.today_strength })
     ]);
 
-    var bottom = el("div", { class: "card-bottom" }, [
-      renderStars(stock.stars),
-      (isPool && stock.added_date) ? el("span", { class: "added-date", text: "納入 " + stock.added_date }) : el("span")
+    var starsBlock = el("div", { class: "row-field" }, [
+      el("span", { class: "field-label", text: "五日強度" }),
+      renderStars(stock.stars)
     ]);
 
-    return el("div", { class: "card" }, [top, bottom]);
+    var children = [idBlock, strengthBlock, starsBlock];
+
+    if (isPool) {
+      children.push(el("div", { class: "row-field" }, [
+        el("span", { class: "field-label", text: "納入日期" }),
+        el("span", { class: "added-date", text: stock.added_date || "—" })
+      ]));
+      if (stock.warned) {
+        children.push(el("span", { class: "badge-warn", text: "⚠ 即將剔除" }));
+      }
+    }
+
+    return el("div", { class: "stock-row" }, children);
+  }
+
+  function listForTab(key) {
+    if (key === "pool") return state.poolTab;
+    var d = state.byDate[state.selectedDate];
+    return (d && d.tabs[key]) || [];
   }
 
   function renderTabs() {
     var nav = document.getElementById("tabs");
     nav.innerHTML = "";
     TABS.forEach(function (t) {
-      var count = state.data && state.data.tabs && state.data.tabs[t.key] ? state.data.tabs[t.key].length : null;
+      var count = state.loaded ? listForTab(t.key).length : null;
       var btn = el("button", {
         class: "tab-btn" + (state.activeTab === t.key ? " active" : ""),
         onclick: function () { state.activeTab = t.key; render(); }
@@ -285,9 +349,9 @@
   function renderContent() {
     var content = document.getElementById("content");
     content.innerHTML = "";
-    if (!state.data) return;
+    if (!state.loaded) return;
 
-    var list = (state.data.tabs && state.data.tabs[state.activeTab]) || [];
+    var list = listForTab(state.activeTab);
     if (list.length === 0) {
       content.appendChild(el("div", { class: "empty" }, [
         el("div", { class: "icon", text: "📭" }),
@@ -296,17 +360,29 @@
       return;
     }
 
-    var grid = el("div", { class: "grid" });
+    var rows = el("div", { class: "rows" });
     list.forEach(function (stock) {
-      grid.appendChild(renderCard(stock, state.activeTab === "pool"));
+      rows.appendChild(renderRow(stock, state.activeTab === "pool"));
     });
-    content.appendChild(grid);
+    content.appendChild(rows);
+  }
+
+  function renderDateSelect() {
+    var sel = document.getElementById("dateSelect");
+    sel.innerHTML = "";
+    state.dates.forEach(function (d) {
+      var opt = el("option", { value: d, text: d });
+      if (d === state.selectedDate) opt.setAttribute("selected", "selected");
+      sel.appendChild(opt);
+    });
+    sel.disabled = state.dates.length === 0;
   }
 
   function render() {
     var meta = document.getElementById("meta");
-    meta.textContent = state.data
-      ? "資料日期：" + state.data.date + "　更新時間：" + state.data.generated_at
+    var cur = state.byDate[state.selectedDate];
+    meta.textContent = cur
+      ? "資料日期：" + cur.date + "　更新時間：" + cur.generated_at
       : "載入中...";
 
     var errorBox = document.getElementById("errorBox");
@@ -317,9 +393,27 @@
       errorBox.style.display = "none";
     }
 
+    renderDateSelect();
     renderTabs();
     renderContent();
   }
+
+  function loadDate(date) {
+    if (state.byDate[date]) { render(); return; }
+    fetch("./history/" + date + ".json", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("找不到 " + date + " 的資料");
+        return res.json();
+      })
+      .then(function (json) { state.byDate[date] = json; render(); })
+      .catch(function (e) { state.error = e.message; render(); });
+  }
+
+  // 監控股池為累加型分頁，切換日期只影響其餘四個分頁的資料來源
+  document.getElementById("dateSelect").addEventListener("change", function (e) {
+    state.selectedDate = e.target.value;
+    loadDate(state.selectedDate);
+  });
 
   render();
 
@@ -328,7 +422,14 @@
       if (!res.ok) throw new Error("找不到 today_summary.json");
       return res.json();
     })
-    .then(function (json) { state.data = json; render(); })
+    .then(function (json) {
+      state.dates = json.dates || [json.date];
+      state.selectedDate = json.date;
+      state.byDate[json.date] = json;
+      state.poolTab = (json.tabs && json.tabs.pool) || [];
+      state.loaded = true;
+      render();
+    })
     .catch(function (e) { state.error = e.message; render(); });
 })();
 </script>

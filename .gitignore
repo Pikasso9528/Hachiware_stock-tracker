@@ -1,7 +1,8 @@
 __pycache__/
 *.pyc
 .DS_Store
-.claude/
+.claude/*
+!.claude/skills/
 
 # 個人截圖來源（不需推送到 GitHub），僅 docs/today_summary.json 與 tracker_db.json 會被追蹤
 [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
