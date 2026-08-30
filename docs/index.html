@@ -209,6 +209,34 @@
   .stars span.dim { opacity: 0.8; }
   .added-date { font-size: 0.78rem; color: var(--text); }
 
+  .group-row-wrap { display: flex; flex-direction: column; }
+  .group-row { cursor: pointer; }
+  .group-row.expanded { border-color: rgba(56,189,248,0.5); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .expand-caret { color: var(--muted2); font-size: 0.7rem; width: 10px; flex-shrink: 0; }
+
+  .group-detail {
+    border: 1px solid rgba(56,189,248,0.5);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    background: rgba(15,23,42,0.4);
+    padding: 6px 16px 12px 46px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .detail-row { display: flex; align-items: center; gap: 10px; padding: 5px 0; }
+  .detail-rank { color: var(--muted); font-size: 0.8rem; width: 18px; flex-shrink: 0; }
+  .detail-name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 500;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .group-detail-empty { color: var(--muted2); font-style: italic; font-size: 0.85rem; padding: 8px 0; }
+
   footer {
     margin-top: 48px;
     text-align: center;
@@ -282,7 +310,8 @@
     selectedDate: null,
     byDate: {},   // date -> { date, generated_at, tabs: {focus, alpha, pullback, super} }
     poolTab: [],  // 監控股池：累加型，固定使用最新一次的資料，不隨日期切換
-    loaded: false
+    loaded: false,
+    expandedSector: null  // 族群分頁目前展開中的族群名稱（一次只展開一個）
   };
 
   function el(tag, attrs, children) {
@@ -384,8 +413,36 @@
     ]);
   }
 
+  function renderSectorDetailRow(stock) {
+    var nameBlock = stock.code
+      ? el("a", {
+          class: "detail-name", href: yahooUrl(stock.code, stock.market),
+          target: "_blank", rel: "noopener noreferrer", text: stock.name
+        })
+      : el("span", { class: "detail-name", text: stock.name });
+
+    return el("div", { class: "detail-row" }, [
+      el("span", { class: "detail-rank", text: stock.rank + "." }),
+      nameBlock,
+      renderPctBadge(stock.pct_change)
+    ]);
+  }
+
+  function renderGroupDetail(item) {
+    var box = el("div", { class: "group-detail" });
+    if (item.stocks && item.stocks.length) {
+      item.stocks.forEach(function (s) { box.appendChild(renderSectorDetailRow(s)); });
+    } else {
+      box.appendChild(el("div", { class: "group-detail-empty", text: "No more Information, please update" }));
+    }
+    return box;
+  }
+
   function renderGroupRow(item) {
+    var expanded = state.expandedSector === item.sector;
+
     var nameBlock = el("div", { class: "row-id" }, [
+      el("span", { class: "expand-caret", text: expanded ? "▾" : "▸" }),
       el("span", { class: "stock-name", text: item.sector })
     ]);
 
@@ -394,11 +451,23 @@
       renderPctBadge(item.pct_change)
     ]);
 
-    return el("div", { class: "stock-row" }, [
+    var header = el("div", {
+      class: "stock-row group-row" + (expanded ? " expanded" : ""),
+      onclick: function () {
+        state.expandedSector = expanded ? null : item.sector;
+        renderContent();
+      }
+    }, [
       el("span", { class: "row-rank", text: String(item.rank) }),
       nameBlock,
       pctBlock
     ]);
+
+    var wrap = el("div", { class: "group-row-wrap" }, [header]);
+    if (expanded) {
+      wrap.appendChild(renderGroupDetail(item));
+    }
+    return wrap;
   }
 
   function listForTab(key) {
