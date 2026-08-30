@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-30T22:25:32",
+  "generated_at": "2026-08-30T22:34:44",
   "date": "2026-08-28",
   "tabs": {
     "focus": [
@@ -297,6 +297,39 @@
             "level": "中立",
             "symbol": "☆",
             "color": "neutral"
+          }
+        ]
+      },
+      {
+        "code": "3665",
+        "name": "貿聯-KY",
+        "market": "TW",
+        "today_strength": "偏強",
+        "stars": [
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "弱",
+            "symbol": "★",
+            "color": "dark"
+          },
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
+          },
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
           }
         ]
       },
@@ -1095,39 +1128,6 @@
       {
         "code": "3661",
         "name": "世芯-KY",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3665",
-        "name": "貿聯-KY",
         "market": "TW",
         "today_strength": "未更新",
         "stars": [
@@ -2749,6 +2749,39 @@
         ]
       },
       {
+        "code": "2368",
+        "name": "金像電",
+        "market": "TW",
+        "today_strength": "極強",
+        "stars": [
+          {
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
+          },
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
+          }
+        ]
+      },
+      {
         "code": "2374",
         "name": "佳能",
         "market": "TW",
@@ -3108,6 +3141,39 @@
             "level": "中立",
             "symbol": "☆",
             "color": "neutral"
+          }
+        ]
+      },
+      {
+        "code": "3665",
+        "name": "貿聯-KY",
+        "market": "TW",
+        "today_strength": "偏強",
+        "stars": [
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "弱",
+            "symbol": "★",
+            "color": "dark"
+          },
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
+          },
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
           }
         ]
       },
@@ -3710,6 +3776,42 @@
             "level": "中立",
             "symbol": "☆",
             "color": "neutral"
+          }
+        ],
+        "warned": false,
+        "pinned": false,
+        "added_date": "2026-08-28"
+      },
+      {
+        "code": "3665",
+        "name": "貿聯-KY",
+        "market": "TW",
+        "today_strength": "偏強",
+        "stars": [
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "弱",
+            "symbol": "★",
+            "color": "dark"
+          },
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
+          },
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
           }
         ],
         "warned": false,

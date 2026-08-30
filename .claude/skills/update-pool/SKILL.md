@@ -9,7 +9,7 @@ description: Refresh the cumulative 監控股池 (watch pool) tab of the 台股�
 
 ## 執行步驟
 
-1.（選用）把個別股票的補漏截圖放進 `screenshots/update/`，檔名須為股票代號開頭（例如 `8358.png`）——用於當某檔股票當天沒有 super 截圖、但你仍想更新它的相對強度歷史時使用。若沒有要補資料，這個資料夾留空即可。
+1.（選用）把個別股票的補漏截圖放進 `screenshots/update/`——用於當某檔股票當天沒有 super 截圖、但你仍想更新它的相對強度歷史時使用。若沒有要補資料，這個資料夾留空即可。檔名最好是股票代號開頭（例如 `8358.png`），程式會直接採信；如果是手機截圖預設檔名（例如 `S__12345678_0.jpg`），程式也會自動改用截圖內容 OCR 辨識代號，不需要手動改檔名，但辨識信心不如檔名可靠。
 2. 在 `screenshots/` 目錄下執行：
    ```
    python data_processor.py --category pool --date <日期>
@@ -25,4 +25,5 @@ description: Refresh the cumulative 監控股池 (watch pool) tab of the 台股�
 ## 注意事項
 
 - 建議每天**最後**才執行這個分頁（或直接用 `update-all`），確保套用的是當天最終、完整的強度資料，剔除規則判斷才會準確；若在 `update-super` 之前就執行，尚未處理的股票當天會暫時被記成❓，等 `update-super` 或下次執行 `update-pool` 時會自動修正。
-- 這個分頁沒有自己的股票代號清單截圖，新股票只會透過 `update-super` 自動加入，`update-pool` 本身不會新增監控池成員。
+- 這個分頁沒有自己的股票代號清單截圖，新股票只會透過 `update-super` 自動加入，或用 `pin-stock` 手動加入，`update-pool` 本身不會新增監控池成員。
+- 若 `screenshots/update/` 裡有檔名不是代號格式的截圖，且截圖內容也辨識不出有效代號（例如截圖模糊、代號被裁掉），會印出 `[WARN]` 並略過該檔——這種情況才需要手動把檔名改成代號.副檔名。

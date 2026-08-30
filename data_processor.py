@@ -268,17 +268,22 @@ def ocr_super_detail(image_path, valid_codes=None):
         for x0, x1 in ((0.42, 0.58), (0.35, 0.65), (0.30, 0.70)):
             crop = img.crop((int(w * x0), int(h * 0.085), int(w * x1), int(h * 0.105))).convert("L")
             inv = ImageOps.invert(crop)
-            inv = inv.resize((inv.width * 4, inv.height * 4), Image.LANCZOS)
-            txt = pytesseract.image_to_string(
-                inv, lang="eng", config="--psm 6 -c tessedit_char_whitelist=0123456789"
-            )
-            candidates = re.findall(r"\d{4,6}", txt)
-            if valid_codes:
-                match = next((c for c in candidates if c in valid_codes), None)
-            else:
-                match = candidates[0] if candidates else None
-            if match:
-                code = match
+            # 4x 放大是最常見的最佳解析度，但少數截圖在剛好 4x 時會被 Tesseract 誤判
+            # 多插入一個數字（依實測校準），故失敗時改試 3x／5x 再放棄。
+            for scale in (4, 3, 5):
+                scaled = inv.resize((inv.width * scale, inv.height * scale), Image.LANCZOS)
+                txt = pytesseract.image_to_string(
+                    scaled, lang="eng", config="--psm 6 -c tessedit_char_whitelist=0123456789"
+                )
+                candidates = re.findall(r"\d{4,6}", txt)
+                if valid_codes:
+                    match = next((c for c in candidates if c in valid_codes), None)
+                else:
+                    match = candidates[0] if candidates else None
+                if match:
+                    code = match
+                    break
+            if code:
                 break
 
         table_crop = img.crop((0, int(h * 0.52), int(w * 0.62), h)).convert("L")
@@ -328,8 +333,11 @@ def scan_super_folder(date_str, valid_codes):
     return codes, detail
 
 
-def scan_update_folder():
-    """補漏資料夾：檔名即股票代號（例如 8358.png），內容比照 super 的個股詳細頁格式。
+def scan_update_folder(valid_codes=None):
+    """補漏資料夾：內容比照 super 的個股詳細頁格式。檔名若已是股票代號開頭
+    （例如 8358.png）就直接採信檔名，只取相對強度表；檔名不是代號格式時
+    （例如手機截圖預設檔名 S__12345678_0.jpg），改用截圖內容 OCR 辨識代號
+    （與 valid_codes 比對降低誤判），讓使用者不需要手動改檔名。
     回傳 (paths, detail)：paths 為 {code: Path}，detail 為 {code: {date: 強度標籤}}。"""
     paths = {}
     detail = {}
@@ -339,11 +347,17 @@ def scan_update_folder():
         if img_path.suffix.lower() not in IMAGE_EXTS:
             continue
         m = re.match(r"(\d{4,6})", img_path.stem)
-        if not m:
-            continue
-        code = m.group(1)
+        if m:
+            code = m.group(1)
+            _, labels = ocr_super_detail(img_path)  # 檔名已是代號，這裡僅取相對強度表
+        else:
+            code, labels = ocr_super_detail(img_path, valid_codes)  # 檔名非代號格式，改由截圖內容辨識代號
+            if not code:
+                print(f"[WARN] update/ 補漏截圖 {img_path.name} 檔名非股票代號格式，"
+                      f"且無法從截圖內容辨識出代號，已略過（也可手動將檔名改為代號.副檔名，例如 2308.jpg）",
+                      file=sys.stderr)
+                continue
         paths[code] = img_path
-        _, labels = ocr_super_detail(img_path)  # 代號採信檔名，這裡僅取相對強度表
         if labels:
             detail[code] = labels
     return paths, detail
@@ -983,11 +997,14 @@ def update_pool(date_str):
     """監控股池：讀取 update/ 補漏截圖、更新相對強度歷史，並執行❓補記與5日剔除規則。
     此分頁為累加型、不依日期切換，因此不寫入 docs/history/，只重新輸出 docs/today_summary.json。"""
     print(f"=== [pool] 處理日期: {date_str} ===")
-    update_paths, update_detail = scan_update_folder()
+    master = fetch_institutional_master(date_str)
+    valid_codes = set(master.keys())
+    update_paths, update_detail = scan_update_folder(valid_codes)
     if update_paths:
         print(f"  [update 補漏] {len(update_paths)} 檔: {sorted(update_paths.keys())}")
 
     db = load_tracker_db()
+    ensure_stock_entries(db, update_paths.keys(), master)  # 代號可能是新從截圖內容辨識出來的，補上名稱/市場
     apply_detail_updates(db, update_detail)
     recompute_pool_state(db, date_str, update_paths)
 

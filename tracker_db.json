@@ -336,7 +336,48 @@
     "3665": {
       "name": "貿聯-KY",
       "market": "TW",
-      "history": []
+      "history": [
+        {
+          "date": "2026-08-20",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-21",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-24",
+          "strength": "偏弱",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-25",
+          "strength": "偏弱",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-26",
+          "strength": "弱",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-27",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "super"
+        }
+      ],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-08-28"
+      }
     },
     "3693": {
       "name": "營邦",
