@@ -982,7 +982,15 @@ def update_group(date_str):
     master = fetch_institutional_master(date_str)
     detail_map = scan_group_sector_details(date_str, master)
     for item in items:
-        item["stocks"] = detail_map.get(item["sector"], [])
+        stocks = detail_map.get(item["sector"])
+        if stocks is None and detail_map:
+            # overall.jpg 該列族群名稱比對信心不足時會保留原始 OCR 文字（可能與明細截圖
+            # 標題辨識出的正確名稱不同字），改用寬鬆模糊比對去對 detail_map 的既有（已較高
+            # 信心比對過）族群名稱，避免因兩處 OCR 結果字面不同而漏接已存在的成分股資料。
+            close = difflib.get_close_matches(item["sector"], detail_map.keys(), n=1, cutoff=0.4)
+            if close:
+                stocks = detail_map[close[0]]
+        item["stocks"] = stocks or []
 
     db = load_tracker_db()
     tabs = load_date_tabs(date_str)
