@@ -338,7 +338,11 @@ def scan_update_folder(valid_codes=None):
     （例如 8358.png）就直接採信檔名，只取相對強度表；檔名不是代號格式時
     （例如手機截圖預設檔名 S__12345678_0.jpg），改用截圖內容 OCR 辨識代號
     （與 valid_codes 比對降低誤判），讓使用者不需要手動改檔名。
-    回傳 (paths, detail)：paths 為 {code: Path}，detail 為 {code: {date: 強度標籤}}。"""
+    同一個代號若出現在多張截圖（例如同一支股票拍了新舊兩張），會把各自的
+    相對強度表合併（同一天以較晚處理到的那張為準），而不是整份覆蓋，避免
+    其中一張涵蓋的日期範圍被另一張蓋掉；並印出提醒，讓使用者知道有重複。
+    回傳 (paths, detail)：paths 為 {code: Path}（多張時取最後處理到的那張），
+    detail 為 {code: {date: 強度標籤}}。"""
     paths = {}
     detail = {}
     if not UPDATE_DIR.exists():
@@ -357,9 +361,12 @@ def scan_update_folder(valid_codes=None):
                       f"且無法從截圖內容辨識出代號，已略過（也可手動將檔名改為代號.副檔名，例如 2308.jpg）",
                       file=sys.stderr)
                 continue
+        if code in paths:
+            print(f"[WARN] update/ 補漏截圖 {img_path.name} 與 {paths[code].name} 都對應到代號 {code}，"
+                  f"兩張的相對強度表會合併，建議確認是否為重複截圖，只留其中一張", file=sys.stderr)
         paths[code] = img_path
         if labels:
-            detail[code] = labels
+            detail.setdefault(code, {}).update(labels)
     return paths, detail
 
 
@@ -410,11 +417,15 @@ def _future_row_centers(img, w, h):
 
 
 def _future_row_fields(img, w, center, row_h):
-    """在單一列的 y 範圍內，分別裁切「代號」與「期漲幅(%)」兩個欄位辨識。"""
+    """在單一列的 y 範圍內，分別裁切「排名」「代號」與「期漲幅(%)」三個欄位辨識。
+    排名欄以截圖上實際印出的數字為準（而非掃描順序），避免多張截圖的拍攝／檔名順序
+    與畫面捲動順序不一致時，把排行順序完全打亂。"""
     y0, y1 = int(center - row_h * 0.42), int(center + row_h * 0.42)
+    rank_crop = img.crop((int(w * 0.02), y0, int(w * 0.17), y1))
     code_crop = img.crop((int(w * 0.20), int(center - 5), int(w * 0.34), y1))
     pct_crop = img.crop((int(w * 0.60), y0, int(w * 0.84), y1))
 
+    rank_txt = _ocr_single_line(_threshold_channel(rank_crop), "0123456789")
     code = _ocr_single_line(_threshold_channel(code_crop), "0123456789")
 
     pct_txt = _ocr_single_line(_threshold_channel(pct_crop, channel=0), "0123456789.")  # 紅字：上漲
@@ -425,18 +436,19 @@ def _future_row_fields(img, w, center, row_h):
 
     pct = sign * float(pct_txt) if re.fullmatch(r"\d{1,3}\.\d{1,2}", pct_txt) else None
     code = code if re.fullmatch(r"\d{4,6}", code) else None
-    return code, pct
+    rank = int(rank_txt) if re.fullmatch(r"\d{1,3}", rank_txt) else None
+    return rank, code, pct
 
 
 def scan_stock_future_folder(date_str, valid_codes):
-    """掃描 stock_future_top/<日期>/ 內的「量大股期」排行榜截圖（可能為捲動後的多張截圖）。
-    依截圖檔名排序（即拍攝／捲動先後順序）逐張辨識每一列的股票代號與期漲幅(%)，
-    以代號去重（保留第一次出現的位置）串接成完整排行，回傳 [(code, pct_change), ...]。"""
+    """掃描 stock_future_top/<日期>/ 內的「量大股期」排行榜截圖（可能為捲動後的多張截圖，
+    不保證檔名／拍攝順序等於畫面捲動順序）。逐張辨識每一列的排名、股票代號與期漲幅(%)，
+    以代號去重（同一代號重複出現時保留排名較小的那筆），再依排名數字由小到大排序，
+    回傳 [(code, pct_change), ...]。"""
     folder = SCREENSHOTS_DIR / "stock_future_top" / date_str
-    ordered = []
-    seen = set()
+    rows = {}  # code -> (rank, pct)
     if not folder.exists():
-        return ordered
+        return []
     for img_path in sorted(folder.iterdir()):
         if img_path.suffix.lower() not in IMAGE_EXTS:
             continue
@@ -447,19 +459,46 @@ def scan_stock_future_folder(date_str, valid_codes):
             continue
         diffs = [centers[i + 1] - centers[i] for i in range(len(centers) - 1)]
         row_h = sum(diffs) / len(diffs)
-        for c in centers:
-            code, pct = _future_row_fields(img, w, c, row_h)
-            if not code or pct is None:
-                print(f"[WARN] 股期排行截圖 {img_path.name} 有一列無法辨識代號或期漲幅，已略過",
-                      file=sys.stderr)
+        # 螢幕邊緣（截圖最上/最下）那一列常因裁切／解析度差異，「期量比」欄位的
+        # 固定格式數字沒被完整偵測到，導致整列漏抓；用列高外推補一列上緣／下緣
+        # 候選位置，只要落在圖片範圍內就一併嘗試辨識——這只是「猜測可能還有一列」，
+        # 猜測位置經常根本沒有列（已經是畫面第一列/最後一列），辨識不到東西是正常情況。
+        extrapolated = set()
+        if centers[0] - row_h > h * 0.05:
+            centers.insert(0, centers[0] - row_h)
+            extrapolated.add(0)
+        if centers[-1] + row_h < h * 0.98:
+            centers.append(centers[-1] + row_h)
+            extrapolated.add(len(centers) - 1)
+
+        raw = [list(_future_row_fields(img, w, c, row_h)) for c in centers]
+        # 同一張截圖內排名是連續整數，個別列的排名數字辨識失敗時，用相鄰列的排名
+        # 往前/往後推回（避免整列因為單一欄位辨識失敗而被捨棄）。
+        for i, (rank, code, pct) in enumerate(raw):
+            if rank is not None:
+                continue
+            for j in range(i + 1, len(raw)):
+                if raw[j][0] is not None:
+                    raw[i][0] = raw[j][0] - (j - i)
+                    break
+            else:
+                for j in range(i - 1, -1, -1):
+                    if raw[j][0] is not None:
+                        raw[i][0] = raw[j][0] + (i - j)
+                        break
+
+        for i, (rank, code, pct) in enumerate(raw):
+            if not code or pct is None or rank is None:
+                if i not in extrapolated:
+                    print(f"[WARN] 股期排行截圖 {img_path.name} 有一列無法辨識排名/代號/期漲幅，已略過",
+                          file=sys.stderr)
                 continue
             if valid_codes and code not in valid_codes:
                 continue
-            if code in seen:
+            if code in rows and rows[code][0] <= rank:
                 continue
-            seen.add(code)
-            ordered.append((code, pct))
-    return ordered
+            rows[code] = (rank, pct)
+    return [(code, pct) for code, (rank, pct) in sorted(rows.items(), key=lambda kv: kv[1][0])]
 
 
 def build_stock_future_list(date_str, master, db):
@@ -509,7 +548,8 @@ GROUP_SECTOR_WHITELIST = [
     "IC-代工", "IC-製造", "被動元件", "IC-封測", "PCB-製造", "PCB-材料設備", "記憶體製造", "ABF",
     "光學鏡片", "IC-設計", "晶圓材料", "EMS", "LCD-TF...", "IC-半導體", "連接元件", "照明",
     "金控", "儀器設備...", "塑膠", "電機", "電源供應器", "IP/ASIC", "航運", "通訊設備", "散熱零組件",
-    "半導體元件", "高爾夫球", "主機板", "遊戲", "記憶體 IC 設計",
+    "半導體元件", "高爾夫球", "主機板", "遊戲", "記憶體 IC 設計", "網通",
+    "工業電腦", "LED照明及光電",
 ]
 
 
