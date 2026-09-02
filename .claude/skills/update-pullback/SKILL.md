@@ -26,3 +26,7 @@ description: Reprocess the 回檔型 (pullback) screenshot folder for a given da
 
 - 這個分頁只提供「當日名單」，強度徽章／五日星星是**沿用**股票歷史資料，不是這裡算出來的；若當天尚未執行 `update-super`，強度會顯示上一次已知的資料。
 - 若系統找不到可用的 Tesseract OCR，截圖將無法辨識，指令會印出 `[WARN]` 警告。
+- 這種清單型截圖是一次抓出一整批候選代號、逐一跟當日有效代號比對，比對不到的候選會直接被丟棄、不會逐檔印出 `[WARN]`（只有整張截圖完全辨識失敗才會有警告），所以「某檔股票明明有截圖卻沒出現在清單裡」這種問題不會自動被抓到，通常是使用者發現才知道。若使用者反映某檔股票被漏掉：**不要請使用者確認截圖或改檔名**，改由 Claude 自己處理：
+  1. 用 Read 工具開啟該截圖，在左側股票名稱/代號欄用視覺讀出該股票的正確代號。
+  2. 用 `python` 呼叫 `data_processor.py` 的 `load_date_tabs(日期)` 讀出當天分頁快照，把該代號加進 `pullback` 清單對應的代號集合，呼叫 `build_tab_list(codes, db)` 重新組出清單，再用 `save_date_tabs` 存回（會一併重新輸出 `docs/today_summary.json`，不用整批重跑 OCR）。
+  3. 回報時說明是哪張截圖、哪支股票被漏辨識、已經補上。

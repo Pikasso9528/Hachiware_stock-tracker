@@ -129,7 +129,7 @@
             "color": "neutral"
           },
           {
-            "level": "弱",
+            "level": "極弱",
             "symbol": "★",
             "color": "dark"
           }
@@ -3633,7 +3633,7 @@
             "color": "neutral"
           },
           {
-            "level": "弱",
+            "level": "極弱",
             "symbol": "★",
             "color": "dark"
           }
@@ -4004,7 +4004,7 @@
             "color": "neutral"
           },
           {
-            "level": "弱",
+            "level": "極弱",
             "symbol": "★",
             "color": "dark"
           }
@@ -4917,15 +4917,15 @@
         "code": "3037",
         "name": "欣興",
         "market": "TW",
-        "today_strength": "弱",
+        "today_strength": "極弱",
         "stars": [
           {
-            "level": "弱",
+            "level": "極弱",
             "symbol": "★",
             "color": "dark"
           },
           {
-            "level": "弱",
+            "level": "極弱",
             "symbol": "★",
             "color": "dark"
           },
@@ -4953,10 +4953,10 @@
         "code": "8996",
         "name": "高力",
         "market": "TW",
-        "today_strength": "弱",
+        "today_strength": "極弱",
         "stars": [
           {
-            "level": "弱",
+            "level": "極弱",
             "symbol": "★",
             "color": "dark"
           },

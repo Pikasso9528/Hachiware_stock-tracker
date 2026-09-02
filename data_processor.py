@@ -45,7 +45,7 @@ UNKNOWN_LEVEL = "未更新"
 
 # 「強度」完全以 super / update 截圖內來源 App 自己算出的『相對強度』欄位為準，
 # 不再用三大法人買賣超數字自行估算等級。
-STRENGTH_LABELS = ["極強", "偏強", "中立", "偏弱", "弱"]
+STRENGTH_LABELS = ["極強", "偏強", "中立", "偏弱", "極弱"]
 # 常見 OCR 誤判字元對照（依實測截圖校準）
 _STRENGTH_CHAR_FIX = {"椏": "極", "偶": "偏", "便": "偏", "彊": "強", "弼": "弱"}
 
@@ -827,7 +827,7 @@ def star_info(strength):
         return {"level": strength, "symbol": "★", "color": "gold"}
     if strength == "中立":
         return {"level": strength, "symbol": "☆", "color": "neutral"}
-    if strength in ("弱", "偏弱"):
+    if strength in ("極弱", "偏弱"):
         return {"level": strength, "symbol": "★", "color": "dark"}
     return {"level": UNKNOWN_LEVEL, "symbol": "❓", "color": "unknown"}
 
@@ -841,7 +841,7 @@ def last5_stars(history):
     return stars
 
 
-_STRENGTH_RANK = {"極強": 0, "偏強": 1, "中立": 2, "偏弱": 3, "弱": 4, UNKNOWN_LEVEL: 5}
+_STRENGTH_RANK = {"極強": 0, "偏強": 1, "中立": 2, "偏弱": 3, "極弱": 4, UNKNOWN_LEVEL: 5}
 
 
 def build_tab_list(codes, db):
