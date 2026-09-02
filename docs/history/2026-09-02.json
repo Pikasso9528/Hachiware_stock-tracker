@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-03T00:15:24",
+  "generated_at": "2026-09-03T00:27:18",
   "date": "2026-09-02",
   "tabs": {
     "focus": [
@@ -4196,19 +4196,19 @@
             "color": "unknown"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           },
           {
             "level": "偏強",
@@ -4290,42 +4290,6 @@
         ],
         "warned": false,
         "pinned": true,
-        "added_date": "2026-08-28"
-      },
-      {
-        "code": "8071",
-        "name": "能率網通",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ],
-        "warned": false,
-        "pinned": false,
         "added_date": "2026-08-28"
       },
       {
