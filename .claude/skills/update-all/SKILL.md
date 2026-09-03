@@ -21,7 +21,7 @@ description: Run a full 台股強勢股分析儀表板 refresh — updates all s
    ```
    python data_processor.py --date <日期>
    ```
-   （不加 `--category` 時預設為 `all`，即依序更新全部七個分頁；若處理今天的資料可省略 `--date`。）
+   （不加 `--category` 時預設為 `all`，即依序更新全部七個分頁。程式雖然支援省略 `--date`（會 fallback 到系統當下日期），但 Claude 執行時一律要明確帶入 `--date <日期>`，不要依賴這個 fallback——尤其午夜前後系統日期可能已經跳到隔天，但使用者説不定還在補前一天的截圖。日期不明確時先問清楚，不要自己假設今天／明天，詳見 README_SKILLS.txt 第7節。）
 3. 這一步在底層依序執行的其實就是 `update-focus` → `update-alpha` → `update-pullback` → `update-super` → `update_stock_future` → `update-group` → `update-pool` 各自的處理邏輯，最後統一寫出 `docs/history/<日期>.json` 與 `docs/today_summary.json`。
 4. 執行完畢後，彙整回報七個分頁各自的檔數（焦點監控／α動能／回檔型／當日Super／股期／族群／監控股池），以及過程中出現的 `[WARN]` 警告（OCR 失敗、代號無法辨識、族群名稱辨識失敗等）。
 

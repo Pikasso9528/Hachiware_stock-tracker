@@ -14,7 +14,7 @@ description: Refresh the cumulative 監控股池 (watch pool) tab of the 台股�
    ```
    python data_processor.py --category pool --date <日期>
    ```
-   `<日期>` 預設為今天，格式 `YYYY-MM-DD`；這裡的日期只用來標記「今天沒有資料的股票」該記為❓，不影響監控池成員本身跨日期累積的性質。
+   `<日期>` 預設為今天，格式 `YYYY-MM-DD`；這裡的日期只用來標記「今天沒有資料的股票」該記為❓，不影響監控池成員本身跨日期累積的性質。但 Claude 執行時仍要明確帶入 `--date <日期>`、不要依賴預設值——尤其午夜前後系統日期可能已經跳到隔天，但使用者説不定還在補前一天的截圖，帶錯日期會讓當天原本有資料的股票被誤記成❓。日期不明確時先問清楚（詳見 README_SKILLS.txt 第7節）。
 3. 這個指令會依序：
    - 掃描 `screenshots/update/` 補漏截圖，更新對應股票的相對強度歷史
    - 對監控池中「今天完全沒有 super/update 截圖」的股票，標記強度為未更新（❓）

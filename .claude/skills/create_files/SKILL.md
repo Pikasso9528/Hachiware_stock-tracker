@@ -15,7 +15,7 @@ description: Create today's (or a given) date subfolder under each of the six ca
 create_files 2026-08-29
 ```
 
-日期格式須為 `YYYY-MM-DD`；若使用者沒有帶日期，預設用今天的日期。
+日期格式須為 `YYYY-MM-DD`；若使用者沒有帶日期，預設用今天的日期。這個技能只是建空資料夾，即使日期猜錯也不會覆蓋或搞丟資料，風險低；但午夜前後如果不確定使用者是要建「今天」還是「剛過去的那天」的資料夾，還是先問清楚比較保險（詳見 README_SKILLS.txt 第7節）。
 
 ## 執行步驟
 

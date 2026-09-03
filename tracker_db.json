@@ -49,7 +49,43 @@
     "8071": {
       "name": "能率網通",
       "market": "TWO",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-08-26",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-27",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-31",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-01",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-02",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-03",
+          "strength": "中立",
+          "source": "super"
+        }
+      ],
       "pool": {
         "active": false,
         "warned": false,
@@ -234,8 +270,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -305,8 +341,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -448,8 +484,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -533,7 +569,43 @@
     "3693": {
       "name": "營邦",
       "market": "TWO",
-      "history": []
+      "history": [
+        {
+          "date": "2026-08-26",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-27",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-31",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-01",
+          "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-02",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-03",
+          "strength": "偏強",
+          "source": "super"
+        }
+      ]
     },
     "8027": {
       "name": "鈦昇",
@@ -677,8 +749,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "偏強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -877,6 +949,16 @@
         {
           "date": "2026-09-01",
           "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-02",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-03",
+          "strength": "極強",
           "source": "super"
         }
       ]
@@ -1359,8 +1441,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -1466,8 +1548,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "極弱",
+          "source": "super"
         }
       ],
       "pool": {
@@ -1879,13 +1961,13 @@
         },
         {
           "date": "2026-09-02",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -1950,8 +2032,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "偏弱",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2305,8 +2387,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏弱",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2367,8 +2449,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "極弱",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2461,8 +2543,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2575,8 +2657,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏弱",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2632,8 +2714,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2783,8 +2865,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極弱",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2856,29 +2938,39 @@
       "market": "TWO",
       "history": [
         {
+          "date": "2026-08-26",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-27",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
           "date": "2026-08-28",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
         },
         {
           "date": "2026-08-31",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
         },
         {
           "date": "2026-09-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
         },
         {
           "date": "2026-09-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2959,8 +3051,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏弱",
+          "source": "super"
         }
       ],
       "pool": {
@@ -3131,13 +3223,13 @@
         },
         {
           "date": "2026-09-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -3440,8 +3532,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "update"
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -3651,7 +3743,48 @@
     "6147": {
       "name": "頎邦",
       "market": "TWO",
-      "history": []
+      "history": [
+        {
+          "date": "2026-08-26",
+          "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-27",
+          "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-28",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-31",
+          "strength": "偏弱",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-01",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-02",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-03",
+          "strength": "偏強",
+          "source": "super"
+        }
+      ],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-09-03"
+      }
     },
     "6426": {
       "name": "統新",
@@ -4067,8 +4200,8 @@
         },
         {
           "date": "2026-09-03",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -4180,6 +4313,82 @@
     },
     "2887": {
       "name": "台新新光金",
+      "market": "TW",
+      "history": []
+    },
+    "6716": {
+      "name": "應廣",
+      "market": "TWO",
+      "history": []
+    },
+    "6446": {
+      "name": "藥華藥",
+      "market": "TW",
+      "history": []
+    },
+    "3141": {
+      "name": "晶宏",
+      "market": "TWO",
+      "history": [
+        {
+          "date": "2026-08-26",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-27",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-28",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-08-31",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-01",
+          "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-02",
+          "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-09-03",
+          "strength": "極強",
+          "source": "super"
+        }
+      ],
+      "pool": {
+        "active": true,
+        "warned": false,
+        "added_date": "2026-09-03"
+      }
+    },
+    "2884": {
+      "name": "玉山金",
+      "market": "TW",
+      "history": []
+    },
+    "2027": {
+      "name": "大成鋼",
+      "market": "TW",
+      "history": []
+    },
+    "3045": {
+      "name": "台灣大",
+      "market": "TW",
+      "history": []
+    },
+    "5880": {
+      "name": "合庫金",
       "market": "TW",
       "history": []
     }

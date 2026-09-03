@@ -15,7 +15,7 @@ description: Manually add a stock code to 監控股池 (watchout pool) and mark 
 pin 8358
 ```
 
-日期為選用參數（`--date YYYY-MM-DD`），只影響「若這是全新加入的股票，納入日期要記成哪一天」；沒帶就用今天。
+日期為選用參數（`--date YYYY-MM-DD`），只影響「若這是全新加入的股票，納入日期要記成哪一天」；沒帶就用今天。Claude 執行時若使用者沒明確指定日期，且時間點在午夜前後、無法確定是「今天」還是「剛過去的那天」，應先問清楚再帶入 `--date`，不要自己假設（詳見 README_SKILLS.txt 第7節）。
 
 ## 執行步驟
 

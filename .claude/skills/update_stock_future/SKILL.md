@@ -15,7 +15,7 @@ description: Reprocess the stock_future_top screenshot folder for a given date (
 update_stock_future 2026-08-28
 ```
 
-日期格式須為 `YYYY-MM-DD`；若使用者沒有帶日期，預設用今天的日期。
+日期格式須為 `YYYY-MM-DD`；程式雖然支援省略日期（會 fallback 到系統當下日期），但 Claude 執行時一律要明確帶入 `--date <日期>`，不要依賴這個 fallback——尤其午夜前後系統日期可能已經跳到隔天，但使用者説不定還在補前一天的截圖。日期不明確時先問清楚，不要自己假設今天／明天（詳見 README_SKILLS.txt 第7節）。
 
 ## 執行步驟
 

@@ -14,7 +14,7 @@ description: Reprocess the 回檔型 (pullback) screenshot folder for a given da
    ```
    python data_processor.py --category pullback --date <日期>
    ```
-   若處理今天的資料可省略 `--date`。
+   程式雖然支援省略 `--date`（會 fallback 到系統當下日期），但 Claude 執行時一律要明確帶入 `--date <日期>`，不要依賴這個 fallback——尤其午夜前後系統日期可能已經跳到隔天，但使用者説不定還在補前一天的截圖。日期不明確時先問清楚，不要自己假設今天／明天（詳見 README_SKILLS.txt 第7節）。
 3. 這個指令會依序：
    - 抓取當日三大法人買賣超資料，作為 OCR 代號有效性驗證與股票名稱/上市櫃別對照
    - 掃描 `pullback/` 資料夾內截圖，OCR 出當日名單
