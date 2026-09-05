@@ -549,7 +549,7 @@ GROUP_SECTOR_WHITELIST = [
     "光學鏡片", "IC-設計", "晶圓材料", "EMS", "LCD-TF...", "IC-半導體", "連接元件", "照明",
     "金控", "儀器設備...", "塑膠", "電機", "電源供應器", "IP/ASIC", "航運", "通訊設備", "散熱零組件",
     "半導體元件", "高爾夫球", "主機板", "遊戲", "記憶體 IC 設計", "網通",
-    "工業電腦", "LED照明及光電",
+    "工業電腦", "LED照明及光電", "筆記型電腦", "NB與手機零組件", "IC-其他",
 ]
 
 
@@ -1027,7 +1027,7 @@ def update_group(date_str):
             # overall.jpg 該列族群名稱比對信心不足時會保留原始 OCR 文字（可能與明細截圖
             # 標題辨識出的正確名稱不同字），改用寬鬆模糊比對去對 detail_map 的既有（已較高
             # 信心比對過）族群名稱，避免因兩處 OCR 結果字面不同而漏接已存在的成分股資料。
-            close = difflib.get_close_matches(item["sector"], detail_map.keys(), n=1, cutoff=0.4)
+            close = difflib.get_close_matches(item["sector"], detail_map.keys(), n=1, cutoff=0.6)
             if close:
                 stocks = detail_map[close[0]]
         item["stocks"] = stocks or []
