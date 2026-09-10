@@ -394,9 +394,11 @@ def _ocr_single_line(img, whitelist):
 
 
 def _future_row_centers(img, w, h):
-    """量大股期排行榜每一列的「期量比」欄固定顯示 100.00，以此定位每列中心 y 座標，
-    比直接辨識排名數字更穩定（實測排名欄在整欄一次 OCR 時常漏掉最後一列）。"""
-    band = img.crop((int(w * 0.42), int(h * 0.15), int(w * 0.60), int(h * 0.95)))
+    """量大股期排行榜每一列的「期量比」欄以此定位每列中心 y 座標，比直接辨識排名數字更穩定
+    （實測排名欄在整欄一次 OCR 時常漏掉最後一列）。該欄位數值沒有固定範圍（大量爆量時可到
+    四位數，如 1970.21），且不同截圖尺寸/比例時表格在畫面中的垂直占比也不同，故位數與掃描
+    高度範圍都需放寬，避免漏掉最上/最下列或高比值列。"""
+    band = img.crop((int(w * 0.42), int(h * 0.15), int(w * 0.60), int(h * 0.99)))
     g = band.convert("L")
     inv = ImageOps.invert(g)
     inv = inv.point(lambda p: 255 if p > 90 else 0)
@@ -408,7 +410,7 @@ def _future_row_centers(img, w, h):
     centers = []
     for i, t in enumerate(data["text"]):
         t = t.strip()
-        if re.fullmatch(r"\d{2,3}\.\d{2}", t):
+        if re.fullmatch(r"\d{2,4}\.\d{2}", t):
             top = data["top"][i] / 4 + int(h * 0.15)
             height = data["height"][i] / 4
             centers.append(top + height / 2)
@@ -456,6 +458,8 @@ def scan_stock_future_folder(date_str, valid_codes):
         w, h = img.size
         centers = _future_row_centers(img, w, h)
         if len(centers) < 2:
+            print(f"[WARN] 股期排行截圖 {img_path.name} 定位不到足夠的列（期量比欄辨識失敗"
+                  f"或截圖尺寸/比例異常），整張截圖已略過", file=sys.stderr)
             continue
         diffs = [centers[i + 1] - centers[i] for i in range(len(centers) - 1)]
         row_h = sum(diffs) / len(diffs)
