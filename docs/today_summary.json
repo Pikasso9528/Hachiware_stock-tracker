@@ -1956,109 +1956,123 @@
     ],
     "stock_future": [
       {
-        "rank": 1,
+        "code": "2338",
+        "name": "光罩",
+        "market": "TW",
+        "pct_change": 4.29,
+        "rank": 1
+      },
+      {
+        "rank": 2,
         "code": "2354",
         "name": "鴻準",
         "market": "TW",
         "pct_change": 0.77
       },
       {
-        "rank": 2,
+        "rank": 3,
         "code": "2603",
         "name": "長榮",
         "market": "TW",
         "pct_change": 1.08
       },
       {
-        "rank": 3,
+        "rank": 4,
         "code": "2605",
         "name": "新興",
         "market": "TW",
         "pct_change": 2.07
       },
       {
-        "rank": 4,
+        "rank": 5,
         "code": "2609",
         "name": "陽明",
         "market": "TW",
         "pct_change": 3.1
       },
       {
-        "rank": 5,
+        "rank": 6,
         "code": "2610",
         "name": "華航",
         "market": "TW",
         "pct_change": 0.74
       },
       {
-        "rank": 6,
+        "rank": 7,
         "code": "2615",
         "name": "萬海",
         "market": "TW",
         "pct_change": 0.9
       },
       {
-        "rank": 7,
+        "rank": 8,
         "code": "2618",
         "name": "長榮航",
         "market": "TW",
         "pct_change": 1.32
       },
       {
-        "rank": 8,
+        "rank": 9,
         "code": "2880",
         "name": "華南金",
         "market": "TW",
         "pct_change": 2.47
       },
       {
-        "rank": 9,
+        "rank": 10,
         "code": "2884",
         "name": "玉山金",
         "market": "TW",
         "pct_change": 2.89
       },
       {
-        "rank": 10,
+        "rank": 11,
         "code": "2886",
         "name": "兆豐金",
         "market": "TW",
         "pct_change": 3.61
       },
       {
-        "rank": 11,
+        "rank": 12,
         "code": "2887",
         "name": "台新新光金",
         "market": "TW",
         "pct_change": 0.71
       },
       {
-        "rank": 12,
+        "rank": 13,
         "code": "2890",
         "name": "永豐金",
         "market": "TW",
         "pct_change": 1.97
       },
       {
-        "rank": 13,
+        "rank": 14,
         "code": "2892",
         "name": "第一金",
         "market": "TW",
         "pct_change": 2.09
       },
       {
-        "rank": 14,
+        "rank": 15,
         "code": "3231",
         "name": "緯創",
         "market": "TW",
         "pct_change": 0.27
       },
       {
-        "rank": 15,
+        "rank": 16,
         "code": "3532",
         "name": "台勝科",
         "market": "TW",
         "pct_change": 2.45
+      },
+      {
+        "code": "8046",
+        "name": "南電",
+        "market": "TW",
+        "pct_change": 0.74,
+        "rank": 17
       }
     ],
     "group": []
