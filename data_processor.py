@@ -202,8 +202,140 @@ def fetch_institutional_master(date_str):
 
 
 # ---------------------------------------------------------------------------
-# OCR：清單型截圖（focus / alpha / pullback）－ 從左側「股票名稱/代號」欄位擷取股票代號
+# OCR：清單型截圖（focus / alpha / pullback）－ 依「漲跌幅」副行固定格式（X.XX%）
+# 逐列定位、逐列擷取代號，取代舊版整欄一次 OCR 的作法。
+#
+# 舊作法（ocr_extract_codes）把整個左欄一次丟給 Tesseract，只靠「有效代號主檔」
+# 過濾候選字串——當某位數字被誤判成另一個「剛好也是真實代號」的數字時
+# （例如 2412 中華電被誤判成 2472 立隆電），有效代號過濾完全抓不出來，
+# 而且失敗是無聲的：不會有任何 [WARN]，也不會少一檔讓人起疑（總檔數照樣對不上
+# 畫面實際列數，但沒人在核對列數）。
+#
+# 逐列作法改用「漲跌幅」副行永遠是 X.XX% 這個固定格式，跟代號本身無關，去定位
+# 每一列的實際 y 座標（同一張截圖裡列高會是固定值），再針對每一列各自裁切、
+# 各自 OCR 代號。這樣至少能把「這一列讀到的代號是否有效」的檢查精準對應到
+# 「原本畫面上就是這一列」，讀不出有效代號時能明確印出 [WARN] 讓後續自動視覺覆核，
+# 不會再無聲吃掉或誤植成另一個巧合有效的代號。
 # ---------------------------------------------------------------------------
+LIST_PCT_X_RANGE = {
+    # alpha（α動能策略）欄位為：股票名稱／股價／漲跌幅／財報創高…
+    "alpha": (0.42, 0.68),
+    # focus（焦點監控）／pullback（回檔型策略）比 alpha 多一欄「特徵」（當沖/突破標籤），
+    # 後面的欄位跟著往右推，漲跌幅欄的 x 範圍因此不同。
+    "focus": (0.60, 0.79),
+    "pullback": (0.60, 0.79),
+}
+
+
+def _list_pct_centers(img, w, h, x0, x1):
+    """回傳清單截圖中每一列「漲跌幅」副行（紅字漲/綠字跌，固定格式 X.XX%）的 y 中心
+    座標。同一直欄裡漲跌幅副行永遠是同一個固定格式，不受代號本身數字誤判影響，
+    比逐字元比對代號本身更適合拿來定位「這裡本來就有一列資料」。"""
+    band = img.crop((int(w * x0), int(h * 0.10), int(w * x1), int(h * 0.99)))
+    raw = []
+    for channel_idx in (0, 1):  # 先試紅字（漲），抓不到再試綠字（跌）
+        ch = band.convert("RGB").split()[channel_idx]
+        th = ch.point(lambda p: 255 if p > 150 else 0)
+        big = th.resize((th.width * 3, th.height * 3), Image.LANCZOS)
+        data = pytesseract.image_to_data(
+            big, lang="eng", config="--psm 6 -c tessedit_char_whitelist=0123456789.%",
+            output_type=pytesseract.Output.DICT,
+        )
+        for i, t in enumerate(data["text"]):
+            t = t.strip()
+            if re.fullmatch(r"\d{1,2}\.\d{2}%", t):
+                top = data["top"][i] / 3 + int(h * 0.10)
+                height = data["height"][i] / 3
+                raw.append(top + height / 2)
+    raw.sort()
+    centers = []
+    for cy in raw:
+        if centers and cy - centers[-1] < 20:  # 紅/綠兩次掃描重複偵測到同一列，去重
+            continue
+        centers.append(cy)
+    return centers
+
+
+def _fill_row_gaps(centers, row_h):
+    """個別列的漲跌幅副行 OCR 失敗時，該列會直接漏掉、讓前後兩列間距變成列高的
+    整數倍——依中位數列高內插補回漏掉的列位置，避免漏一列就連帶讓後面所有列的
+    裁切位置往上偏移。"""
+    if len(centers) < 2 or row_h <= 0:
+        return centers
+    filled = [centers[0]]
+    for c in centers[1:]:
+        prev = filled[-1]
+        gap = c - prev
+        n = max(1, round(gap / row_h))
+        step = gap / n
+        for k in range(1, n):
+            filled.append(prev + step * k)
+        filled.append(c)
+    return filled
+
+
+def _extrapolate_row_edges(centers, row_h, h):
+    """截圖最上/最下緣那一列常因裁切邊界導致漲跌幅副行沒被完整偵測到，用列高
+    外推補一個上緣/下緣候選位置（同 stock_future 排行榜截圖的處理方式）。"""
+    if not centers or row_h <= 0:
+        return centers, set()
+    result = list(centers)
+    extrapolated = set()
+    if result[0] - row_h > h * 0.05:
+        result.insert(0, result[0] - row_h)
+        extrapolated = {i + 1 for i in extrapolated}
+        extrapolated.add(0)
+    if result[-1] + row_h < h * 0.97:
+        extrapolated.add(len(result))
+        result.append(result[-1] + row_h)
+    return result, extrapolated
+
+
+def _list_row_code(img, w, cy, row_h):
+    """裁切單一列左側「股票名稱／代號」欄位中，代號那一行（名稱下方第二行）並 OCR。"""
+    y0 = int(cy - row_h * 0.10)
+    y1 = int(cy + row_h * 0.20)
+    crop = img.crop((int(w * 0.05), y0, int(w * 0.24), y1)).convert("L")
+    inv = ImageOps.invert(crop)
+    th = inv.point(lambda p: 255 if p > 130 else 0)
+    big = th.resize((th.width * 4, th.height * 4), Image.LANCZOS)
+    for psm in (7, 8, 6):
+        txt = pytesseract.image_to_string(
+            big, lang="eng", config=f"--psm {psm} -c tessedit_char_whitelist=0123456789"
+        ).strip()
+        if re.fullmatch(r"\d{4,6}", txt):
+            return txt
+    return None
+
+
+def _scan_list_rows(img, w, h, x0, x1, valid_codes, img_name):
+    """逐列掃描清單型截圖，回傳該截圖辨識出的有效代號集合；每一列若偵測到確實
+    存在（漲跌幅副行位置找得到）但代號讀不出有效值，印出 [WARN] 供後續視覺覆核，
+    而不是無聲漏掉或誤採到另一個巧合有效的代號。偵測到的列數過少（<2，通常是
+    截圖比例/版面跟預期不同）時回傳 None，讓呼叫端改用舊版整欄 OCR 當備援。"""
+    centers = _list_pct_centers(img, w, h, x0, x1)
+    if len(centers) < 2:
+        return None
+    diffs = [centers[i + 1] - centers[i] for i in range(len(centers) - 1)]
+    # 用「最小間距」而非中位數估計列高：漏抓某一列時，前後兩個偵測到的錨點間距
+    # 會變成列高的整數倍（例如漏一列變 2 倍），而不會比真正的列高更小——只要
+    # dedup 已濾掉雜訊造成的過近重複點，最小間距就是最可靠的單列高度估計，
+    # 中位數在只有兩三個間距、且剛好多數都被拉高時反而容易抓到錯誤的倍數值。
+    row_h = min(diffs)
+    centers = _fill_row_gaps(centers, row_h)
+    centers, extrapolated = _extrapolate_row_edges(centers, row_h, h)
+
+    codes = set()
+    for i, cy in enumerate(centers):
+        code = _list_row_code(img, w, cy, row_h)
+        if code and (not valid_codes or code in valid_codes):
+            codes.add(code)
+        elif i not in extrapolated:
+            print(f"[WARN] 清單截圖 {img_name} 有一列（約第 {i + 1} 列）代號無法辨識或非有效代號"
+                  f"（OCR讀到 {code!r}），已略過，請視覺核對該列代號", file=sys.stderr)
+    return codes
+
+
 def ocr_extract_codes(image_path):
     """回傳截圖中辨識出的候選股票代號集合（未經有效代號過濾）。"""
     if not OCR_AVAILABLE:
@@ -230,13 +362,26 @@ def ocr_extract_codes(image_path):
 
 
 def scan_category_folder(category, date_str, valid_codes):
-    """截圖資料夾佈局為 screenshots/<分類>/<日期>/，例如 screenshots/focus/2026-08-30/。"""
+    """截圖資料夾佈局為 screenshots/<分類>/<日期>/，例如 screenshots/focus/2026-08-30/。
+    focus/alpha/pullback 優先採用逐列掃描（_scan_list_rows）：能明確抓出「這裡本來
+    就有一列但代號讀不出來」的情況並印出 [WARN]，而不是無聲漏抓或誤植成另一個
+    巧合有效的代號。只有在逐列掃描判斷此截圖版面/比例不適用（偵測到的列數 <2）時，
+    才退回舊版整欄一次 OCR 當備援，避免遇到未預期的截圖格式時整張直接漏抓。"""
     folder = SCREENSHOTS_DIR / category / date_str
     codes = set()
     if not folder.exists():
         return codes
+    x_range = LIST_PCT_X_RANGE.get(category)
     for img_path in sorted(folder.iterdir()):
         if img_path.suffix.lower() not in IMAGE_EXTS:
+            continue
+        row_codes = None
+        if x_range and OCR_AVAILABLE:
+            img = Image.open(img_path)
+            w, h = img.size
+            row_codes = _scan_list_rows(img, w, h, x_range[0], x_range[1], valid_codes, img_path.name)
+        if row_codes is not None:
+            codes |= row_codes
             continue
         raw = ocr_extract_codes(img_path)
         if valid_codes:
