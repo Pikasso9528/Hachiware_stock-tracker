@@ -543,7 +543,10 @@ def _future_row_centers(img, w, h):
     （實測排名欄在整欄一次 OCR 時常漏掉最後一列）。該欄位數值沒有固定範圍（大量爆量時可到
     四位數，如 1970.21），且不同截圖尺寸/比例時表格在畫面中的垂直占比也不同，故位數與掃描
     高度範圍都需放寬，避免漏掉最上/最下列或高比值列。"""
-    band = img.crop((int(w * 0.42), int(h * 0.15), int(w * 0.60), int(h * 0.99)))
+    # 左邊界 0.36（而非 0.42）：期量比為 100.00（三位數，休市/資料異常時整欄都是 100.00）
+    # 時數字左緣會超出 0.42，開頭的 1 被裁掉、讀成 0.00 而整張截圖被略過；代號欄在 0.26 以內，
+    # 放寬到 0.36 不會誤納入。
+    band = img.crop((int(w * 0.36), int(h * 0.15), int(w * 0.60), int(h * 0.99)))
     g = band.convert("L")
     inv = ImageOps.invert(g)
     inv = inv.point(lambda p: 255 if p > 90 else 0)
@@ -569,7 +572,9 @@ def _future_row_fields(img, w, center, row_h):
     與畫面捲動順序不一致時，把排行順序完全打亂。"""
     y0, y1 = int(center - row_h * 0.42), int(center + row_h * 0.42)
     rank_crop = img.crop((int(w * 0.02), y0, int(w * 0.17), y1))
-    code_crop = img.crop((int(w * 0.20), int(center - 5), int(w * 0.34), y1))
+    # 表格各欄寬度依內容浮動（例如期量比為 100.00 時該欄變寬，股名欄整體左移到約 0.18），
+    # 左緣取 0.15（排名欄分隔線 ≈0.14 之後）才不會切掉代號第一個數字。
+    code_crop = img.crop((int(w * 0.15), int(center - 5), int(w * 0.34), y1))
     pct_crop = img.crop((int(w * 0.60), y0, int(w * 0.84), y1))
 
     rank_txt = _ocr_single_line(_threshold_channel(rank_crop), "0123456789")
@@ -772,6 +777,29 @@ def _ocr_group_row_pct(img, box):
     return None
 
 
+def _estimate_group_scroll_shift(img, row0_top, row_h):
+    """族群明細截圖是捲動後的畫面，第一列的垂直位置會隨捲動量不同而上下偏移（實測同一天
+    不同族群的截圖可差約 30px），固定位置校準會讓漲跌幅讀取框整個落空。這裡偵測畫面上實際
+    有幾個「X.XX%」漲跌幅副行的 y 位置，與依校準推算的位置比對，取偏移量的中位數（個別列
+    偵測失敗不影響）；偏移量小於 3px 視為沒有偏移，避免擾動本來就對準的截圖。"""
+    w, h = img.size
+    try:
+        centers = _list_pct_centers(img, w, h, 0.76, 0.97)
+    except Exception:
+        return 0.0
+    if len(centers) < 3:
+        return 0.0
+    # 漲跌幅讀取框為 [top + OFFSET - 6, top + OFFSET + BAND_HEIGHT]，其中心相對列頂端的位置
+    pct_mid = GROUP_PCT_Y_OFFSET + (GROUP_PCT_BAND_HEIGHT - 6) / 2
+    residuals = []
+    for c in centers:
+        r = ((c - pct_mid - row0_top) + row_h / 2) % row_h - row_h / 2
+        residuals.append(r)
+    residuals.sort()
+    shift = residuals[len(residuals) // 2]
+    return shift if abs(shift) >= 12 else 0.0
+
+
 def _scan_group_list_rows(img, row0_frac, name_x_frac, max_rows=GROUP_LIST_MAX_ROWS):
     """依固定列高逐列擷取清單畫面（族群總覽或族群明細皆適用），回傳
     [{"name": 原始 OCR 名稱, "pct_change": 漲跌幅}, ...]，抓不到漲跌幅的列直接略過
@@ -779,6 +807,7 @@ def _scan_group_list_rows(img, row0_frac, name_x_frac, max_rows=GROUP_LIST_MAX_R
     w, h = img.size
     row0_top = h * row0_frac
     row_h = h * GROUP_ROW_HEIGHT_FRAC
+    row0_top += _estimate_group_scroll_shift(img, row0_top, row_h)
     rows = []
     for i in range(max_rows):
         top = row0_top + i * row_h
@@ -1172,7 +1201,7 @@ def update_group(date_str):
     detail_map = scan_group_sector_details(date_str, master)
     for item in items:
         stocks = detail_map.get(item["sector"])
-        if stocks is None and detail_map:
+        if stocks is None and detail_map and item["sector"] not in GROUP_SECTOR_WHITELIST:
             # overall.jpg 該列族群名稱比對信心不足時會保留原始 OCR 文字（可能與明細截圖
             # 標題辨識出的正確名稱不同字），改用寬鬆模糊比對去對 detail_map 的既有（已較高
             # 信心比對過）族群名稱，避免因兩處 OCR 結果字面不同而漏接已存在的成分股資料。
