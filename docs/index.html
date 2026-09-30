@@ -165,6 +165,8 @@
 
   .row-field { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; flex-shrink: 0; }
   .row-field .field-label { font-size: 0.65rem; color: var(--muted2); }
+  .turnover-field { min-width: 84px; align-items: flex-end; }
+  .turnover-value { font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
 
   .row-tags { flex: 1 1 160px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
   .tag-chip {
@@ -433,6 +435,7 @@
   }
 
   function renderPctBadge(pct) {
+    if (pct === null || pct === undefined) return el("span", { class: "pct-badge", text: "—" });
     var up = pct >= 0;
     return el("span", {
       class: "pct-badge " + (up ? "pct-up" : "pct-down"),
@@ -495,6 +498,15 @@
       el("span", { class: "stock-name", text: item.sector })
     ]);
 
+    // 依成交金額排名；舊日期的資料沒有 turnover 欄位（當時依漲幅排名），顯示「—」
+    var turnoverText = typeof item.turnover === "number"
+      ? item.turnover.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      : "—";
+    var turnoverBlock = el("div", { class: "row-field turnover-field" }, [
+      el("span", { class: "field-label", text: "成交額（億）" }),
+      el("span", { class: "turnover-value", text: turnoverText })
+    ]);
+
     var pctBlock = el("div", { class: "row-field" }, [
       el("span", { class: "field-label", text: "漲跌幅" }),
       renderPctBadge(item.pct_change)
@@ -509,6 +521,7 @@
     }, [
       el("span", { class: "row-rank", text: String(item.rank) }),
       nameBlock,
+      turnoverBlock,
       pctBlock
     ]);
 

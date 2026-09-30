@@ -13,6 +13,7 @@ import difflib
 import json
 import re
 import sys
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
@@ -681,7 +682,8 @@ def build_stock_future_list(date_str, master, db):
 # ---------------------------------------------------------------------------
 _GROUP_NOISE_RE = re.compile(r"[﹣﹍‥。﹒｜|:：'’,，)）(（\[\]{}『』﹚﹛ˍ︰…=~`^\s]+")
 _GROUP_PCT_VALUE_RE = re.compile(r"^([+-])?(\d+)\.(\d{2,})")
-GROUP_TOP_N = 10  # 族群分頁只顯示漲幅前 N 名
+GROUP_TOP_N = 10  # 族群分頁只顯示成交金額前 N 名
+GROUP_TURNOVER_X_FRAC = (0.45, 0.74)  # 族群總覽「成交金額」欄水平範圍（漲跌幅欄約從 0.76 開始）
 GROUP_DETAIL_TOP_N = 10  # 每個族群展開後只顯示成分股前 N 名
 GROUP_DETAIL_NAME_CUTOFF = 0.6
 
@@ -777,6 +779,49 @@ def _ocr_group_row_pct(img, box):
     return None
 
 
+def _parse_turnover(txt):
+    s = txt.replace(",", "")
+    if s.count(".") > 1:  # OCR 偶爾把千分位逗號讀成小數點，只保留最後一個
+        head, _, tail = s.rpartition(".")
+        s = head.replace(".", "") + "." + tail
+    return float(s) if re.fullmatch(r"\d{1,5}(\.\d{1,2})?", s) else None
+
+
+# 成交金額 OCR 的（二值化門檻, 放大倍率）組合：單一組合都會在某些列把 5 誤讀成 9 或 3
+# （實測 2026-09-30：593.19→993.19、489.25→439.25，且每個門檻出錯的列不同），因此多組
+# 各讀一次取多數決，依實測校準。
+GROUP_TURNOVER_OCR_VARIANTS = [(t, s) for t in (100, 130, 180) for s in (2, 3, 4)]
+
+
+def _ocr_group_row_turnover(img, box):
+    """族群總覽的「成交金額」欄（白字，單位：億元，含千分位逗號，例如 1,328.12）。"""
+    l, t, r, b = box
+    crop = img.crop((int(l), int(t), int(r), int(b)))
+    votes = Counter()
+    for thresh, scale in GROUP_TURNOVER_OCR_VARIANTS:
+        val = _parse_turnover(_ocr_single_line(_threshold_channel(crop, thresh=thresh, scale=scale), "0123456789.,"))
+        if val is not None:
+            votes[val] += 1
+    return votes.most_common(1)[0][0] if votes else None
+
+
+def _estimate_group_row_height(img, nominal_row_h):
+    """實測列高會隨截圖（裝置/App 版本）略有不同（例如 134px vs 校準值 137.7px），
+    固定列高每往下一列就累積幾 px 誤差，到後段列讀取框整個偏掉、字被切半而誤判。
+    改用畫面上實際偵測到的相鄰「X.XX%」副行間距中位數；只採用與校準值相差 15% 以內的
+    間距（排除中間漏偵測造成的兩倍間距），可用間距不足 2 個時沿用校準值。"""
+    w, h = img.size
+    try:
+        centers = _list_pct_centers(img, w, h, 0.76, 0.97)
+    except Exception:
+        return nominal_row_h
+    diffs = sorted(b - a for a, b in zip(centers, centers[1:])
+                   if abs((b - a) - nominal_row_h) <= nominal_row_h * 0.15)
+    if len(diffs) < 2:
+        return nominal_row_h
+    return diffs[len(diffs) // 2]
+
+
 def _estimate_group_scroll_shift(img, row0_top, row_h):
     """族群明細截圖是捲動後的畫面，第一列的垂直位置會隨捲動量不同而上下偏移（實測同一天
     不同族群的截圖可差約 30px），固定位置校準會讓漲跌幅讀取框整個落空。這裡偵測畫面上實際
@@ -800,13 +845,16 @@ def _estimate_group_scroll_shift(img, row0_top, row_h):
     return shift if abs(shift) >= 12 else 0.0
 
 
-def _scan_group_list_rows(img, row0_frac, name_x_frac, max_rows=GROUP_LIST_MAX_ROWS):
+def _scan_group_list_rows(img, row0_frac, name_x_frac, max_rows=GROUP_LIST_MAX_ROWS, turnover_x_frac=None):
     """依固定列高逐列擷取清單畫面（族群總覽或族群明細皆適用），回傳
     [{"name": 原始 OCR 名稱, "pct_change": 漲跌幅}, ...]，抓不到漲跌幅的列直接略過
-    （名稱可能因被 UI 浮動元件遮擋等因素辨識失敗，仍保留該列、名稱為空字串）。"""
+    （名稱可能因被 UI 浮動元件遮擋等因素辨識失敗，仍保留該列、名稱為空字串）。
+    指定 turnover_x_frac 時（族群總覽）另外擷取與名稱同一行的「成交金額」欄存入
+    "turnover"；此時只要成交金額讀得到就保留該列（最後一列漲跌幅副行常被底部導覽列
+    遮住，pct_change 為 None）。"""
     w, h = img.size
     row0_top = h * row0_frac
-    row_h = h * GROUP_ROW_HEIGHT_FRAC
+    row_h = _estimate_group_row_height(img, h * GROUP_ROW_HEIGHT_FRAC)
     row0_top += _estimate_group_scroll_shift(img, row0_top, row_h)
     rows = []
     for i in range(max_rows):
@@ -816,39 +864,49 @@ def _scan_group_list_rows(img, row0_frac, name_x_frac, max_rows=GROUP_LIST_MAX_R
         name_box = (name_x_frac[0] * w, top - row_h * 0.08, name_x_frac[1] * w, top + row_h * 0.30)
         pct_box = (w * 0.76, top + GROUP_PCT_Y_OFFSET - 6, w * 0.97, top + GROUP_PCT_Y_OFFSET + GROUP_PCT_BAND_HEIGHT)
         pct = _ocr_group_row_pct(img, pct_box)
-        if pct is None:
+        turnover = None
+        if turnover_x_frac:
+            turnover_box = (turnover_x_frac[0] * w, name_box[1], turnover_x_frac[1] * w, name_box[3])
+            turnover = _ocr_group_row_turnover(img, turnover_box)
+        if pct is None and turnover is None:
             continue
         name = _ocr_group_row_name(img, name_box)
-        rows.append({"name": name, "pct_change": pct})
+        row = {"name": name, "pct_change": pct}
+        if turnover_x_frac:
+            row["turnover"] = turnover
+        rows.append(row)
     return rows
 
 
 def scan_group_overall(date_str):
     """解析 group/<日期>/overall.jpg（App 市場總覽→熱力圖→清單模式截圖），擷取每個
-    產業／族群列的名稱與日漲跌幅(%)，僅保留漲幅 > 0% 的族群，依漲幅由高到低排序，
-    取前 GROUP_TOP_N 名並附上名次。名稱與 GROUP_SECTOR_WHITELIST 模糊比對校正，
-    比對信心不足則保留原始 OCR 文字，讓使用者自行核對。"""
+    產業／族群列的名稱、成交金額（億元）與日漲跌幅(%)，依成交金額由高到低排序（漲跌
+    不限），取前 GROUP_TOP_N 名並附上名次。名稱與 GROUP_SECTOR_WHITELIST 模糊比對校正，
+    比對信心不足則保留原始 OCR 文字，讓使用者自行核對。成交金額辨識失敗的列排在最後。"""
     path = SCREENSHOTS_DIR / "group" / date_str / "overall.jpg"
     if not path.exists():
         return []
     img = Image.open(path)
-    rows = _scan_group_list_rows(img, GROUP_OVERALL_ROW0_FRAC, (0.0, 0.35))
+    rows = _scan_group_list_rows(img, GROUP_OVERALL_ROW0_FRAC, (0.0, 0.35), turnover_x_frac=GROUP_TURNOVER_X_FRAC)
 
     results = []
     for r in rows:
         match, score = _snap_to_sector_name(r["name"])
         name = match if (match and score >= 0.6) else r["name"]
+        desc = f"成交金額 {r['turnover']}" if r["turnover"] is not None else f"漲跌幅 {r['pct_change']:+.2f}%"
         if not name:
-            print(f"[WARN] 族群清單有一列（漲跌幅 {r['pct_change']:+.2f}%）名稱無法辨識，已略過",
-                  file=sys.stderr)
+            print(f"[WARN] 族群清單有一列（{desc}）名稱無法辨識，已略過", file=sys.stderr)
             continue
         if not (match and score >= 0.6):
-            print(f"[WARN] 族群清單有一列（漲跌幅 {r['pct_change']:+.2f}%）名稱與已知族群表比對信心不足，"
+            print(f"[WARN] 族群清單有一列（{desc}）名稱與已知族群表比對信心不足，"
                   f"保留原始辨識結果 {name!r}，建議人工核對", file=sys.stderr)
-        results.append({"sector": name, "pct_change": r["pct_change"]})
+        if r["turnover"] is None:
+            print(f"[WARN] 族群清單 {name} 的成交金額無法辨識，排名排在最後，建議人工核對", file=sys.stderr)
+        if r["pct_change"] is None:
+            print(f"[WARN] 族群清單 {name} 的漲跌幅無法辨識（可能被畫面底部遮住），建議人工核對", file=sys.stderr)
+        results.append({"sector": name, "turnover": r["turnover"], "pct_change": r["pct_change"]})
 
-    results = [r for r in results if r["pct_change"] > 0]
-    results.sort(key=lambda r: -r["pct_change"])
+    results.sort(key=lambda r: -(r["turnover"] if r["turnover"] is not None else -1))
     results = results[:GROUP_TOP_N]
     for i, r in enumerate(results):
         r["rank"] = i + 1
@@ -1189,7 +1247,7 @@ def update_stock_future(date_str):
 
 
 def update_group(date_str):
-    """族群：解析 group/<日期>/overall.jpg 熱力圖，僅保留漲幅 > 0% 的族群並依漲幅排名；
+    """族群：解析 group/<日期>/overall.jpg 清單，依成交金額排名取前 GROUP_TOP_N 名；
     再掃描同資料夾內其他族群明細截圖（點進單一族群後看到的成分股熱力圖），依標題比對
     出所屬族群，附上該族群前 6 大個股排行（供前端點擊該族群列時展開）。找不到對應明細
     截圖的族群，stocks 為空陣列，前端會顯示「No more Information, please update」。
@@ -1216,7 +1274,7 @@ def update_group(date_str):
     save_date_tabs(date_str, tabs, db)
 
     with_detail = sum(1 for it in items if it["stocks"])
-    print(f"  漲幅 > 0% 的族群共 {len(items)} 個（{with_detail} 個有成分股明細），已重新輸出 {SUMMARY_PATH}")
+    print(f"  成交金額前 {GROUP_TOP_N} 名族群共 {len(items)} 個（{with_detail} 個有成分股明細），已重新輸出 {SUMMARY_PATH}")
     return items
 
 
