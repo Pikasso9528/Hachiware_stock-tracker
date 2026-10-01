@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T23:51:44",
+  "generated_at": "2026-10-01T23:31:57",
   "date": "2026-09-17",
   "tabs": {
     "focus": [
@@ -2967,6 +2967,7 @@
     "group": [
       {
         "sector": "IC-代工",
+        "turnover": 1163.86,
         "pct_change": 1.97,
         "rank": 1,
         "stocks": [
@@ -3043,81 +3044,60 @@
         ]
       },
       {
-        "sector": "IC-封測",
-        "pct_change": 1.03,
+        "sector": "PCB-材料設備",
+        "turnover": 1031.09,
+        "pct_change": -6.25,
         "rank": 2,
-        "stocks": [
-          {
-            "name": "中砌",
-            "code": null,
-            "market": null,
-            "pct_change": 9.99,
-            "rank": 1
-          },
-          {
-            "name": "世界",
-            "code": "5347",
-            "market": "TWO",
-            "pct_change": 4.75,
-            "rank": 2
-          },
-          {
-            "name": "聯電",
-            "code": "2303",
-            "market": "TW",
-            "pct_change": 3.87,
-            "rank": 3
-          },
-          {
-            "name": "台積電",
-            "code": "2330",
-            "market": "TW",
-            "pct_change": 1.89,
-            "rank": 4
-          },
-          {
-            "name": "力積電",
-            "code": "6770",
-            "market": "TW",
-            "pct_change": 1.86,
-            "rank": 5
-          },
-          {
-            "name": "a7",
-            "code": null,
-            "market": null,
-            "pct_change": 1.06,
-            "rank": 6
-          },
-          {
-            "name": "環宇-KY",
-            "code": "4991",
-            "market": "TWO",
-            "pct_change": 0.7,
-            "rank": 7
-          },
-          {
-            "name": "宏捷科",
-            "code": "8086",
-            "market": "TWO",
-            "pct_change": 0.47,
-            "rank": 8
-          },
-          {
-            "name": "穩懋",
-            "code": "3105",
-            "market": "TWO",
-            "pct_change": -0.32,
-            "rank": 9
-          },
-          {
-            "name": "茂矽",
-            "code": "2342",
-            "market": "TW",
-            "pct_change": -2.34,
-            "rank": 10
-          }
-        ]
+        "stocks": []
+      },
+      {
+        "sector": "IC-封測",
+        "turnover": 670.68,
+        "pct_change": 1.03,
+        "rank": 3,
+        "stocks": []
+      },
+      {
+        "sector": "被動元件",
+        "turnover": 473.01,
+        "pct_change": -1.69,
+        "rank": 4,
+        "stocks": []
+      },
+      {
+        "sector": "PCB-製造",
+        "turnover": 466.63,
+        "pct_change": -2.49,
+        "rank": 5,
+        "stocks": []
+      },
+      {
+        "sector": "記憶體製造",
+        "turnover": 457.77,
+        "pct_change": -0.58,
+        "rank": 6,
+        "stocks": []
+      },
+      {
+        "sector": "IC-設計",
+        "turnover": 432.93,
+        "pct_change": -0.52,
+        "rank": 7,
+        "stocks": []
+      },
+      {
+        "sector": "ABF",
+        "turnover": 361.91,
+        "pct_change": -2.5,
+        "rank": 8,
+        "stocks": []
+      },
+      {
+        "sector": "光學鏡片",
+        "turnover": 337.22,
+        "pct_change": -2.97,
+        "rank": 9,
+        "stocks": []
       }
     ]
   }

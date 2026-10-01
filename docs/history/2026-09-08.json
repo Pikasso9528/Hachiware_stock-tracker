@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-08T23:19:36",
+  "generated_at": "2026-10-01T23:23:31",
   "date": "2026-09-08",
   "tabs": {
     "focus": [
@@ -3151,9 +3151,17 @@
     ],
     "group": [
       {
-        "sector": "記憶體製造",
-        "pct_change": 3.08,
+        "sector": "IC-代工",
+        "turnover": 1167.81,
+        "pct_change": 0.26,
         "rank": 1,
+        "stocks": []
+      },
+      {
+        "sector": "記憶體製造",
+        "turnover": 875.39,
+        "pct_change": 3.08,
+        "rank": 2,
         "stocks": [
           {
             "name": "華邦電",
@@ -3180,14 +3188,51 @@
       },
       {
         "sector": "IC-封測",
+        "turnover": 562.91,
         "pct_change": 0.41,
-        "rank": 2,
+        "rank": 3,
         "stocks": []
       },
       {
-        "sector": "IC-代工",
-        "pct_change": 0.26,
-        "rank": 3,
+        "sector": "被動元件",
+        "turnover": 549.38,
+        "pct_change": -3.26,
+        "rank": 4,
+        "stocks": []
+      },
+      {
+        "sector": "IC-設計",
+        "turnover": 544.02,
+        "pct_change": -1.09,
+        "rank": 5,
+        "stocks": []
+      },
+      {
+        "sector": "PCB-製造",
+        "turnover": 513.63,
+        "pct_change": -2.1,
+        "rank": 6,
+        "stocks": []
+      },
+      {
+        "sector": "PCB-材料設備",
+        "turnover": 501.04,
+        "pct_change": -2.11,
+        "rank": 7,
+        "stocks": []
+      },
+      {
+        "sector": "筆記型電腦",
+        "turnover": 444.07,
+        "pct_change": -4.45,
+        "rank": 8,
+        "stocks": []
+      },
+      {
+        "sector": "ABF",
+        "turnover": 311.22,
+        "pct_change": -0.54,
+        "rank": 9,
         "stocks": []
       }
     ]

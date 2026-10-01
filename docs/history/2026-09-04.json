@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-06T00:28:11",
+  "generated_at": "2026-10-01T23:20:15",
   "date": "2026-09-04",
   "tabs": {
     "focus": [
@@ -6253,6 +6253,7 @@
     "group": [
       {
         "sector": "被動元件",
+        "turnover": 654.53,
         "pct_change": 8.31,
         "rank": 1,
         "stocks": [
@@ -6285,9 +6286,9 @@
             "rank": 4
           },
           {
-            "name": "禾伸堂",
-            "code": "3026",
-            "market": "TW",
+            "name": "ARS",
+            "code": null,
+            "market": null,
             "pct_change": 9.87,
             "rank": 5
           },
@@ -6329,9 +6330,81 @@
         ]
       },
       {
-        "sector": "NB與手機零組件",
-        "pct_change": 8.0,
+        "sector": "筆記型電腦",
+        "turnover": 370.37,
+        "pct_change": 4.25,
         "rank": 2,
+        "stocks": []
+      },
+      {
+        "sector": "通訊設備",
+        "turnover": 234.73,
+        "pct_change": 4.58,
+        "rank": 3,
+        "stocks": []
+      },
+      {
+        "sector": "晶圓材料",
+        "turnover": 179.6,
+        "pct_change": 5.19,
+        "rank": 4,
+        "stocks": [
+          {
+            "name": "環球晶",
+            "code": "6488",
+            "market": "TWO",
+            "pct_change": 9.83,
+            "rank": 1
+          },
+          {
+            "name": "Gan",
+            "code": null,
+            "market": null,
+            "pct_change": 6.22,
+            "rank": 2
+          },
+          {
+            "name": "台勝科",
+            "code": "3532",
+            "market": "TW",
+            "pct_change": 4.72,
+            "rank": 3
+          },
+          {
+            "name": "嘉晶",
+            "code": "3016",
+            "market": "TW",
+            "pct_change": 2.79,
+            "rank": 4
+          },
+          {
+            "name": "淏磊",
+            "code": null,
+            "market": null,
+            "pct_change": 2.48,
+            "rank": 5
+          },
+          {
+            "name": "IET-KY",
+            "code": "4971",
+            "market": "TWO",
+            "pct_change": 2.13,
+            "rank": 6
+          },
+          {
+            "name": "頌勝科技",
+            "code": "7768",
+            "market": "TW",
+            "pct_change": 1.62,
+            "rank": 7
+          }
+        ]
+      },
+      {
+        "sector": "NB與手機零組件",
+        "turnover": 147.73,
+        "pct_change": 8.0,
+        "rank": 5,
         "stocks": [
           {
             "name": "奇鋐",
@@ -6407,8 +6480,9 @@
       },
       {
         "sector": "散熱零組件",
-        "pct_change": 5.37,
-        "rank": 3,
+        "turnover": 113.15,
+        "pct_change": 9.37,
+        "rank": 6,
         "stocks": [
           {
             "name": "雙鴻",
@@ -6483,88 +6557,23 @@
         ]
       },
       {
-        "sector": "晶圓材料",
-        "pct_change": 5.19,
-        "rank": 4,
-        "stocks": [
-          {
-            "name": "環球晶",
-            "code": "6488",
-            "market": "TWO",
-            "pct_change": 9.83,
-            "rank": 1
-          },
-          {
-            "name": "下三",
-            "code": null,
-            "market": null,
-            "pct_change": 6.22,
-            "rank": 2
-          },
-          {
-            "name": "台勝科",
-            "code": "3532",
-            "market": "TW",
-            "pct_change": 4.72,
-            "rank": 3
-          },
-          {
-            "name": "嘉晶",
-            "code": "3016",
-            "market": "TW",
-            "pct_change": 2.79,
-            "rank": 4
-          },
-          {
-            "name": "淏磊",
-            "code": null,
-            "market": null,
-            "pct_change": 2.48,
-            "rank": 5
-          },
-          {
-            "name": "IET-KY",
-            "code": "4971",
-            "market": "TWO",
-            "pct_change": 2.13,
-            "rank": 6
-          },
-          {
-            "name": "頌勝科技",
-            "code": "7768",
-            "market": "TW",
-            "pct_change": 1.62,
-            "rank": 7
-          }
-        ]
-      },
-      {
-        "sector": "工業電腦",
-        "pct_change": 5.08,
-        "rank": 5,
-        "stocks": []
-      },
-      {
-        "sector": "通訊設備",
-        "pct_change": 4.58,
-        "rank": 6,
-        "stocks": []
-      },
-      {
-        "sector": "IC-其他",
-        "pct_change": 4.38,
+        "sector": "主機板",
+        "turnover": 77.77,
+        "pct_change": 4.21,
         "rank": 7,
         "stocks": []
       },
       {
-        "sector": "筆記型電腦",
-        "pct_change": 4.25,
+        "sector": "工業電腦",
+        "turnover": 55.21,
+        "pct_change": 5.08,
         "rank": 8,
         "stocks": []
       },
       {
-        "sector": "主機板",
-        "pct_change": 4.21,
+        "sector": "IC-其他",
+        "turnover": 48.36,
+        "pct_change": 4.38,
         "rank": 9,
         "stocks": []
       }

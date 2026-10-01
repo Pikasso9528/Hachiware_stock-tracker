@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T23:52:21",
+  "generated_at": "2026-10-01T23:14:45",
   "date": "2026-08-31",
   "tabs": {
     "focus": [
@@ -4344,51 +4344,31 @@
     ],
     "group": [
       {
-        "sector": "半導體元件",
-        "pct_change": 9.43,
+        "sector": "埒膠",
+        "turnover": 521.88,
+        "pct_change": 7.59,
         "rank": 1,
-        "stocks": [
-          {
-            "name": "全新",
-            "code": "2455",
-            "market": "TW",
-            "pct_change": 9.91,
-            "rank": 1
-          },
-          {
-            "name": "聯亞",
-            "code": "3081",
-            "market": "TWO",
-            "pct_change": 6.81,
-            "rank": 2
-          },
-          {
-            "name": "千附精密",
-            "code": "6829",
-            "market": "TWO",
-            "pct_change": 2.94,
-            "rank": 3
-          },
-          {
-            "name": "日揭",
-            "code": null,
-            "market": null,
-            "pct_change": -1.21,
-            "rank": 4
-          },
-          {
-            "name": "棉越",
-            "code": null,
-            "market": null,
-            "pct_change": -2.65,
-            "rank": 5
-          }
-        ]
+        "stocks": []
+      },
+      {
+        "sector": "記憶體 IC 設計",
+        "turnover": 465.42,
+        "pct_change": 2.11,
+        "rank": 2,
+        "stocks": []
+      },
+      {
+        "sector": "金控",
+        "turnover": 414.69,
+        "pct_change": 2.07,
+        "rank": 3,
+        "stocks": []
       },
       {
         "sector": "光學鏡片",
+        "turnover": 402.74,
         "pct_change": 7.74,
-        "rank": 2,
+        "rank": 4,
         "stocks": [
           {
             "name": "玉晶光",
@@ -4463,86 +4443,53 @@
         ]
       },
       {
-        "sector": "埒膠",
-        "pct_change": 7.59,
-        "rank": 3,
+        "sector": "半導體元件",
+        "turnover": 290.73,
+        "pct_change": 9.43,
+        "rank": 5,
         "stocks": [
           {
-            "name": "南亞",
-            "code": "1303",
+            "name": "全新",
+            "code": "2455",
             "market": "TW",
-            "pct_change": 9.98,
+            "pct_change": 9.91,
             "rank": 1
           },
           {
-            "name": "台化",
-            "code": "1326",
-            "market": "TW",
-            "pct_change": 9.98,
+            "name": "聯亞",
+            "code": "3081",
+            "market": "TWO",
+            "pct_change": 6.81,
             "rank": 2
           },
           {
-            "name": "國嗌",
-            "code": null,
-            "market": null,
-            "pct_change": 9.89,
+            "name": "千附精密",
+            "code": "6829",
+            "market": "TWO",
+            "pct_change": 2.94,
             "rank": 3
           },
           {
-            "name": "ne",
+            "name": "日揭",
             "code": null,
             "market": null,
-            "pct_change": 9.58,
+            "pct_change": -1.21,
             "rank": 4
           },
           {
-            "name": "台嘉碩",
-            "code": "3221",
-            "market": "TWO",
-            "pct_change": 4.98,
+            "name": "棉越",
+            "code": null,
+            "market": null,
+            "pct_change": -2.65,
             "rank": 5
-          },
-          {
-            "name": "台塑化",
-            "code": "6505",
-            "market": "TW",
-            "pct_change": 2.94,
-            "rank": 6
-          },
-          {
-            "name": "聯史",
-            "code": null,
-            "market": null,
-            "pct_change": 2.53,
-            "rank": 7
-          },
-          {
-            "name": "中石化",
-            "code": "1314",
-            "market": "TW",
-            "pct_change": 1.61,
-            "rank": 8
-          },
-          {
-            "name": "安全",
-            "code": null,
-            "market": null,
-            "pct_change": -0.38,
-            "rank": 9
-          },
-          {
-            "name": "信立",
-            "code": "4303",
-            "market": "TWO",
-            "pct_change": -2.18,
-            "rank": 10
           }
         ]
       },
       {
         "sector": "散熱零組件",
+        "turnover": 247.32,
         "pct_change": 4.19,
-        "rank": 4,
+        "rank": 6,
         "stocks": [
           {
             "name": "建準",
@@ -4617,32 +4564,23 @@
         ]
       },
       {
-        "sector": "高爾夫球",
-        "pct_change": 3.83,
-        "rank": 5,
-        "stocks": []
-      },
-      {
-        "sector": "主機板",
-        "pct_change": 3.62,
-        "rank": 6,
-        "stocks": []
-      },
-      {
         "sector": "遊戲",
+        "turnover": 167.27,
         "pct_change": 2.84,
         "rank": 7,
         "stocks": []
       },
       {
-        "sector": "記憶體 IC 設計",
-        "pct_change": 2.11,
+        "sector": "主機板",
+        "turnover": 64.89,
+        "pct_change": 3.62,
         "rank": 8,
         "stocks": []
       },
       {
-        "sector": "金控",
-        "pct_change": 2.07,
+        "sector": "高爾夫球",
+        "turnover": 1.8,
+        "pct_change": 3.83,
         "rank": 9,
         "stocks": []
       }

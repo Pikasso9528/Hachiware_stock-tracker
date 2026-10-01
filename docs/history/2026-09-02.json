@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-03T00:27:18",
+  "generated_at": "2026-10-01T23:17:58",
   "date": "2026-09-02",
   "tabs": {
     "focus": [
@@ -4517,15 +4517,10 @@
     ],
     "group": [
       {
-        "sector": "照明",
-        "pct_change": 4.13,
-        "rank": 1,
-        "stocks": []
-      },
-      {
         "sector": "光學鏡片",
+        "turnover": 279.58,
         "pct_change": 3.48,
-        "rank": 2,
+        "rank": 1,
         "stocks": [
           {
             "name": "亞光",
@@ -4535,24 +4530,24 @@
             "rank": 1
           },
           {
+            "name": "先進光",
+            "code": "3362",
+            "market": "TWO",
+            "pct_change": 9.0,
+            "rank": 2
+          },
+          {
             "name": "揚明光",
             "code": "3504",
             "market": "TW",
             "pct_change": 8.14,
-            "rank": 2
+            "rank": 3
           },
           {
             "name": "久禾光",
             "code": "6498",
             "market": "TWO",
             "pct_change": 6.39,
-            "rank": 3
-          },
-          {
-            "name": "先進光",
-            "code": "3362",
-            "market": "TWO",
-            "pct_change": 5.0,
             "rank": 4
           },
           {
@@ -4596,20 +4591,14 @@
             "market": "TW",
             "pct_change": 2.68,
             "rank": 10
-          },
-          {
-            "name": "保勝光學",
-            "code": "6517",
-            "market": "TWO",
-            "pct_change": 2.46,
-            "rank": 11
           }
         ]
       },
       {
         "sector": "通訊設備",
+        "turnover": 180.89,
         "pct_change": 3.04,
-        "rank": 3,
+        "rank": 2,
         "stocks": [
           {
             "name": "仲琦",
@@ -4684,38 +4673,51 @@
         ]
       },
       {
-        "sector": "IC-導線架",
+        "sector": "IC導線架",
+        "turnover": 36.93,
         "pct_change": 2.7,
-        "rank": 4,
-        "stocks": []
-      },
-      {
-        "sector": "手機製造",
-        "pct_change": 2.07,
-        "rank": 5,
-        "stocks": []
-      },
-      {
-        "sector": "磁碟陣列",
-        "pct_change": 1.69,
-        "rank": 6,
-        "stocks": []
-      },
-      {
-        "sector": "數位相機",
-        "pct_change": 1.62,
-        "rank": 7,
+        "rank": 3,
         "stocks": []
       },
       {
         "sector": "銀行",
+        "turnover": 35.64,
         "pct_change": 1.47,
-        "rank": 8,
+        "rank": 4,
         "stocks": []
       },
       {
         "sector": "電腦周邊",
+        "turnover": 4.72,
         "pct_change": 1.44,
+        "rank": 5,
+        "stocks": []
+      },
+      {
+        "sector": "數位相機",
+        "turnover": 4.29,
+        "pct_change": 1.62,
+        "rank": 6,
+        "stocks": []
+      },
+      {
+        "sector": "照昭",
+        "turnover": 3.93,
+        "pct_change": 4.13,
+        "rank": 7,
+        "stocks": []
+      },
+      {
+        "sector": "手機裕造",
+        "turnover": 2.53,
+        "pct_change": 2.07,
+        "rank": 8,
+        "stocks": []
+      },
+      {
+        "sector": "磁硼陣列",
+        "turnover": 0.71,
+        "pct_change": 1.69,
         "rank": 9,
         "stocks": []
       }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T23:38:09",
+  "generated_at": "2026-10-01T23:26:43",
   "date": "2026-09-10",
   "tabs": {
     "focus": [
@@ -2897,9 +2897,17 @@
     ],
     "group": [
       {
-        "sector": "被動元件",
-        "pct_change": 1.92,
+        "sector": "IC-代工",
+        "turnover": 931.24,
+        "pct_change": -0.55,
         "rank": 1,
+        "stocks": []
+      },
+      {
+        "sector": "被動元件",
+        "turnover": 654.18,
+        "pct_change": 1.92,
+        "rank": 2,
         "stocks": [
           {
             "name": "ARS",
@@ -2974,84 +2982,8 @@
         ]
       },
       {
-        "sector": "IC-設計",
-        "pct_change": 1.39,
-        "rank": 2,
-        "stocks": [
-          {
-            "name": "ip",
-            "code": null,
-            "market": null,
-            "pct_change": 3.13,
-            "rank": 1
-          },
-          {
-            "name": "聯發科",
-            "code": "2454",
-            "market": "TW",
-            "pct_change": 2.05,
-            "rank": 2
-          },
-          {
-            "name": "信驊",
-            "code": "5274",
-            "market": "TWO",
-            "pct_change": 0.51,
-            "rank": 3
-          },
-          {
-            "name": "聯詠",
-            "code": "3034",
-            "market": "TW",
-            "pct_change": 0.37,
-            "rank": 4
-          },
-          {
-            "name": "矽統",
-            "code": "2363",
-            "market": "TW",
-            "pct_change": 0.0,
-            "rank": 5
-          },
-          {
-            "name": "偎請電",
-            "code": null,
-            "market": null,
-            "pct_change": -1.16,
-            "rank": 6
-          },
-          {
-            "name": "瑞昱",
-            "code": "2379",
-            "market": "TW",
-            "pct_change": -1.28,
-            "rank": 7
-          },
-          {
-            "name": "寓鼎",
-            "code": null,
-            "market": null,
-            "pct_change": -1.47,
-            "rank": 8
-          },
-          {
-            "name": "+4",
-            "code": null,
-            "market": null,
-            "pct_change": -2.51,
-            "rank": 9
-          },
-          {
-            "name": "矽力*-KY",
-            "code": "6415",
-            "market": "TW",
-            "pct_change": -2.83,
-            "rank": 10
-          }
-        ]
-      },
-      {
         "sector": "IC-封測",
+        "turnover": 547.45,
         "pct_change": 0.93,
         "rank": 3,
         "stocks": [
@@ -3128,9 +3060,116 @@
         ]
       },
       {
-        "sector": "PCB-材料設備",
-        "pct_change": 0.19,
+        "sector": "IC-設計",
+        "turnover": 432.52,
+        "pct_change": 1.39,
         "rank": 4,
+        "stocks": [
+          {
+            "name": "ip",
+            "code": null,
+            "market": null,
+            "pct_change": 3.13,
+            "rank": 1
+          },
+          {
+            "name": "聯發科",
+            "code": "2454",
+            "market": "TW",
+            "pct_change": 2.05,
+            "rank": 2
+          },
+          {
+            "name": "信驊",
+            "code": "5274",
+            "market": "TWO",
+            "pct_change": 0.51,
+            "rank": 3
+          },
+          {
+            "name": "聯詠",
+            "code": "3034",
+            "market": "TW",
+            "pct_change": 0.37,
+            "rank": 4
+          },
+          {
+            "name": "矽統",
+            "code": "2363",
+            "market": "TW",
+            "pct_change": 0.0,
+            "rank": 5
+          },
+          {
+            "name": "偎請電",
+            "code": null,
+            "market": null,
+            "pct_change": -1.16,
+            "rank": 6
+          },
+          {
+            "name": "瑞昱",
+            "code": "2379",
+            "market": "TW",
+            "pct_change": -1.28,
+            "rank": 7
+          },
+          {
+            "name": "寓鼎",
+            "code": null,
+            "market": null,
+            "pct_change": -1.47,
+            "rank": 8
+          },
+          {
+            "name": "+4",
+            "code": null,
+            "market": null,
+            "pct_change": -2.51,
+            "rank": 9
+          },
+          {
+            "name": "矽力*-KY",
+            "code": "6415",
+            "market": "TW",
+            "pct_change": -2.83,
+            "rank": 10
+          }
+        ]
+      },
+      {
+        "sector": "電源供應器",
+        "turnover": 360.68,
+        "pct_change": -9.72,
+        "rank": 5,
+        "stocks": []
+      },
+      {
+        "sector": "ABF",
+        "turnover": 359.2,
+        "pct_change": -0.55,
+        "rank": 6,
+        "stocks": []
+      },
+      {
+        "sector": "記憶體製造",
+        "turnover": 342.53,
+        "pct_change": -1.78,
+        "rank": 7,
+        "stocks": []
+      },
+      {
+        "sector": "PCB-製造",
+        "turnover": 304.27,
+        "pct_change": -2.43,
+        "rank": 8,
+        "stocks": []
+      },
+      {
+        "sector": "PCB-材料設備",
+        "turnover": 279.87,
+        "pct_change": 0.19,
+        "rank": 9,
         "stocks": []
       }
     ]

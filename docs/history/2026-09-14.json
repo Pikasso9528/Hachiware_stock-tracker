@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T23:20:38",
+  "generated_at": "2026-10-01T23:28:21",
   "date": "2026-09-14",
   "tabs": {
     "focus": [
@@ -2940,13 +2940,15 @@
     ],
     "group": [
       {
-        "sector": "IP/ASIC",
-        "pct_change": 3.19,
+        "sector": "IC-代工",
+        "turnover": 780.59,
+        "pct_change": -1.14,
         "rank": 1,
         "stocks": []
       },
       {
         "sector": "PCB-材料設備",
+        "turnover": 484.15,
         "pct_change": 0.38,
         "rank": 2,
         "stocks": [
@@ -2965,9 +2967,9 @@
             "rank": 2
           },
           {
-            "name": "ale",
-            "code": null,
-            "market": null,
+            "name": "台燿",
+            "code": "6274",
+            "market": "TWO",
             "pct_change": 3.3,
             "rank": 3
           },
@@ -3021,6 +3023,55 @@
             "rank": 10
           }
         ]
+      },
+      {
+        "sector": "被動元件",
+        "turnover": 450.56,
+        "pct_change": -0.24,
+        "rank": 3,
+        "stocks": []
+      },
+      {
+        "sector": "IC-封測",
+        "turnover": 443.52,
+        "pct_change": -0.96,
+        "rank": 4,
+        "stocks": []
+      },
+      {
+        "sector": "記憶體製造",
+        "turnover": 436.83,
+        "pct_change": -4.66,
+        "rank": 5,
+        "stocks": []
+      },
+      {
+        "sector": "IC-設計",
+        "turnover": 401.27,
+        "pct_change": -0.13,
+        "rank": 6,
+        "stocks": []
+      },
+      {
+        "sector": "IP/ASIC",
+        "turnover": 318.28,
+        "pct_change": 3.19,
+        "rank": 7,
+        "stocks": []
+      },
+      {
+        "sector": "ABF",
+        "turnover": 270.05,
+        "pct_change": -1.47,
+        "rank": 8,
+        "stocks": []
+      },
+      {
+        "sector": "PCB-製造",
+        "turnover": 267.31,
+        "pct_change": -0.69,
+        "rank": 9,
+        "stocks": []
       }
     ]
   }

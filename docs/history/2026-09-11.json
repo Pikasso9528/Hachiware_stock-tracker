@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-13T21:54:50",
+  "generated_at": "2026-10-01T23:27:23",
   "date": "2026-09-11",
   "tabs": {
     "focus": [
@@ -2075,6 +2075,70 @@
         "rank": 17
       }
     ],
-    "group": []
+    "group": [
+      {
+        "sector": "被動元件",
+        "turnover": 843.36,
+        "pct_change": null,
+        "rank": 1,
+        "stocks": []
+      },
+      {
+        "sector": "IC-代工",
+        "turnover": 822.25,
+        "pct_change": -1.64,
+        "rank": 2,
+        "stocks": []
+      },
+      {
+        "sector": "IC-封測",
+        "turnover": 506.53,
+        "pct_change": -3.96,
+        "rank": 3,
+        "stocks": []
+      },
+      {
+        "sector": "IC-設計",
+        "turnover": 442.44,
+        "pct_change": -2.6,
+        "rank": 4,
+        "stocks": []
+      },
+      {
+        "sector": "PCB柩秦設侷",
+        "turnover": 383.85,
+        "pct_change": -1.15,
+        "rank": 5,
+        "stocks": []
+      },
+      {
+        "sector": "記憔麓袖痘",
+        "turnover": 328.79,
+        "pct_change": -4.2,
+        "rank": 6,
+        "stocks": []
+      },
+      {
+        "sector": "IP/ASIC",
+        "turnover": 318.52,
+        "pct_change": -4.13,
+        "rank": 7,
+        "stocks": []
+      },
+      {
+        "sector": "元學貘戶",
+        "turnover": 314.07,
+        "pct_change": -0.89,
+        "rank": 8,
+        "stocks": []
+      },
+      {
+        "sector": "電源供應器",
+        "turnover": 288.94,
+        "pct_change": -3.4,
+        "rank": 9,
+        "stocks": []
+      }
+    ]
   }
 }

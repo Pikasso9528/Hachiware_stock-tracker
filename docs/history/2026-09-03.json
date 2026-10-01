@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-03T23:39:15",
+  "generated_at": "2026-10-01T23:18:37",
   "date": "2026-09-03",
   "tabs": {
     "focus": [
@@ -2739,15 +2739,66 @@
     ],
     "group": [
       {
-        "sector": "IC-設計",
-        "pct_change": 0.59,
+        "sector": "記憶體製造",
+        "turnover": 920.13,
+        "pct_change": -6.92,
         "rank": 1,
         "stocks": []
       },
       {
         "sector": "IC-代工",
+        "turnover": 837.5,
         "pct_change": 0.13,
         "rank": 2,
+        "stocks": []
+      },
+      {
+        "sector": "ABF",
+        "turnover": 744.04,
+        "pct_change": -6.96,
+        "rank": 3,
+        "stocks": []
+      },
+      {
+        "sector": "IC-封測",
+        "turnover": 637.32,
+        "pct_change": -1.37,
+        "rank": 4,
+        "stocks": []
+      },
+      {
+        "sector": "IC-設計",
+        "turnover": 624.9,
+        "pct_change": 0.59,
+        "rank": 5,
+        "stocks": []
+      },
+      {
+        "sector": "PCB-材料設備",
+        "turnover": 547.34,
+        "pct_change": -3.56,
+        "rank": 6,
+        "stocks": []
+      },
+      {
+        "sector": "PCB-製造",
+        "turnover": 535.02,
+        "pct_change": -9.87,
+        "rank": 7,
+        "stocks": []
+      },
+      {
+        "sector": "被動元件",
+        "turnover": 449.4,
+        "pct_change": -5.12,
+        "rank": 8,
+        "stocks": []
+      },
+      {
+        "sector": "埒膠",
+        "turnover": 364.98,
+        "pct_change": -4.75,
+        "rank": 9,
         "stocks": []
       }
     ]

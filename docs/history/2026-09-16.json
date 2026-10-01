@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T23:25:16",
+  "generated_at": "2026-10-01T23:31:02",
   "date": "2026-09-16",
   "tabs": {
     "focus": [
@@ -4706,96 +4706,242 @@
     ],
     "group": [
       {
-        "sector": "PCB-製造",
-        "pct_change": 2.73,
+        "sector": "IC-代工",
+        "turnover": 825.13,
+        "pct_change": 0.13,
         "rank": 1,
-        "stocks": []
-      },
-      {
-        "sector": "半導體元件",
-        "pct_change": 2.68,
-        "rank": 2,
-        "stocks": []
-      },
-      {
-        "sector": "IC-設計",
-        "pct_change": 2.47,
-        "rank": 3,
         "stocks": [
           {
-            "name": "聯鈞",
-            "code": "3450",
+            "name": "茂矽",
+            "code": "2342",
             "market": "TW",
-            "pct_change": 9.85,
+            "pct_change": 5.6,
             "rank": 1
           },
           {
-            "name": "訊芯-KY",
-            "code": "6451",
+            "name": "力積電",
+            "code": "6770",
             "market": "TW",
-            "pct_change": 6.85,
+            "pct_change": 4.48,
             "rank": 2
           },
           {
-            "name": "精材",
-            "code": "3374",
+            "name": "穩懋",
+            "code": "3105",
             "market": "TWO",
-            "pct_change": 3.79,
+            "pct_change": 4.07,
             "rank": 3
           },
           {
-            "name": "頎邦",
-            "code": "6147",
+            "name": "世界",
+            "code": "5347",
             "market": "TWO",
-            "pct_change": 3.75,
+            "pct_change": 3.27,
             "rank": 4
           },
           {
-            "name": "旺矽",
-            "code": "6223",
-            "market": "TWO",
-            "pct_change": 2.94,
+            "name": "聯電",
+            "code": "2303",
+            "market": "TW",
+            "pct_change": 2.53,
             "rank": 5
           },
           {
-            "name": "力成",
-            "code": "6239",
-            "market": "TW",
-            "pct_change": 2.43,
+            "name": "環宇-KY",
+            "code": "4991",
+            "market": "TWO",
+            "pct_change": 2.39,
             "rank": 6
           },
           {
-            "name": "日月光投控",
-            "code": "3711",
-            "market": "TW",
-            "pct_change": 2.2,
+            "name": "a7",
+            "code": null,
+            "market": null,
+            "pct_change": 1.84,
             "rank": 7
           },
           {
-            "name": "京元電子",
-            "code": "2449",
-            "market": "TW",
-            "pct_change": 1.75,
+            "name": "宏捷科",
+            "code": "8086",
+            "market": "TWO",
+            "pct_change": 1.42,
             "rank": 8
           },
           {
-            "name": "精測",
-            "code": "6510",
-            "market": "TWO",
-            "pct_change": -0.77,
+            "name": "中砌",
+            "code": null,
+            "market": null,
+            "pct_change": 0.82,
             "rank": 9
           },
           {
-            "name": "顆崴",
+            "name": "台積電",
+            "code": "2330",
+            "market": "TW",
+            "pct_change": 0.0,
+            "rank": 10
+          }
+        ]
+      },
+      {
+        "sector": "PCB-材料設備",
+        "turnover": 504.62,
+        "pct_change": 1.15,
+        "rank": 2,
+        "stocks": [
+          {
+            "name": "揚博",
+            "code": "2493",
+            "market": "TW",
+            "pct_change": 9.94,
+            "rank": 1
+          },
+          {
+            "name": "金居",
+            "code": "8358",
+            "market": "TWO",
+            "pct_change": 9.81,
+            "rank": 2
+          },
+          {
+            "name": "德安",
             "code": null,
             "market": null,
-            "pct_change": -1.58,
+            "pct_change": 7.06,
+            "rank": 3
+          },
+          {
+            "name": "由田",
+            "code": "3455",
+            "market": "TWO",
+            "pct_change": 6.65,
+            "rank": 4
+          },
+          {
+            "name": "聯茂",
+            "code": "6213",
+            "market": "TW",
+            "pct_change": 5.97,
+            "rank": 5
+          },
+          {
+            "name": "中探針",
+            "code": "6217",
+            "market": "TWO",
+            "pct_change": 5.43,
+            "rank": 6
+          },
+          {
+            "name": "寓嗌",
+            "code": null,
+            "market": null,
+            "pct_change": 3.49,
+            "rank": 7
+          },
+          {
+            "name": "aie",
+            "code": null,
+            "market": null,
+            "pct_change": 3.28,
+            "rank": 8
+          },
+          {
+            "name": "尖點",
+            "code": "8021",
+            "market": "TW",
+            "pct_change": 1.97,
+            "rank": 9
+          },
+          {
+            "name": "台光電",
+            "code": "2383",
+            "market": "TW",
+            "pct_change": -0.59,
+            "rank": 10
+          }
+        ]
+      },
+      {
+        "sector": "被動元件",
+        "turnover": 436.71,
+        "pct_change": 1.36,
+        "rank": 3,
+        "stocks": [
+          {
+            "name": "芳華",
+            "code": null,
+            "market": null,
+            "pct_change": 9.0,
+            "rank": 1
+          },
+          {
+            "name": "信昌電",
+            "code": "6173",
+            "market": "TWO",
+            "pct_change": 6.96,
+            "rank": 2
+          },
+          {
+            "name": "ARS",
+            "code": null,
+            "market": null,
+            "pct_change": 6.34,
+            "rank": 3
+          },
+          {
+            "name": "上誇",
+            "code": null,
+            "market": null,
+            "pct_change": 5.56,
+            "rank": 4
+          },
+          {
+            "name": "天二科技",
+            "code": "6834",
+            "market": "TW",
+            "pct_change": 2.99,
+            "rank": 5
+          },
+          {
+            "name": "華新科",
+            "code": "2492",
+            "market": "TW",
+            "pct_change": 2.5,
+            "rank": 6
+          },
+          {
+            "name": "晶技",
+            "code": "3042",
+            "market": "TW",
+            "pct_change": 2.49,
+            "rank": 7
+          },
+          {
+            "name": "立隆電",
+            "code": "2472",
+            "market": "TW",
+            "pct_change": 1.2,
+            "rank": 8
+          },
+          {
+            "name": "國巨*",
+            "code": "2327",
+            "market": "TW",
+            "pct_change": -0.19,
+            "rank": 9
+          },
+          {
+            "name": "光頭",
+            "code": null,
+            "market": null,
+            "pct_change": -0.4,
             "rank": 10
           }
         ]
       },
       {
         "sector": "IC-封測",
+        "turnover": 431.71,
         "pct_change": 2.24,
         "rank": 4,
         "stocks": [
@@ -4872,247 +5018,39 @@
         ]
       },
       {
-        "sector": "ABF",
-        "pct_change": 1.58,
+        "sector": "IC-設計",
+        "turnover": 408.85,
+        "pct_change": 2.47,
         "rank": 5,
         "stocks": []
       },
       {
-        "sector": "被動元件",
-        "pct_change": 1.36,
-        "rank": 6,
-        "stocks": [
-          {
-            "name": "芳華",
-            "code": null,
-            "market": null,
-            "pct_change": 9.0,
-            "rank": 1
-          },
-          {
-            "name": "信昌電",
-            "code": "6173",
-            "market": "TWO",
-            "pct_change": 6.96,
-            "rank": 2
-          },
-          {
-            "name": "ARS",
-            "code": null,
-            "market": null,
-            "pct_change": 6.34,
-            "rank": 3
-          },
-          {
-            "name": "上誇",
-            "code": null,
-            "market": null,
-            "pct_change": 5.56,
-            "rank": 4
-          },
-          {
-            "name": "天二科技",
-            "code": "6834",
-            "market": "TW",
-            "pct_change": 2.99,
-            "rank": 5
-          },
-          {
-            "name": "華新科",
-            "code": "2492",
-            "market": "TW",
-            "pct_change": 2.5,
-            "rank": 6
-          },
-          {
-            "name": "晶技",
-            "code": "3042",
-            "market": "TW",
-            "pct_change": 2.49,
-            "rank": 7
-          },
-          {
-            "name": "立隆電",
-            "code": "2472",
-            "market": "TW",
-            "pct_change": 1.2,
-            "rank": 8
-          },
-          {
-            "name": "國巨*",
-            "code": "2327",
-            "market": "TW",
-            "pct_change": -0.19,
-            "rank": 9
-          },
-          {
-            "name": "光頭",
-            "code": null,
-            "market": null,
-            "pct_change": -0.4,
-            "rank": 10
-          }
-        ]
-      },
-      {
-        "sector": "PCB-材料設備",
-        "pct_change": 1.15,
-        "rank": 7,
-        "stocks": [
-          {
-            "name": "揚博",
-            "code": "2493",
-            "market": "TW",
-            "pct_change": 9.94,
-            "rank": 1
-          },
-          {
-            "name": "金居",
-            "code": "8358",
-            "market": "TWO",
-            "pct_change": 9.81,
-            "rank": 2
-          },
-          {
-            "name": "德安",
-            "code": null,
-            "market": null,
-            "pct_change": 7.06,
-            "rank": 3
-          },
-          {
-            "name": "由田",
-            "code": "3455",
-            "market": "TWO",
-            "pct_change": 6.65,
-            "rank": 4
-          },
-          {
-            "name": "聯茂",
-            "code": "6213",
-            "market": "TW",
-            "pct_change": 5.97,
-            "rank": 5
-          },
-          {
-            "name": "中探針",
-            "code": "6217",
-            "market": "TWO",
-            "pct_change": 5.43,
-            "rank": 6
-          },
-          {
-            "name": "寓嗌",
-            "code": null,
-            "market": null,
-            "pct_change": 3.49,
-            "rank": 7
-          },
-          {
-            "name": "aie",
-            "code": null,
-            "market": null,
-            "pct_change": 3.28,
-            "rank": 8
-          },
-          {
-            "name": "尖點",
-            "code": "8021",
-            "market": "TW",
-            "pct_change": 1.97,
-            "rank": 9
-          },
-          {
-            "name": "台光電",
-            "code": "2383",
-            "market": "TW",
-            "pct_change": -0.59,
-            "rank": 10
-          }
-        ]
-      },
-      {
         "sector": "記憶體製造",
+        "turnover": 331.17,
         "pct_change": 0.68,
+        "rank": 6,
+        "stocks": []
+      },
+      {
+        "sector": "PCB-製造",
+        "turnover": 291.8,
+        "pct_change": 2.73,
+        "rank": 7,
+        "stocks": []
+      },
+      {
+        "sector": "ABF",
+        "turnover": 278.38,
+        "pct_change": 1.58,
         "rank": 8,
         "stocks": []
       },
       {
-        "sector": "IC-代工",
-        "pct_change": 0.13,
+        "sector": "半導體元件",
+        "turnover": 263.17,
+        "pct_change": 2.68,
         "rank": 9,
-        "stocks": [
-          {
-            "name": "茂矽",
-            "code": "2342",
-            "market": "TW",
-            "pct_change": 5.6,
-            "rank": 1
-          },
-          {
-            "name": "力積電",
-            "code": "6770",
-            "market": "TW",
-            "pct_change": 4.48,
-            "rank": 2
-          },
-          {
-            "name": "穩懋",
-            "code": "3105",
-            "market": "TWO",
-            "pct_change": 4.07,
-            "rank": 3
-          },
-          {
-            "name": "世界",
-            "code": "5347",
-            "market": "TWO",
-            "pct_change": 3.27,
-            "rank": 4
-          },
-          {
-            "name": "聯電",
-            "code": "2303",
-            "market": "TW",
-            "pct_change": 2.53,
-            "rank": 5
-          },
-          {
-            "name": "環宇-KY",
-            "code": "4991",
-            "market": "TWO",
-            "pct_change": 2.39,
-            "rank": 6
-          },
-          {
-            "name": "a7",
-            "code": null,
-            "market": null,
-            "pct_change": 1.84,
-            "rank": 7
-          },
-          {
-            "name": "宏捷科",
-            "code": "8086",
-            "market": "TWO",
-            "pct_change": 1.42,
-            "rank": 8
-          },
-          {
-            "name": "中砌",
-            "code": null,
-            "market": null,
-            "pct_change": 0.82,
-            "rank": 9
-          },
-          {
-            "name": "台積電",
-            "code": "2330",
-            "market": "TW",
-            "pct_change": 0.0,
-            "rank": 10
-          }
-        ]
+        "stocks": []
       }
     ]
   }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07T23:38:51",
+  "generated_at": "2026-10-01T23:22:42",
   "date": "2026-09-07",
   "tabs": {
     "focus": [
@@ -4439,9 +4439,88 @@
     ],
     "group": [
       {
-        "sector": "IC-設計",
-        "pct_change": 6.76,
+        "sector": "IC-代工",
+        "turnover": 1314.37,
+        "pct_change": 2.31,
         "rank": 1,
+        "stocks": [
+          {
+            "name": "聯電",
+            "code": "2303",
+            "market": "TW",
+            "pct_change": 10.0,
+            "rank": 1
+          },
+          {
+            "name": "力積電",
+            "code": "6770",
+            "market": "TW",
+            "pct_change": 6.42,
+            "rank": 2
+          },
+          {
+            "name": "中砌",
+            "code": null,
+            "market": null,
+            "pct_change": 5.04,
+            "rank": 3
+          },
+          {
+            "name": "世界",
+            "code": "5347",
+            "market": "TWO",
+            "pct_change": 4.0,
+            "rank": 4
+          },
+          {
+            "name": "台積電",
+            "code": "2330",
+            "market": "TW",
+            "pct_change": 2.07,
+            "rank": 5
+          },
+          {
+            "name": "全訊",
+            "code": "5222",
+            "market": "TW",
+            "pct_change": 0.96,
+            "rank": 6
+          },
+          {
+            "name": "穩懋",
+            "code": "3105",
+            "market": "TWO",
+            "pct_change": 0.22,
+            "rank": 7
+          },
+          {
+            "name": "茂矽",
+            "code": "2342",
+            "market": "TW",
+            "pct_change": 0.13,
+            "rank": 8
+          },
+          {
+            "name": "宏捷科",
+            "code": "8086",
+            "market": "TWO",
+            "pct_change": 0.0,
+            "rank": 9
+          },
+          {
+            "name": "環宇-KY",
+            "code": "4991",
+            "market": "TWO",
+            "pct_change": -0.6,
+            "rank": 10
+          }
+        ]
+      },
+      {
+        "sector": "IC-設計",
+        "turnover": 923.56,
+        "pct_change": 6.76,
+        "rank": 2,
         "stocks": [
           {
             "name": "信驊",
@@ -4517,8 +4596,9 @@
       },
       {
         "sector": "被動元件",
+        "turnover": 783.72,
         "pct_change": 4.42,
-        "rank": 2,
+        "rank": 3,
         "stocks": [
           {
             "name": "ARS",
@@ -4594,8 +4674,9 @@
       },
       {
         "sector": "IC-封測",
+        "turnover": 597.71,
         "pct_change": 4.41,
-        "rank": 3,
+        "rank": 4,
         "stocks": [
           {
             "name": "精材",
@@ -4671,8 +4752,9 @@
       },
       {
         "sector": "PCB-製造",
+        "turnover": 548.12,
         "pct_change": 4.0,
-        "rank": 4,
+        "rank": 5,
         "stocks": [
           {
             "name": "台虹",
@@ -4748,119 +4830,16 @@
       },
       {
         "sector": "記憶體製造",
+        "turnover": 531.67,
         "pct_change": 3.85,
-        "rank": 5,
+        "rank": 6,
         "stocks": []
       },
       {
-        "sector": "ABF",
-        "pct_change": 2.81,
-        "rank": 6,
-        "stocks": [
-          {
-            "name": "欣興",
-            "code": "3037",
-            "market": "TW",
-            "pct_change": 5.21,
-            "rank": 1
-          },
-          {
-            "name": "南電",
-            "code": "8046",
-            "market": "TW",
-            "pct_change": -0.47,
-            "rank": 2
-          },
-          {
-            "name": "景碩",
-            "code": "3189",
-            "market": "TW",
-            "pct_change": -0.73,
-            "rank": 3
-          }
-        ]
-      },
-      {
-        "sector": "IC-代工",
-        "pct_change": 2.31,
-        "rank": 7,
-        "stocks": [
-          {
-            "name": "聯電",
-            "code": "2303",
-            "market": "TW",
-            "pct_change": 10.0,
-            "rank": 1
-          },
-          {
-            "name": "力積電",
-            "code": "6770",
-            "market": "TW",
-            "pct_change": 6.42,
-            "rank": 2
-          },
-          {
-            "name": "中砌",
-            "code": null,
-            "market": null,
-            "pct_change": 5.04,
-            "rank": 3
-          },
-          {
-            "name": "世界",
-            "code": "5347",
-            "market": "TWO",
-            "pct_change": 4.0,
-            "rank": 4
-          },
-          {
-            "name": "台積電",
-            "code": "2330",
-            "market": "TW",
-            "pct_change": 2.07,
-            "rank": 5
-          },
-          {
-            "name": "全訊",
-            "code": "5222",
-            "market": "TW",
-            "pct_change": 0.96,
-            "rank": 6
-          },
-          {
-            "name": "穩懋",
-            "code": "3105",
-            "market": "TWO",
-            "pct_change": 0.22,
-            "rank": 7
-          },
-          {
-            "name": "茂矽",
-            "code": "2342",
-            "market": "TW",
-            "pct_change": 0.13,
-            "rank": 8
-          },
-          {
-            "name": "宏捷科",
-            "code": "8086",
-            "market": "TWO",
-            "pct_change": 0.0,
-            "rank": 9
-          },
-          {
-            "name": "環宇-KY",
-            "code": "4991",
-            "market": "TWO",
-            "pct_change": -0.6,
-            "rank": 10
-          }
-        ]
-      },
-      {
         "sector": "PCB-材料設備",
+        "turnover": 433.08,
         "pct_change": 1.64,
-        "rank": 8,
+        "rank": 7,
         "stocks": [
           {
             "name": "尖點",
@@ -4935,7 +4914,37 @@
         ]
       },
       {
+        "sector": "ABF",
+        "turnover": 404.37,
+        "pct_change": 2.81,
+        "rank": 8,
+        "stocks": [
+          {
+            "name": "欣興",
+            "code": "3037",
+            "market": "TW",
+            "pct_change": 5.21,
+            "rank": 1
+          },
+          {
+            "name": "南電",
+            "code": "8046",
+            "market": "TW",
+            "pct_change": -0.47,
+            "rank": 2
+          },
+          {
+            "name": "景碩",
+            "code": "3189",
+            "market": "TW",
+            "pct_change": -0.73,
+            "rank": 3
+          }
+        ]
+      },
+      {
         "sector": "IP/ASIC",
+        "turnover": 316.35,
         "pct_change": 1.14,
         "rank": 9,
         "stocks": []
