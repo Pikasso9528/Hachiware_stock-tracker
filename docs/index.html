@@ -359,7 +359,8 @@
     return row;
   }
 
-  var POOL_CROSS_CHECK_KEYS = ["focus", "alpha", "pullback", "stock_future"]; // group（族群）另外檢查成分股
+  // 監控股池標籤顯示順序；group（族群）檢查的是各族群的成分股
+  var POOL_CROSS_CHECK_KEYS = ["alpha", "stock_future", "focus", "group", "pullback"];
 
   function poolCrossTabs(code) {
     var d = state.byDate[state.selectedDate];
@@ -367,21 +368,33 @@
     var found = [];
     POOL_CROSS_CHECK_KEYS.forEach(function (key) {
       var list = d.tabs[key] || [];
-      var hit = list.some(function (item) { return item.code === code; });
+      var hit = key === "group"
+        ? list.some(function (sector) {
+            return (sector.stocks || []).some(function (s) { return s.code === code; });
+          })
+        : list.some(function (item) { return item.code === code; });
       if (hit) {
         var tabDef = TABS.filter(function (t) { return t.key === key; })[0];
         if (tabDef) found.push(tabDef);
       }
     });
-    var groupList = d.tabs.group || [];
-    var inGroup = groupList.some(function (sector) {
-      return (sector.stocks || []).some(function (s) { return s.code === code; });
-    });
-    if (inGroup) {
-      var groupTab = TABS.filter(function (t) { return t.key === "group"; })[0];
-      if (groupTab) found.push(groupTab);
-    }
     return found;
+  }
+
+  function goldStarCount(stars) {
+    return (stars || []).filter(function (s) { return s.color === "gold"; }).length;
+  }
+
+  // 監控股池排序：①所選日期出現在越多分頁（α動能/股期/焦點/族群/回檔）越前面
+  // ②五日強度黃星（偏強/極強）越多越前面；都相同時維持原本順序（當日強度→代號）
+  function sortPoolList(list) {
+    var keyed = list.map(function (stock, i) {
+      return { stock: stock, tabs: poolCrossTabs(stock.code).length, gold: goldStarCount(stock.stars), i: i };
+    });
+    keyed.sort(function (a, b) {
+      return (b.tabs - a.tabs) || (b.gold - a.gold) || (a.i - b.i);
+    });
+    return keyed.map(function (k) { return k.stock; });
   }
 
   function renderPoolTagsBlock(code) {
@@ -561,6 +574,7 @@
     if (!state.loaded) return;
 
     var list = listForTab(state.activeTab);
+    if (state.activeTab === "pool") list = sortPoolList(list);
     if (list.length === 0) {
       content.appendChild(el("div", { class: "empty" }, [
         el("div", { class: "icon", text: "📭" }),

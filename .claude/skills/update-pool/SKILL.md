@@ -22,6 +22,16 @@ description: Refresh the cumulative 監控股池 (watch pool) tab of the 台股�
    - 重新輸出 `docs/today_summary.json`（監控股池分頁一律用最新狀態，不寫入 `docs/history/`）
 4. 執行完畢後，回報：目前監控股池共有幾檔股票、有幾檔本次被標記⚠即將剔除、有幾檔被正式剔除。
 
+## 前端顯示順序（watchout pool 分頁）
+
+排序在前端 `docs/index.html` 的 `sortPoolList()` 處理（不是 `data_processor.py`），因為它依網頁上目前選擇的「資料日期」而定：
+
+1. **出現的分頁數越多越前面**：該股票在所選日期出現在 alpha power、stock future、Focus、Circle group（任一族群的成分股明細）、pullback 這 5 個分頁中的幾個。
+2. **五日強度黃色星星越多越前面**：五日強度中顯示偏強／極強（黃色 ★）的天數。
+3. 以上都相同時，維持 `build_pool_list()` 原本的順序（當日強度 → 代號）。
+
+每列的分頁標籤也依 alpha power → stock future → Focus → Circle group → pullback 的順序顯示。切換「資料日期」下拉選單時，分頁數會依該日期重新計算，排序可能跟著改變。
+
 ## 注意事項
 
 - 建議每天**最後**才執行這個分頁（或直接用 `update-all`），確保套用的是當天最終、完整的強度資料，剔除規則判斷才會準確；若在 `update-super` 之前就執行，尚未處理的股票當天會暫時被記成❓，等 `update-super` 或下次執行 `update-pool` 時會自動修正。

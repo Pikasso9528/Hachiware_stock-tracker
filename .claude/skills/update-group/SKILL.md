@@ -1,11 +1,11 @@
 ---
 name: update-group
-description: Parse the group/<date>/overall.jpg sector list screenshot (top 10 sectors by percentage gain, from the app's "list mode" view) plus any other group/<date>/*.jpg per-sector detail list screenshots found in that folder, and refresh the 族群 tab of the 台股強勢股分析儀表板 dashboard. Each sector row can be clicked/expanded in the UI to show its top 10 component stocks, sourced from the matching detail screenshot. Use when the user says "update-group <date>" or asks to update the sector/group tab.
+description: Parse the group/<date>/overall.jpg sector list screenshot (top 10 sectors by trading value 成交金額, gainers and losers alike, from the app's "list mode" view) plus any other group/<date>/*.jpg per-sector detail list screenshots found in that folder, and refresh the 族群 tab of the 台股強勢股分析儀表板 dashboard. Each sector row can be clicked/expanded in the UI to show its top 10 component stocks, sourced from the matching detail screenshot. Use when the user says "update-group <date>" or asks to update the sector/group tab.
 ---
 
 # 更新「族群」分頁
 
-解析 `screenshots/group/<日期>/overall.jpg`（App 市場總覽 → 熱力圖 → **清單模式**畫面截圖，畫面左上角切換成「☰」清單圖示那個版本，不是色塊拼接的熱力圖模式），擷取每個族群列的名稱與日漲跌幅(%)，只保留漲幅 **大於 0%** 的族群，依漲幅由高到低排名，取**前 10 名**。接著再掃描同資料夾內其他截圖（點進某個族群後看到的「該族群成分股」清單，同樣要切換成清單模式），依標題辨識出所屬族群，附上該族群前 **10** 大個股排行——前端點擊某個族群列時會展開顯示。更新台股強勢股分析儀表板中的**族群**分頁，不會動到其他分頁的資料。
+解析 `screenshots/group/<日期>/overall.jpg`（App 市場總覽 → 熱力圖 → **清單模式**畫面截圖，畫面左上角切換成「☰」清單圖示那個版本，不是色塊拼接的熱力圖模式），擷取每個族群列的名稱、**成交金額（億元）**與日漲跌幅(%)，依**成交金額由高到低**排名（漲跌不限，下跌的族群也會列入），取**前 10 名**。前端每列會同時顯示「成交額（億）」與「漲跌幅」。（2026-09-30 起改為依成交金額排名；之前是只取漲幅 > 0% 依漲幅排名，2026-08-28 ~ 2026-09-29 的歷史資料已全部依新規則重跑。）接著再掃描同資料夾內其他截圖（點進某個族群後看到的「該族群成分股」清單，同樣要切換成清單模式），依標題辨識出所屬族群，附上該族群前 **10** 大個股排行——前端點擊某個族群列時會展開顯示。更新台股強勢股分析儀表板中的**族群**分頁，不會動到其他分頁的資料。
 
 ## 用法
 
@@ -28,11 +28,11 @@ update-group 2026-08-28
    ```
    這個指令 OCR 呼叫次數比其他分頁多（每張截圖要逐列辨識名稱＋漲跌幅），單一日期全部跑完可能需要 1–2 分鐘，屬正常現象。
 3. 這個指令會：
-   - 對 `overall.jpg` 依固定列高逐列擷取族群名稱與日漲跌幅(%)（清單模式排版規則，用固定間距推算每列位置，比熱力圖色塊拼接可靠很多）；漲跌幅副行為紅字（漲）或綠字（跌），會先試紅色版再試綠色版二值化辨識並據此判斷正負號；名稱與內建的 `GROUP_SECTOR_WHITELIST` 模糊比對校正；篩出漲幅 > 0% 的前 10 名族群
+   - 對 `overall.jpg` 逐列擷取族群名稱、成交金額與日漲跌幅(%)（清單模式排版規則，逐列推算位置，比熱力圖色塊拼接可靠很多）。列高不是寫死的：程式會用畫面上實際偵測到的「X.XX%」副行間距推算（不同截圖列高可能是 134px 或 137.7px，寫死會讓後段列的讀取框越往下越偏、字被切半而漏抓）；漲跌幅副行為紅字（漲）或綠字（跌），會先試紅色版再試綠色版二值化辨識並據此判斷正負號；成交金額為白字，用多組二值化門檻／放大倍率各讀一次取多數決（`GROUP_TURNOVER_OCR_VARIANTS`，避免單一參數把 5 讀成 9 或 3）；名稱與內建的 `GROUP_SECTOR_WHITELIST` 模糊比對校正；依成交金額取前 10 名族群（成交金額讀不到的列排最後）
    - 抓取當日三大法人買賣超資料，取得全市場股票中文名稱主檔，用來校正個股名稱
    - 對每張非 `overall.jpg` 的截圖：辨識標題文字比對出所屬族群，再依同樣的固定列高邏輯逐列擷取個股名稱與漲跌幅(%)，個股名稱與三大法人主檔模糊比對校正、取得代號，取前 10 名附到對應族群
    - 寫回 `docs/history/<日期>.json` 的 `group` 分頁（每個族群項目多一個 `stocks` 陣列），並重新輸出 `docs/today_summary.json`
-4. 執行完畢後，回報：族群分頁最終有幾筆（若當天漲幅 > 0% 的族群不到 10 個則會較少）、其中幾筆有成分股明細，以及有沒有 `[WARN]`（族群或個股名稱比對信心不足、某張明細截圖辨識不出所屬族群等，通常發生在辨識信心較低的列，可忽略）。
+4. 執行完畢後，回報：族群分頁最終有幾筆（截圖畫面通常只拍到 9–10 個族群，拍到幾個就最多幾筆）、其中幾筆有成分股明細，以及有沒有 `[WARN]`（族群或個股名稱比對信心不足、某張明細截圖辨識不出所屬族群等，通常發生在辨識信心較低的列，可忽略）。
 
 ## 注意事項
 
@@ -44,4 +44,7 @@ update-group 2026-08-28
 - 執行後若出現 `[WARN] 族群清單有一列...名稱與已知族群表比對信心不足` 或 `[WARN] 族群明細截圖...無法辨識所屬族群`：先看 OCR 辨識出的原始文字是不是一個合理、看得懂的真實產業/族群名稱（不是亂碼）。若是，直接視為白名單漏收錄，**不用另外詢問使用者**，把這個名稱加進 `data_processor.py` 的 `GROUP_SECTOR_WHITELIST` 常數，然後重跑一次 `update-group` 讓它套用；只有當 OCR 文字明顯是亂碼、無法判斷應該是哪個名稱時才需要請使用者確認或補截圖。
 - 若當天 `overall.jpg` 不存在，這個分頁會是空的（技能不會報錯，只會輸出 0 筆）。
 - **若兩個不同族群展開後 `stocks` 內容完全一樣（同一批個股、同樣排名）**：代表某族群的明細截圖因標題辨識失敗被略過，`update_group()` 內用來補接資料的寬鬆模糊比對（`difflib.get_close_matches(..., cutoff=0.6)`）誤把它接到了另一個名稱結尾相同（例如都以「零組件」結尾）的族群明細上。診斷方式：檢查該族群在 `overall.jpg` 的名稱是否真的存在於 `GROUP_SECTOR_WHITELIST`（2026-09-04 曾發生「NB與手機零組件」不在白名單內，明細截圖標題比對失敗被略過，之後被誤接成「散熱零組件」的資料）；補上白名單缺漏的名稱、重跑，通常就能讓它讀到自己真正的明細截圖，不再需要靠這個寬鬆比對回退。
-- **族群漲跌幅(%)偶爾會有 OCR 把「5」誤讀成「9」（或反過來）的情形**，即使截圖本身數字清楚可辨，這是 tesseract 在這個字型下對這兩個數字的既有限制——實測過調低/調高二值化門檻或換 psm 模式，只會讓誤判在不同截圖間互相對調，沒有一組參數是全面更準的，因此**不要**為了單一個案去調整程式裡的門檻常數。若某次排名結果讓你覺得「這個族群排名感覺不太對」（例如某族群漲幅明顯比截圖上看起來的名次還高／低），直接打開對應的 `overall.jpg` 用視覺覆核那一列的漲跌幅數字，若確認 OCR 讀錯，手動修正 `docs/today_summary.json` 與 `docs/history/<日期>.json` 裡該族群的 `pct_change` 與整份 `group` 陣列的排序/`rank`（畫面上「漲跌幅由高到低」排列，改完後其他族群名次也要跟著往後移一位）。
+- **族群漲跌幅(%)偶爾會有 OCR 把「5」誤讀成「9」（或反過來）的情形**，即使截圖本身數字清楚可辨，這是 tesseract 在這個字型下對這兩個數字的既有限制——實測過調低/調高二值化門檻或換 psm 模式，只會讓誤判在不同截圖間互相對調，沒有一組參數是全面更準的，因此**不要**為了單一個案去調整程式裡的門檻常數。現在排名依成交金額，漲跌幅讀錯不會影響名次，只影響顯示的數字：若發現某族群漲跌幅與 `overall.jpg` 不符，只需手動修正 `docs/today_summary.json` 與 `docs/history/<日期>.json` 裡該族群的 `pct_change`，不必調整 `rank`。
+- **成交金額（決定排名）若讀錯**：多數決已實測在 2026-09-18/22/23/24/29/30 六張截圖上 100% 正確，但若發現某族群名次與 `overall.jpg` 的成交金額順序對不上，用視覺覆核後手動修正該族群的 `turnover`，並依成交金額由高到低重排整份 `group` 陣列與 `rank`。
+- **最後一列的漲跌幅常被 App 底部導覽列遮住**：程式會保留該列（成交金額讀得到即可）、`pct_change` 為 `null`，前端顯示「—」並印出 `[WARN] ... 的漲跌幅無法辨識（可能被畫面底部遮住）`。若截圖上還看得到數字的上半部，可以視覺讀出後手動補進 JSON。
+- 成分股明細（點開族群後的個股排行）目前仍依**漲跌幅**排序取前 10 名，不是依成交金額。
