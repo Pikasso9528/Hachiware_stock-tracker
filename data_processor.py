@@ -1068,19 +1068,41 @@ def star_info(strength):
     return {"level": UNKNOWN_LEVEL, "symbol": "❓", "color": "unknown"}
 
 
-def last5_stars(history):
-    """近 5 日星星，New -> Old 排列（最左為當日 T0）。"""
-    last5 = list(reversed(history[-5:]))
-    stars = [star_info(h["strength"]) for h in last5]
-    while len(stars) < 5:
-        stars.append(star_info(UNKNOWN_LEVEL))
-    return stars
+def trading_dates_upto(db, date_str):
+    """截至 date_str（含）為止的交易日清單（舊→新）：docs/history/ 既有日期快照、各股強度
+    歷史中出現過的日期，再加上 date_str 本身（當天第一次更新時快照檔可能還沒寫出）。"""
+    dates = {p.stem for p in HISTORY_DIR.glob("*.json")}
+    for entry in db["stocks"].values():
+        dates.update(h["date"] for h in entry.get("history", []))
+    dates.add(date_str)
+    return sorted(d for d in dates if d <= date_str)
+
+
+def strength_as_of(history, date_str):
+    """「當日強度」：只認 date_str 當天的紀錄；當天沒有截圖資料（例如還沒跑 super）就是未更新，
+    不沿用前幾天的強度，避免把舊資料誤認為當日強度。"""
+    for h in reversed(history):
+        if h["date"] == date_str:
+            return h["strength"]
+    return UNKNOWN_LEVEL
+
+
+def stars_as_of(history, window):
+    """五日強度星星：window 為最近 5 個交易日（新→舊，最左為當日 T0），
+    該日沒有強度紀錄就顯示 ❓，不往前遞補。"""
+    by_date = {h["date"]: h["strength"] for h in history}
+    return [star_info(by_date.get(d, UNKNOWN_LEVEL)) for d in window]
+
+
+def five_day_window(db, date_str):
+    return list(reversed(trading_dates_upto(db, date_str)[-5:]))
 
 
 _STRENGTH_RANK = {"極強": 0, "偏強": 1, "中立": 2, "偏弱": 3, "極弱": 4, UNKNOWN_LEVEL: 5}
 
 
-def build_tab_list(codes, db):
+def build_tab_list(codes, db, date_str):
+    window = five_day_window(db, date_str)
     items = []
     for code in sorted(codes):
         entry = db["stocks"].get(code)
@@ -1091,14 +1113,15 @@ def build_tab_list(codes, db):
             "code": code,
             "name": entry.get("name", "—"),
             "market": entry.get("market", "TW"),
-            "today_strength": history[-1]["strength"] if history else UNKNOWN_LEVEL,
-            "stars": last5_stars(history),
+            "today_strength": strength_as_of(history, date_str),
+            "stars": stars_as_of(history, window),
         })
     items.sort(key=lambda x: (_STRENGTH_RANK.get(x["today_strength"], 5), x["code"]))
     return items
 
 
-def build_pool_list(db):
+def build_pool_list(db, date_str):
+    window = five_day_window(db, date_str)
     items = []
     for code, entry in db["stocks"].items():
         pool = entry.get("pool")
@@ -1108,8 +1131,8 @@ def build_pool_list(db):
             "code": code,
             "name": entry.get("name", "—"),
             "market": entry.get("market", "TW"),
-            "today_strength": entry["history"][-1]["strength"] if entry["history"] else UNKNOWN_LEVEL,
-            "stars": last5_stars(entry["history"]),
+            "today_strength": strength_as_of(entry["history"], date_str),
+            "stars": stars_as_of(entry["history"], window),
             "warned": pool.get("warned", False),
             "pinned": pool.get("pinned", False),
             "added_date": pool.get("added_date"),
@@ -1127,15 +1150,17 @@ def load_date_tabs(date_str):
     return {cat: [] for cat in CATEGORIES}
 
 
-def refresh_tab_strengths(db, tabs):
+def refresh_tab_strengths(db, tabs, date_str):
     """強度資料（super／監控股池補漏）更新後，重算既有分頁內每檔股票的當日強度與五日星星，
     避免焦點監控／α動能／回檔型／當日Super 分頁殘留過期的強度快照。"""
+    window = five_day_window(db, date_str)
     for cat in CATEGORIES:
         items = tabs.get(cat, [])
         for item in items:
             history = db["stocks"].get(item["code"], {}).get("history", [])
-            item["today_strength"] = history[-1]["strength"] if history else UNKNOWN_LEVEL
-            item["stars"] = last5_stars(history)
+            item["today_strength"] = strength_as_of(history, date_str)
+            item["stars"] = stars_as_of(history, window)
+            item.pop("strength_date", None)
         items.sort(key=lambda x: (_STRENGTH_RANK.get(x["today_strength"], 5), x["code"]))
     return tabs
 
@@ -1165,8 +1190,8 @@ def finalize_summary(db):
     with open(HISTORY_DIR / f"{latest}.json", "r", encoding="utf-8") as f:
         snapshot = json.load(f)
 
-    refresh_tab_strengths(db, snapshot["tabs"])
-    snapshot["tabs"]["pool"] = build_pool_list(db)
+    refresh_tab_strengths(db, snapshot["tabs"], latest)
+    snapshot["tabs"]["pool"] = build_pool_list(db, latest)
     snapshot["generated_at"] = datetime.now().isoformat(timespec="seconds")
 
     with open(HISTORY_DIR / f"{latest}.json", "w", encoding="utf-8") as f:
@@ -1194,7 +1219,7 @@ def update_list_category(date_str, category):
     ensure_stock_entries(db, codes, master)
 
     tabs = load_date_tabs(date_str)
-    tabs[category] = build_tab_list(codes, db)
+    tabs[category] = build_tab_list(codes, db, date_str)
     save_date_tabs(date_str, tabs, db)
 
     db["last_updated"] = date_str
@@ -1218,7 +1243,7 @@ def update_super(date_str):
     activate_pool_codes(db, super_codes, date_str)
 
     tabs = load_date_tabs(date_str)
-    tabs["super"] = build_tab_list(super_codes, db)
+    tabs["super"] = build_tab_list(super_codes, db, date_str)
     save_date_tabs(date_str, tabs, db)
 
     db["last_updated"] = date_str
@@ -1296,7 +1321,7 @@ def update_pool(date_str):
     db["last_updated"] = date_str
     save_tracker_db(db)
     finalize_summary(db)
-    print(f"  監控股池目前共 {len(build_pool_list(db))} 檔，已重新輸出 {SUMMARY_PATH}")
+    print(f"  監控股池目前共 {len(build_pool_list(db, date_str))} 檔，已重新輸出 {SUMMARY_PATH}")
     return update_paths
 
 

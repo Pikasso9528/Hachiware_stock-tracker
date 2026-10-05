@@ -218,6 +218,30 @@
     flex-shrink: 0;
     margin-left: auto;
   }
+  /* 監控股池：所有列共用同一組欄位（subgrid），讓標籤、當日強度、五日強度、納入日期在每一列都對齊；
+     標籤依固定順序各佔一欄（沒有該標籤就留空），一行顯示；畫面太窄時整個表格左右捲動 */
+  .pool-scroll { overflow-x: auto; margin: 0 -16px; padding: 0 16px 4px; }
+  @media (min-width: 640px) { .pool-scroll { margin: 0; padding: 0 0 4px; } }
+  .pool-rows {
+    display: grid;
+    grid-template-columns: minmax(150px, 1fr) repeat(5, max-content) repeat(4, max-content);
+    column-gap: 6px;
+    row-gap: 8px;
+    width: max-content;
+    min-width: 100%;
+  }
+  .pool-rows .stock-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: center;
+    gap: 0 6px;
+  }
+  .pool-rows .row-id { min-width: 0; }
+  .pool-rows .row-field { align-items: center; padding-left: 14px; }
+  .pool-rows .badge-warn { margin-left: 8px; justify-self: end; }
+  .pool-tag-slot { display: flex; }
+
   .stars { display: flex; align-items: center; gap: 3px; font-size: 1.05rem; line-height: 1; }
   .stars span.dim { opacity: 0.8; }
   .added-date { font-size: 0.78rem; color: var(--text); }
@@ -397,12 +421,17 @@
     return keyed.map(function (k) { return k.stock; });
   }
 
-  function renderPoolTagsBlock(code) {
-    var box = el("div", { class: "row-tags" });
-    poolCrossTabs(code).forEach(function (t) {
-      box.appendChild(el("span", { class: "tag-chip", text: t.icon + " " + t.label }));
+  // 每種標籤固定一欄（依 POOL_CROSS_CHECK_KEYS 順序），沒有該標籤就留空，讓各列的標籤上下對齊
+  function renderPoolTagSlots(code) {
+    var hitKeys = poolCrossTabs(code).map(function (t) { return t.key; });
+    return POOL_CROSS_CHECK_KEYS.map(function (key) {
+      var slot = el("div", { class: "pool-tag-slot" });
+      if (hitKeys.indexOf(key) >= 0) {
+        var t = TABS.filter(function (tab) { return tab.key === key; })[0];
+        slot.appendChild(el("span", { class: "tag-chip", text: t.icon + " " + t.label }));
+      }
+      return slot;
     });
-    return box;
   }
 
   function renderRow(stock, isPool) {
@@ -430,7 +459,7 @@
 
     var children = [idBlock];
     if (isPool) {
-      children.push(renderPoolTagsBlock(stock.code));
+      children = children.concat(renderPoolTagSlots(stock.code));
     }
     children.push(strengthBlock, starsBlock);
 
@@ -439,9 +468,10 @@
         el("span", { class: "field-label", text: "納入日期" }),
         el("span", { class: "added-date", text: stock.added_date || "—" })
       ]));
-      if (!stock.pinned && stock.warned) {
-        children.push(el("span", { class: "badge-warn", text: "⚠ 即將剔除" }));
-      }
+      // 監控股池每列欄數必須一致（共用同一組 grid 欄），沒有警示時放空白欄
+      children.push(!stock.pinned && stock.warned
+        ? el("span", { class: "badge-warn", text: "⚠ 即將剔除" })
+        : el("span"));
     }
 
     return el("div", { class: "stock-row" }, children);
@@ -583,17 +613,18 @@
       return;
     }
 
-    var rows = el("div", { class: "rows" });
+    var isPool = state.activeTab === "pool";
+    var rows = el("div", { class: isPool ? "pool-rows" : "rows" });
     list.forEach(function (item) {
       if (state.activeTab === "stock_future") {
         rows.appendChild(renderFutureRow(item));
       } else if (state.activeTab === "group") {
         rows.appendChild(renderGroupRow(item));
       } else {
-        rows.appendChild(renderRow(item, state.activeTab === "pool"));
+        rows.appendChild(renderRow(item, isPool));
       }
     });
-    content.appendChild(rows);
+    content.appendChild(isPool ? el("div", { class: "pool-scroll" }, [rows]) : rows);
   }
 
   function renderDateSelect() {

@@ -67,3 +67,9 @@ The sandbox shell parser intercepts and prompts the user on ANY command that con
 - Folders with bracket naming like `[param]` (e.g. `[accountId]`) are treated as glob characters by the shell parser.
 - **NEVER** pass unescaped brackets or use `find`/`ls` directly targeting routes with `[...]`.
 - To inspect or list files inside dynamic route folders, use Claude Code's built-in file view tools (`View` / `GlobTool`) instead of raw Bash `find`, or execute a Python script to traverse the directory.
+
+---
+
+## 3. Local Dashboard Preview Server
+
+At session start, if `http://localhost:8000/index.html` doesn't return `200`, start `python -m http.server 8000 --directory docs` with Bash `run_in_background`, and give the user the URL. Keep it running for the whole session; restart it if a notification says it stopped. (The `/exit` "background task" warning is this server — expected.)
