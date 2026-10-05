@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-02",
+  "last_updated": "2026-10-05",
   "stocks": {
     "1203": {
       "name": "味王",
@@ -139,6 +139,11 @@
         {
           "date": "2026-10-02",
           "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "極強",
           "source": "super"
         }
       ],
@@ -578,38 +583,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -886,13 +896,18 @@
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2650,38 +2665,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2989,38 +3009,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -3522,6 +3547,11 @@
           "date": "2026-10-02",
           "strength": "偏強",
           "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -3652,38 +3682,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -3844,38 +3879,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -4016,38 +4056,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "偏強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -4168,38 +4213,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -4351,6 +4401,11 @@
         {
           "date": "2026-10-02",
           "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "偏強",
           "source": "super"
         }
       ],
@@ -4793,6 +4848,11 @@
           "date": "2026-10-02",
           "strength": "偏強",
           "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "偏強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -5065,38 +5125,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -5248,6 +5313,11 @@
         {
           "date": "2026-10-02",
           "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "極強",
           "source": "super"
         }
       ],
@@ -5685,6 +5755,11 @@
           "date": "2026-10-02",
           "strength": "極強",
           "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "偏強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -5805,38 +5880,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏弱",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -6149,13 +6229,18 @@
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "偏強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -6285,13 +6370,18 @@
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "偏強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -7223,38 +7313,43 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-23",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-24",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-29",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "偏強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -8022,7 +8117,7 @@
         },
         {
           "date": "2026-09-22",
-          "strength": "極強",
+          "strength": "偏強",
           "source": "super"
         },
         {
@@ -8042,18 +8137,23 @@
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -8118,13 +8218,18 @@
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -8589,6 +8694,11 @@
         {
           "date": "2026-10-02",
           "strength": "極強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "中立",
           "source": "super"
         }
       ],
@@ -9481,6 +9591,11 @@
           "date": "2026-10-02",
           "strength": "偏強",
           "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -9888,18 +10003,23 @@
         },
         {
           "date": "2026-09-30",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-10-01",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "偏強",
+          "source": "super"
         },
         {
           "date": "2026-10-02",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-05",
+          "strength": "極強",
+          "source": "super"
         }
       ],
       "pool": {
@@ -10797,6 +10917,36 @@
     "4556": {
       "name": "旭然",
       "market": "TWO",
+      "history": []
+    },
+    "6419": {
+      "name": "京晨科",
+      "market": "TWO",
+      "history": []
+    },
+    "6658": {
+      "name": "聯策",
+      "market": "TW",
+      "history": []
+    },
+    "2476": {
+      "name": "鉅祥",
+      "market": "TW",
+      "history": []
+    },
+    "6204": {
+      "name": "艾華",
+      "market": "TWO",
+      "history": []
+    },
+    "8097": {
+      "name": "常珵",
+      "market": "TWO",
+      "history": []
+    },
+    "2367": {
+      "name": "燿華",
+      "market": "TW",
       "history": []
     }
   }
