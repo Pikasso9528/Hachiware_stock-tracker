@@ -1,236 +1,38 @@
 {
-  "generated_at": "2026-10-13T23:41:04",
-  "date": "2026-10-12",
+  "generated_at": "2026-10-13T23:48:58",
+  "date": "2026-10-13",
   "tabs": {
     "focus": [
       {
-        "code": "3264",
-        "name": "欣銓",
-        "market": "TWO",
-        "today_strength": "極強",
+        "code": "1303",
+        "name": "南亞",
+        "market": "TW",
+        "today_strength": "中立",
         "stars": [
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
           {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ]
-      },
-      {
-        "code": "6510",
-        "name": "精測",
-        "market": "TWO",
-        "today_strength": "極強",
-        "stars": [
-          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ]
-      },
-      {
-        "code": "7769",
-        "name": "鴻勁",
-        "market": "TW",
-        "today_strength": "極強",
-        "stars": [
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ]
-      },
-      {
-        "code": "3008",
-        "name": "大立光",
-        "market": "TW",
-        "today_strength": "偏強",
-        "stars": [
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ]
-      },
-      {
-        "code": "6223",
-        "name": "旺矽",
-        "market": "TWO",
-        "today_strength": "偏強",
-        "stars": [
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ]
-      },
-      {
-        "code": "1519",
-        "name": "華城",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "1597",
-        "name": "直得",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
           }
         ]
       },
@@ -251,6 +53,11 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
@@ -259,83 +66,12 @@
             "level": "極強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ]
-      },
-      {
-        "code": "2467",
-        "name": "志聖",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
           }
         ]
       },
       {
         "code": "2480",
         "name": "敦陽科",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "2493",
-        "name": "揚博",
         "market": "TW",
         "today_strength": "未更新",
         "stars": [
@@ -400,8 +136,472 @@
         ]
       },
       {
-        "code": "2615",
-        "name": "萬海",
+        "code": "3034",
+        "name": "聯詠",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "3406",
+        "name": "玉晶光",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          }
+        ]
+      },
+      {
+        "code": "4938",
+        "name": "和碩",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "4961",
+        "name": "天鈺",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "6199",
+        "name": "天品",
+        "market": "TWO",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "6217",
+        "name": "中探針",
+        "market": "TWO",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "6505",
+        "name": "台塑化",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          }
+        ]
+      },
+      {
+        "code": "6532",
+        "name": "瑞耘",
+        "market": "TWO",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "6834",
+        "name": "天二科技",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      }
+    ],
+    "alpha": [
+      {
+        "code": "2347",
+        "name": "聯強",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "2412",
+        "name": "中華電",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "2466",
+        "name": "冠西電",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
+          }
+        ]
+      },
+      {
+        "code": "2480",
+        "name": "敦陽科",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "2603",
+        "name": "長榮",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "2637",
+        "name": "慧洋-KY",
         "market": "TW",
         "today_strength": "未更新",
         "stars": [
@@ -466,6 +666,72 @@
         ]
       },
       {
+        "code": "3010",
+        "name": "華立",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "3045",
+        "name": "台灣大",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
         "code": "3265",
         "name": "台星科",
         "market": "TWO",
@@ -499,372 +765,9 @@
         ]
       },
       {
-        "code": "3362",
-        "name": "先進光",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3498",
-        "name": "陽程",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3515",
-        "name": "華擎",
+        "code": "3406",
+        "name": "玉晶光",
         "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3605",
-        "name": "宏致",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3617",
-        "name": "碩天",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "4542",
-        "name": "科嶠",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "4764",
-        "name": "雙鍵",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "4973",
-        "name": "廣穎",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "4977",
-        "name": "眾達-KY",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "4979",
-        "name": "華星光",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "5269",
-        "name": "祥碩",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "6187",
-        "name": "萬潤",
-        "market": "TWO",
         "today_strength": "未更新",
         "stars": [
           {
@@ -888,9 +791,141 @@
             "color": "gold"
           },
           {
-            "level": "極強",
+            "level": "偏強",
             "symbol": "★",
             "color": "gold"
+          }
+        ]
+      },
+      {
+        "code": "3580",
+        "name": "友威科",
+        "market": "TWO",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "4904",
+        "name": "遠傳",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "4938",
+        "name": "和碩",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "6199",
+        "name": "天品",
+        "market": "TWO",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           }
         ]
       },
@@ -928,8 +963,74 @@
         ]
       },
       {
-        "code": "6278",
-        "name": "台表科",
+        "code": "6416",
+        "name": "瑞祺電通",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "6438",
+        "name": "迅得",
+        "market": "TW",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          }
+        ]
+      },
+      {
+        "code": "6505",
+        "name": "台塑化",
         "market": "TW",
         "today_strength": "未更新",
         "stars": [
@@ -945,11 +1046,6 @@
           },
           {
             "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
             "symbol": "★",
             "color": "gold"
           },
@@ -957,72 +1053,11 @@
             "level": "中立",
             "symbol": "☆",
             "color": "neutral"
-          }
-        ]
-      },
-      {
-        "code": "6515",
-        "name": "穎崴",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "6672",
-        "name": "騰輝電子-KY",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           }
         ]
       },
@@ -1091,1004 +1126,45 @@
             "color": "unknown"
           }
         ]
-      },
-      {
-        "code": "6861",
-        "name": "睿生光電",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "6913",
-        "name": "鴻呈",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "7788",
-        "name": "松川精密",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "8042",
-        "name": "金山電",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "8069",
-        "name": "元太",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      }
-    ],
-    "alpha": [
-      {
-        "code": "2466",
-        "name": "冠西電",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ]
-      },
-      {
-        "code": "2480",
-        "name": "敦陽科",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "2603",
-        "name": "長榮",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3030",
-        "name": "德律",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3167",
-        "name": "大量",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ]
-      },
-      {
-        "code": "3265",
-        "name": "台星科",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3455",
-        "name": "由田",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3498",
-        "name": "陽程",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "3661",
-        "name": "世芯-KY",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ]
-      },
-      {
-        "code": "3711",
-        "name": "日月光投控",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ]
-      },
-      {
-        "code": "4542",
-        "name": "科嶠",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "5269",
-        "name": "祥碩",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "5475",
-        "name": "德宏",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "6187",
-        "name": "萬潤",
-        "market": "TWO",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ]
-      },
-      {
-        "code": "6197",
-        "name": "佳必琪",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "6213",
-        "name": "聯茂",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ]
-      },
-      {
-        "code": "6257",
-        "name": "矽格",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "6271",
-        "name": "同欣電",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "6278",
-        "name": "台表科",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ]
-      },
-      {
-        "code": "6285",
-        "name": "啟碁",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ]
-      },
-      {
-        "code": "6438",
-        "name": "迅得",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "6658",
-        "name": "聯策",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
-      },
-      {
-        "code": "6672",
-        "name": "騰輝電子-KY",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ]
-      },
-      {
-        "code": "6715",
-        "name": "嘉基",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ]
       }
     ],
     "pullback": [
       {
-        "code": "5475",
-        "name": "德宏",
-        "market": "TWO",
-        "today_strength": "未更新",
+        "code": "1303",
+        "name": "南亞",
+        "market": "TW",
+        "today_strength": "中立",
         "stars": [
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
           }
         ]
       },
       {
-        "code": "6257",
-        "name": "矽格",
+        "code": "6505",
+        "name": "台塑化",
         "market": "TW",
         "today_strength": "未更新",
         "stars": [
@@ -2103,26 +1179,26 @@
             "color": "unknown"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           },
           {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           }
         ]
       },
       {
-        "code": "8042",
-        "name": "金山電",
-        "market": "TWO",
+        "code": "6834",
+        "name": "天二科技",
+        "market": "TW",
         "today_strength": "未更新",
         "stars": [
           {
@@ -2156,78 +1232,6 @@
     "super": [],
     "pool": [
       {
-        "code": "6510",
-        "name": "精測",
-        "market": "TWO",
-        "today_strength": "極強",
-        "stars": [
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ],
-        "warned": false,
-        "pinned": false,
-        "added_date": "2026-09-02"
-      },
-      {
-        "code": "4989",
-        "name": "榮科",
-        "market": "TW",
-        "today_strength": "偏強",
-        "stars": [
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ],
-        "warned": false,
-        "pinned": true,
-        "added_date": "2026-08-28"
-      },
-      {
         "code": "8431",
         "name": "匯鑽科",
         "market": "TWO",
@@ -2239,6 +1243,11 @@
             "color": "gold"
           },
           {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
             "level": "偏弱",
             "symbol": "★",
             "color": "dark"
@@ -2247,11 +1256,6 @@
             "level": "中立",
             "symbol": "☆",
             "color": "neutral"
-          },
-          {
-            "level": "偏弱",
-            "symbol": "★",
-            "color": "dark"
           },
           {
             "level": "偏弱",
@@ -2285,9 +1289,9 @@
             "color": "gold"
           },
           {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
           },
           {
             "level": "中立",
@@ -2311,6 +1315,11 @@
             "color": "neutral"
           },
           {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
             "level": "偏強",
             "symbol": "★",
             "color": "gold"
@@ -2322,11 +1331,6 @@
           },
           {
             "level": "極強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
             "symbol": "★",
             "color": "gold"
           }
@@ -2334,6 +1338,42 @@
         "warned": false,
         "pinned": false,
         "added_date": "2026-08-31"
+      },
+      {
+        "code": "2330",
+        "name": "台積電",
+        "market": "TW",
+        "today_strength": "中立",
+        "stars": [
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          }
+        ],
+        "warned": false,
+        "pinned": true,
+        "added_date": "2026-08-28"
       },
       {
         "code": "2368",
@@ -2347,6 +1387,11 @@
             "color": "neutral"
           },
           {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
             "level": "偏強",
             "symbol": "★",
             "color": "gold"
@@ -2360,11 +1405,6 @@
             "level": "極強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           }
         ],
         "warned": false,
@@ -2383,12 +1423,12 @@
             "color": "neutral"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           },
           {
-            "level": "極強",
+            "level": "偏強",
             "symbol": "★",
             "color": "gold"
           },
@@ -2408,8 +1448,8 @@
         "added_date": "2026-08-28"
       },
       {
-        "code": "3037",
-        "name": "欣興",
+        "code": "3017",
+        "name": "奇鋐",
         "market": "TW",
         "today_strength": "中立",
         "stars": [
@@ -2419,36 +1459,10 @@
             "color": "neutral"
           },
           {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "偏強",
+            "level": "偏弱",
             "symbol": "★",
-            "color": "gold"
-          }
-        ],
-        "warned": false,
-        "pinned": true,
-        "added_date": "2026-08-28"
-      },
-      {
-        "code": "3081",
-        "name": "聯亞",
-        "market": "TWO",
-        "today_strength": "中立",
-        "stars": [
+            "color": "dark"
+          },
           {
             "level": "中立",
             "symbol": "☆",
@@ -2463,16 +1477,6 @@
             "level": "中立",
             "symbol": "☆",
             "color": "neutral"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
           }
         ],
         "warned": false,
@@ -2501,9 +1505,9 @@
             "color": "neutral"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           },
           {
             "level": "偏強",
@@ -2552,6 +1556,42 @@
         "added_date": "2026-08-28"
       },
       {
+        "code": "4989",
+        "name": "榮科",
+        "market": "TW",
+        "today_strength": "中立",
+        "stars": [
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          }
+        ],
+        "warned": false,
+        "pinned": true,
+        "added_date": "2026-08-28"
+      },
+      {
         "code": "8046",
         "name": "南電",
         "market": "TW",
@@ -2578,9 +1618,9 @@
             "color": "neutral"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           }
         ],
         "warned": false,
@@ -2588,15 +1628,15 @@
         "added_date": "2026-08-28"
       },
       {
-        "code": "8358",
-        "name": "金居",
-        "market": "TWO",
-        "today_strength": "中立",
+        "code": "2308",
+        "name": "台達電",
+        "market": "TW",
+        "today_strength": "偏弱",
         "stars": [
           {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
           },
           {
             "level": "偏弱",
@@ -2609,14 +1649,14 @@
             "color": "neutral"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           },
           {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
           }
         ],
         "warned": false,
@@ -2624,8 +1664,8 @@
         "added_date": "2026-08-28"
       },
       {
-        "code": "3017",
-        "name": "奇鋐",
+        "code": "3037",
+        "name": "欣興",
         "market": "TW",
         "today_strength": "偏弱",
         "stars": [
@@ -2660,6 +1700,42 @@
         "added_date": "2026-08-28"
       },
       {
+        "code": "8358",
+        "name": "金居",
+        "market": "TWO",
+        "today_strength": "偏弱",
+        "stars": [
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "偏弱",
+            "symbol": "★",
+            "color": "dark"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          }
+        ],
+        "warned": false,
+        "pinned": true,
+        "added_date": "2026-08-28"
+      },
+      {
         "code": "1815",
         "name": "富喬",
         "market": "TWO",
@@ -2671,9 +1747,9 @@
             "color": "unknown"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
             "level": "偏強",
@@ -2693,78 +1769,6 @@
         ],
         "warned": false,
         "pinned": false,
-        "added_date": "2026-08-28"
-      },
-      {
-        "code": "2105",
-        "name": "正新",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ],
-        "warned": true,
-        "pinned": false,
-        "added_date": "2026-09-30"
-      },
-      {
-        "code": "2308",
-        "name": "台達電",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          }
-        ],
-        "warned": false,
-        "pinned": true,
         "added_date": "2026-08-28"
       },
       {
@@ -2789,50 +1793,14 @@
             "color": "unknown"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          }
-        ],
-        "warned": false,
-        "pinned": true,
-        "added_date": "2026-08-28"
-      },
-      {
-        "code": "2330",
-        "name": "台積電",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
             "level": "未更新",
             "symbol": "❓",
             "color": "unknown"
           },
           {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
           }
         ],
         "warned": false,
@@ -2856,9 +1824,9 @@
             "color": "unknown"
           },
           {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
             "level": "極強",
@@ -2892,9 +1860,9 @@
             "color": "unknown"
           },
           {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
             "level": "極強",
@@ -2910,42 +1878,6 @@
         "warned": false,
         "pinned": false,
         "added_date": "2026-08-28"
-      },
-      {
-        "code": "2911",
-        "name": "麗嬰房",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ],
-        "warned": true,
-        "pinned": false,
-        "added_date": "2026-09-30"
       },
       {
         "code": "3016",
@@ -2964,9 +1896,9 @@
             "color": "unknown"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
             "level": "偏強",
@@ -2974,9 +1906,9 @@
             "color": "gold"
           },
           {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
           }
         ],
         "warned": false,
@@ -3041,19 +1973,55 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "偏強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           }
         ],
         "warned": false,
         "pinned": false,
         "added_date": "2026-10-06"
+      },
+      {
+        "code": "3081",
+        "name": "聯亞",
+        "market": "TWO",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          }
+        ],
+        "warned": false,
+        "pinned": true,
+        "added_date": "2026-08-28"
       },
       {
         "code": "3108",
@@ -3103,6 +2071,11 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "偏強",
             "symbol": "★",
             "color": "gold"
@@ -3116,11 +2089,6 @@
             "level": "中立",
             "symbol": "☆",
             "color": "neutral"
-          },
-          {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
           }
         ],
         "warned": false,
@@ -3154,9 +2122,9 @@
             "color": "unknown"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           }
         ],
         "warned": false,
@@ -3180,17 +2148,17 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
           },
           {
             "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
             "symbol": "★",
             "color": "gold"
           }
@@ -3211,12 +2179,12 @@
             "color": "unknown"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
-            "level": "極強",
+            "level": "偏強",
             "symbol": "★",
             "color": "gold"
           },
@@ -3257,14 +2225,14 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           }
         ],
         "warned": false,
@@ -3283,6 +2251,11 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
@@ -3296,52 +2269,11 @@
             "level": "偏強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           }
         ],
         "warned": false,
         "pinned": false,
         "added_date": "2026-09-01"
-      },
-      {
-        "code": "3665",
-        "name": "貿聯-KY",
-        "market": "TW",
-        "today_strength": "未更新",
-        "stars": [
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          },
-          {
-            "level": "未更新",
-            "symbol": "❓",
-            "color": "unknown"
-          }
-        ],
-        "warned": true,
-        "pinned": false,
-        "added_date": "2026-08-28"
       },
       {
         "code": "4749",
@@ -3396,12 +2328,12 @@
             "color": "unknown"
           },
           {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
-            "level": "偏強",
+            "level": "極強",
             "symbol": "★",
             "color": "gold"
           },
@@ -3478,9 +2410,9 @@
             "color": "unknown"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           }
         ],
         "warned": false,
@@ -3504,14 +2436,14 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "偏強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           },
           {
             "level": "中立",
@@ -3576,14 +2508,14 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "偏強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           },
           {
             "level": "中立",
@@ -3653,9 +2585,9 @@
             "color": "unknown"
           },
           {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
             "level": "極強",
@@ -3694,9 +2626,9 @@
             "color": "unknown"
           },
           {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           }
         ],
         "warned": false,
@@ -3730,12 +2662,12 @@
             "color": "unknown"
           },
           {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           }
         ],
-        "warned": false,
+        "warned": true,
         "pinned": false,
         "added_date": "2026-10-02"
       },
@@ -3751,12 +2683,12 @@
             "color": "unknown"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
-            "level": "極強",
+            "level": "偏強",
             "symbol": "★",
             "color": "gold"
           },
@@ -3802,9 +2734,9 @@
             "color": "unknown"
           },
           {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           }
         ],
         "warned": false,
@@ -3828,6 +2760,11 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
@@ -3836,11 +2773,6 @@
             "level": "偏強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           }
         ],
         "warned": false,
@@ -3869,14 +2801,14 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "偏強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           }
         ],
         "warned": false,
@@ -3895,9 +2827,9 @@
             "color": "unknown"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
             "level": "偏強",
@@ -3910,7 +2842,7 @@
             "color": "gold"
           },
           {
-            "level": "極強",
+            "level": "偏強",
             "symbol": "★",
             "color": "gold"
           }
@@ -3936,14 +2868,14 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           },
           {
             "level": "中立",
@@ -3967,6 +2899,11 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "中立",
             "symbol": "☆",
             "color": "neutral"
@@ -3978,11 +2915,6 @@
           },
           {
             "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
-          },
-          {
-            "level": "極強",
             "symbol": "★",
             "color": "gold"
           }
@@ -4003,14 +2935,14 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           },
           {
             "level": "中立",
@@ -4026,6 +2958,42 @@
         "warned": false,
         "pinned": false,
         "added_date": "2026-10-08"
+      },
+      {
+        "code": "6510",
+        "name": "精測",
+        "market": "TWO",
+        "today_strength": "未更新",
+        "stars": [
+          {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
+            "level": "極強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "偏強",
+            "symbol": "★",
+            "color": "gold"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          },
+          {
+            "level": "中立",
+            "symbol": "☆",
+            "color": "neutral"
+          }
+        ],
+        "warned": false,
+        "pinned": false,
+        "added_date": "2026-09-02"
       },
       {
         "code": "6672",
@@ -4044,9 +3012,9 @@
             "color": "unknown"
           },
           {
-            "level": "極強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
             "level": "極強",
@@ -4075,9 +3043,9 @@
             "color": "unknown"
           },
           {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
             "level": "中立",
@@ -4116,14 +3084,14 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           },
           {
             "level": "中立",
@@ -4152,14 +3120,14 @@
             "color": "unknown"
           },
           {
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
+          },
+          {
             "level": "極強",
             "symbol": "★",
             "color": "gold"
-          },
-          {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
           },
           {
             "level": "中立",
@@ -4229,12 +3197,12 @@
             "color": "unknown"
           },
           {
-            "level": "偏強",
-            "symbol": "★",
-            "color": "gold"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           },
           {
-            "level": "極強",
+            "level": "偏強",
             "symbol": "★",
             "color": "gold"
           }
@@ -4270,448 +3238,208 @@
             "color": "unknown"
           },
           {
-            "level": "中立",
-            "symbol": "☆",
-            "color": "neutral"
+            "level": "未更新",
+            "symbol": "❓",
+            "color": "unknown"
           }
         ],
-        "warned": false,
+        "warned": true,
         "pinned": false,
         "added_date": "2026-10-02"
       }
     ],
+    "not_updated": [
+      "super"
+    ],
     "stock_future": [
       {
         "rank": 1,
-        "code": "2312",
-        "name": "金寶",
+        "code": "3702",
+        "name": "大聯大",
         "market": "TW",
-        "pct_change": 3.1
+        "pct_change": 1.72
       },
       {
         "rank": 2,
         "code": "4938",
         "name": "和碩",
         "market": "TW",
-        "pct_change": 9.9
+        "pct_change": 4.25
       },
       {
         "rank": 3,
-        "code": "6282",
-        "name": "康舒",
+        "code": "6505",
+        "name": "台塑化",
         "market": "TW",
-        "pct_change": 7.19
+        "pct_change": 9.68
       },
       {
         "rank": 4,
-        "code": "2615",
-        "name": "萬海",
+        "code": "3406",
+        "name": "玉晶光",
         "market": "TW",
-        "pct_change": 8.89
+        "pct_change": 7.29
       },
       {
         "rank": 5,
-        "code": "3706",
-        "name": "神達",
-        "market": "TW",
-        "pct_change": 2.23
-      },
-      {
-        "rank": 6,
         "code": "2355",
         "name": "敬鵬",
         "market": "TW",
-        "pct_change": 9.98
+        "pct_change": 3.02
       },
       {
-        "rank": 7,
-        "code": "2609",
-        "name": "陽明",
-        "market": "TW",
-        "pct_change": 6.64
-      },
-      {
-        "rank": 8,
-        "code": "3008",
-        "name": "大立光",
-        "market": "TW",
-        "pct_change": 9.98
-      },
-      {
-        "rank": 9,
-        "code": "2441",
-        "name": "超豐",
-        "market": "TW",
-        "pct_change": 3.13
-      },
-      {
-        "rank": 10,
+        "rank": 6,
         "code": "2603",
         "name": "長榮",
         "market": "TW",
-        "pct_change": 9.81
+        "pct_change": 2.72
       },
       {
-        "rank": 11,
-        "code": "2324",
-        "name": "仁寶",
+        "rank": 7,
+        "code": "2449",
+        "name": "京元電子",
         "market": "TW",
-        "pct_change": 4.09
+        "pct_change": 1.17
       },
       {
-        "rank": 12,
-        "code": "2002",
-        "name": "中鋼",
-        "market": "TW",
-        "pct_change": 1.05
-      },
-      {
-        "rank": 13,
-        "code": "2610",
-        "name": "華航",
-        "market": "TW",
-        "pct_change": 0.99
-      },
-      {
-        "rank": 14,
-        "code": "3260",
-        "name": "威剛",
-        "market": "TWO",
-        "pct_change": 1.94
-      },
-      {
-        "rank": 15,
-        "code": "6285",
-        "name": "啟碁",
-        "market": "TW",
-        "pct_change": 3.11
-      },
-      {
-        "rank": 16,
-        "code": "2605",
-        "name": "新興",
-        "market": "TW",
-        "pct_change": 1.9
-      },
-      {
-        "rank": 17,
-        "code": "2887",
-        "name": "台新新光金",
-        "market": "TW",
-        "pct_change": 4.74
-      },
-      {
-        "rank": 18,
+        "rank": 8,
         "code": "1312",
         "name": "國喬",
         "market": "TW",
-        "pct_change": 5.88
+        "pct_change": 9.85
+      },
+      {
+        "rank": 13,
+        "code": "2618",
+        "name": "長榮航",
+        "market": "TW",
+        "pct_change": 2.02
+      },
+      {
+        "rank": 14,
+        "code": "1301",
+        "name": "台塑",
+        "market": "TW",
+        "pct_change": 1.25
+      },
+      {
+        "rank": 15,
+        "code": "2891",
+        "name": "中信金",
+        "market": "TW",
+        "pct_change": 2.29
+      },
+      {
+        "rank": 16,
+        "code": "2881",
+        "name": "富邦金",
+        "market": "TW",
+        "pct_change": 0.95
+      },
+      {
+        "rank": 17,
+        "code": "2882",
+        "name": "國泰金",
+        "market": "TW",
+        "pct_change": 0.88
+      },
+      {
+        "rank": 18,
+        "code": "2615",
+        "name": "萬海",
+        "market": "TW",
+        "pct_change": 0.41
       },
       {
         "rank": 19,
-        "code": "6116",
-        "name": "彩晶",
+        "code": "2340",
+        "name": "台亞",
         "market": "TW",
-        "pct_change": 1.0
+        "pct_change": 4.47
       },
       {
         "rank": 20,
-        "code": "1101",
-        "name": "台泥",
+        "code": "2887",
+        "name": "台新新光金",
         "market": "TW",
-        "pct_change": 5.41
+        "pct_change": 0.12
       }
     ],
     "group": [
       {
         "sector": "IC-代工",
-        "turnover": 922.04,
-        "pct_change": -0.43,
+        "turnover": 1391.9,
+        "pct_change": -2.03,
         "rank": 1,
         "stocks": []
       },
       {
         "sector": "IC-封測",
-        "turnover": 833.52,
-        "pct_change": 2.71,
+        "turnover": 787.31,
+        "pct_change": -2.82,
         "rank": 2,
-        "stocks": [
-          {
-            "name": "旺矽",
-            "code": "6223",
-            "market": "TWO",
-            "pct_change": 9.96,
-            "rank": 1
-          },
-          {
-            "name": "穎崴",
-            "code": "6515",
-            "market": "TW",
-            "pct_change": 7.3,
-            "rank": 2
-          },
-          {
-            "name": "欣銓",
-            "code": "3264",
-            "market": "TWO",
-            "pct_change": 6.45,
-            "rank": 3
-          },
-          {
-            "name": "精測",
-            "code": "6510",
-            "market": "TWO",
-            "pct_change": 3.01,
-            "rank": 4
-          },
-          {
-            "name": "日月光投控",
-            "code": "3711",
-            "market": "TW",
-            "pct_change": 2.42,
-            "rank": 5
-          },
-          {
-            "name": "矽格",
-            "code": "6257",
-            "market": "TW",
-            "pct_change": 1.41,
-            "rank": 6
-          },
-          {
-            "name": "頎邦",
-            "code": "6147",
-            "market": "TWO",
-            "pct_change": 1.33,
-            "rank": 7
-          },
-          {
-            "name": "力成",
-            "code": "6239",
-            "market": "TW",
-            "pct_change": -1.14,
-            "rank": 8
-          },
-          {
-            "name": "京元電子",
-            "code": "2449",
-            "market": "TW",
-            "pct_change": -1.48,
-            "rank": 9
-          },
-          {
-            "name": "精材",
-            "code": "3374",
-            "market": "TWO",
-            "pct_change": -3.12,
-            "rank": 10
-          }
-        ]
+        "stocks": []
       },
       {
         "sector": "被動元件",
-        "turnover": 621.01,
-        "pct_change": -0.76,
+        "turnover": 746.2,
+        "pct_change": -5.07,
         "rank": 3,
         "stocks": []
       },
       {
-        "sector": "PCB-製造",
-        "turnover": 566.88,
-        "pct_change": -0.6,
+        "sector": "記憶體製造",
+        "turnover": 701.5,
+        "pct_change": -7.37,
         "rank": 4,
         "stocks": []
       },
       {
-        "sector": "光學鏡片",
-        "turnover": 515.51,
-        "pct_change": 8.15,
+        "sector": "PCB-製造",
+        "turnover": 690.23,
+        "pct_change": -4.01,
         "rank": 5,
-        "stocks": [
-          {
-            "name": "大立光",
-            "code": "3008",
-            "market": "TW",
-            "pct_change": 9.98,
-            "rank": 1
-          },
-          {
-            "name": "先進光",
-            "code": "3362",
-            "market": "TWO",
-            "pct_change": 3.68,
-            "rank": 2
-          },
-          {
-            "name": "亞光",
-            "code": "3019",
-            "market": "TW",
-            "pct_change": 1.46,
-            "rank": 3
-          },
-          {
-            "name": "揚明光",
-            "code": "3504",
-            "market": "TW",
-            "pct_change": 1.21,
-            "rank": 4
-          },
-          {
-            "name": "玉晶光",
-            "code": "3406",
-            "market": "TW",
-            "pct_change": 0.94,
-            "rank": 5
-          },
-          {
-            "name": "邑錡",
-            "code": "7402",
-            "market": "TWO",
-            "pct_change": -0.2,
-            "rank": 6
-          },
-          {
-            "name": "今國光",
-            "code": "6209",
-            "market": "TW",
-            "pct_change": -1.11,
-            "rank": 7
-          },
-          {
-            "name": "保勝光學",
-            "code": "6517",
-            "market": "TWO",
-            "pct_change": -1.52,
-            "rank": 8
-          },
-          {
-            "name": "耀穎",
-            "code": "7772",
-            "market": "TWO",
-            "pct_change": -2.22,
-            "rank": 9
-          },
-          {
-            "name": "聯一光",
-            "code": "3441",
-            "market": "TWO",
-            "pct_change": -2.4,
-            "rank": 10
-          }
-        ]
+        "stocks": []
       },
       {
-        "sector": "IC-設計",
-        "turnover": 468.97,
-        "pct_change": -1.11,
+        "sector": "PCB-材料設備",
+        "turnover": 650.58,
+        "pct_change": -7.13,
         "rank": 6,
         "stocks": []
       },
       {
         "sector": "塑膠",
-        "turnover": 460.59,
-        "pct_change": -1.74,
+        "turnover": 634.46,
+        "pct_change": 5.21,
         "rank": 7,
         "stocks": []
       },
       {
-        "sector": "PCB-材料設備",
-        "turnover": 396.93,
-        "pct_change": 1.62,
+        "sector": "光學鏡片",
+        "turnover": 579.23,
+        "pct_change": 0.47,
         "rank": 8,
-        "stocks": [
-          {
-            "name": "志聖",
-            "code": "2467",
-            "market": "TW",
-            "pct_change": 6.88,
-            "rank": 1
-          },
-          {
-            "name": "中探針",
-            "code": "6217",
-            "market": "TWO",
-            "pct_change": 6.85,
-            "rank": 2
-          },
-          {
-            "name": "揚博",
-            "code": "2493",
-            "market": "TW",
-            "pct_change": 3.46,
-            "rank": 3
-          },
-          {
-            "name": "台光電",
-            "code": "2383",
-            "market": "TW",
-            "pct_change": 2.5,
-            "rank": 4
-          },
-          {
-            "name": "亞泰金屬",
-            "code": "6727",
-            "market": "TWO",
-            "pct_change": 2.45,
-            "rank": 5
-          },
-          {
-            "name": "聯茂",
-            "code": "6213",
-            "market": "TW",
-            "pct_change": 0.74,
-            "rank": 6
-          },
-          {
-            "name": "建榮",
-            "code": "5340",
-            "market": "TWO",
-            "pct_change": 0.64,
-            "rank": 7
-          },
-          {
-            "name": "台燿",
-            "code": "6274",
-            "market": "TWO",
-            "pct_change": -0.29,
-            "rank": 8
-          },
-          {
-            "name": "富喬",
-            "code": "1815",
-            "market": "TWO",
-            "pct_change": -1.48,
-            "rank": 9
-          },
-          {
-            "name": "金居",
-            "code": "8358",
-            "market": "TWO",
-            "pct_change": -2.43,
-            "rank": 10
-          }
-        ]
+        "stocks": []
       },
       {
-        "sector": "IP/ASIC",
-        "turnover": 328.33,
-        "pct_change": -2.09,
+        "sector": "IC-設計",
+        "turnover": 485.73,
+        "pct_change": -1.77,
         "rank": 9,
         "stocks": []
       },
       {
-        "sector": "電源供應器",
-        "turnover": 294.42,
-        "pct_change": -3.16,
+        "sector": "ABF",
+        "turnover": 364.75,
+        "pct_change": null,
         "rank": 10,
         "stocks": []
       }
-    ],
-    "not_updated": [
-      "super"
     ]
   },
   "dates": [
+    "2026-10-13",
     "2026-10-12",
     "2026-10-08",
     "2026-10-07",
