@@ -21,6 +21,7 @@ description: Refresh the cumulative 監控股池 (watch pool) tab of the 台股�
    - 套用「連續5個交易日無偏強/極強 → 標示警示，隔天仍未轉強才正式剔除」的規則
    - 重新輸出 `docs/today_summary.json`（監控股池分頁一律用最新狀態，不寫入 `docs/history/`）
 4. 執行完畢後，回報：目前監控股池共有幾檔股票、有幾檔本次被標記⚠即將剔除、有幾檔被正式剔除。
+5. **清空 `update/`**：這批補漏截圖的資料併入、且該日期的資料已 commit 並 push 到 GitHub 之後，刪除 `screenshots/update/` 裡的所有截圖檔（只刪檔案、保留資料夾本身），避免下次執行時被重複讀取。還沒 commit／push 前不要刪——若需要還原重跑，還要用到這些截圖。回報時說明刪了幾個檔案。
 
 ## 前端顯示順序（watchout pool 分頁）
 
