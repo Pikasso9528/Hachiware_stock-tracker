@@ -1203,11 +1203,45 @@ def finalize_summary(db):
 
 
 # ---------------------------------------------------------------------------
+# 「未更新」標記：某分頁當天的截圖資料夾是空的，就略過該步驟（不寫空名單、不跑剔除），
+# 並在 docs/history/<日期>.json 的 tabs.not_updated 記下分頁代號，前端據此顯示「未更新」。
+# 之後補上截圖重跑該分頁時，會自動把標記移除。
+# ---------------------------------------------------------------------------
+def has_screenshots(folder):
+    return folder.exists() and any(p.suffix.lower() in IMAGE_EXTS for p in folder.iterdir())
+
+
+def _set_not_updated(tabs, key, skipped):
+    flags = set(tabs.get("not_updated", []))
+    if skipped:
+        flags.add(key)
+    else:
+        flags.discard(key)
+    if flags:
+        tabs["not_updated"] = sorted(flags)
+    else:
+        tabs.pop("not_updated", None)
+
+
+def skip_not_updated(date_str, key, reason):
+    """略過某分頁並標記為未更新（不覆寫該分頁既有資料）。"""
+    print(f"=== [{key}] 處理日期: {date_str} ===")
+    print(f"  {reason}，略過此分頁（前端顯示「未更新」）")
+    db = load_tracker_db()
+    tabs = load_date_tabs(date_str)
+    _set_not_updated(tabs, key, True)
+    save_date_tabs(date_str, tabs, db)
+
+
+# ---------------------------------------------------------------------------
 # 五個可獨立執行的更新技能：焦點監控／α動能／回檔型／當日Super／監控股池
 # ---------------------------------------------------------------------------
 def update_list_category(date_str, category):
     """焦點監控／α動能／回檔型 共用：僅掃描清單型截圖辨識當日名單，強度沿用既有歷史資料。"""
     assert category in LIST_CATEGORIES
+    if not has_screenshots(SCREENSHOTS_DIR / category / date_str):
+        skip_not_updated(date_str, category, f"{category}/{date_str}/ 沒有截圖")
+        return set()
     print(f"=== [{category}] 處理日期: {date_str} ===")
     master = fetch_institutional_master(date_str)
     valid_codes = set(master.keys())
@@ -1220,6 +1254,7 @@ def update_list_category(date_str, category):
 
     tabs = load_date_tabs(date_str)
     tabs[category] = build_tab_list(codes, db, date_str)
+    _set_not_updated(tabs, category, False)
     save_date_tabs(date_str, tabs, db)
 
     db["last_updated"] = date_str
@@ -1230,6 +1265,9 @@ def update_list_category(date_str, category):
 
 def update_super(date_str):
     """當日Super：掃描個股詳細頁，強度完全以此為準，並自動將當日出現的股票納入監控股池。"""
+    if not has_screenshots(SCREENSHOTS_DIR / "super" / date_str):
+        skip_not_updated(date_str, "super", f"super/{date_str}/ 沒有截圖")
+        return set()
     print(f"=== [super] 處理日期: {date_str} ===")
     master = fetch_institutional_master(date_str)
     valid_codes = set(master.keys())
@@ -1244,6 +1282,7 @@ def update_super(date_str):
 
     tabs = load_date_tabs(date_str)
     tabs["super"] = build_tab_list(super_codes, db, date_str)
+    _set_not_updated(tabs, "super", False)
     save_date_tabs(date_str, tabs, db)
 
     db["last_updated"] = date_str
@@ -1256,6 +1295,9 @@ def update_stock_future(date_str):
     """股期：掃描 stock_future_top/<日期>/ 的量大股期排行榜截圖，依代號去重後的
     出現順序排名，並記錄期漲幅(%)。此分頁依日期切換（寫入 docs/history/<日期>.json），
     不涉及強度歷史，不影響其他分頁。"""
+    if not has_screenshots(SCREENSHOTS_DIR / "stock_future_top" / date_str):
+        skip_not_updated(date_str, "stock_future", f"stock_future_top/{date_str}/ 沒有截圖")
+        return []
     print(f"=== [stock_future] 處理日期: {date_str} ===")
     master = fetch_institutional_master(date_str)
 
@@ -1265,6 +1307,7 @@ def update_stock_future(date_str):
 
     tabs = load_date_tabs(date_str)
     tabs["stock_future"] = items
+    _set_not_updated(tabs, "stock_future", False)
     save_date_tabs(date_str, tabs, db)
 
     print(f"  股期排行榜共 {len(items)} 檔，已重新輸出 {SUMMARY_PATH}")
@@ -1277,6 +1320,9 @@ def update_group(date_str):
     出所屬族群，附上該族群前 6 大個股排行（供前端點擊該族群列時展開）。找不到對應明細
     截圖的族群，stocks 為空陣列，前端會顯示「No more Information, please update」。
     此分頁依日期切換（寫入 docs/history/<日期>.json），不涉及強度歷史，不影響其他分頁。"""
+    if not (SCREENSHOTS_DIR / "group" / date_str / "overall.jpg").exists():
+        skip_not_updated(date_str, "group", f"group/{date_str}/overall.jpg 不存在")
+        return []
     print(f"=== [group] 處理日期: {date_str} ===")
     items = scan_group_overall(date_str)
 
@@ -1296,6 +1342,7 @@ def update_group(date_str):
     db = load_tracker_db()
     tabs = load_date_tabs(date_str)
     tabs["group"] = items
+    _set_not_updated(tabs, "group", False)
     save_date_tabs(date_str, tabs, db)
 
     with_detail = sum(1 for it in items if it["stocks"])
@@ -1305,7 +1352,12 @@ def update_group(date_str):
 
 def update_pool(date_str):
     """監控股池：讀取 update/ 補漏截圖、更新相對強度歷史，並執行❓補記與5日剔除規則。
-    此分頁為累加型、不依日期切換，因此不寫入 docs/history/，只重新輸出 docs/today_summary.json。"""
+    此分頁為累加型、不依日期切換，因此不寫入 docs/history/，只重新輸出 docs/today_summary.json。
+    當天 super/<日期>/ 與 update/ 都沒有截圖時（沒有任何新強度資料），略過❓補記與剔除判斷，
+    只在該日期快照標記 pool 未更新，避免整池被記成❓、5日剔除計數無故前進。"""
+    if not (has_screenshots(SCREENSHOTS_DIR / "super" / date_str) or has_screenshots(UPDATE_DIR)):
+        skip_not_updated(date_str, "pool", f"super/{date_str}/ 與 update/ 都沒有截圖")
+        return {}
     print(f"=== [pool] 處理日期: {date_str} ===")
     master = fetch_institutional_master(date_str)
     valid_codes = set(master.keys())
@@ -1320,7 +1372,12 @@ def update_pool(date_str):
 
     db["last_updated"] = date_str
     save_tracker_db(db)
-    finalize_summary(db)
+    if (HISTORY_DIR / f"{date_str}.json").exists():
+        tabs = load_date_tabs(date_str)
+        _set_not_updated(tabs, "pool", False)
+        save_date_tabs(date_str, tabs, db)  # 內含 finalize_summary
+    else:
+        finalize_summary(db)
     print(f"  監控股池目前共 {len(build_pool_list(db, date_str))} 檔，已重新輸出 {SUMMARY_PATH}")
     return update_paths
 

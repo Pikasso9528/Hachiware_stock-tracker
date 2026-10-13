@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T23:35:12",
+  "generated_at": "2026-10-13T23:41:04",
   "date": "2026-10-12",
   "tabs": {
     "focus": [
@@ -4706,6 +4706,9 @@
         "rank": 10,
         "stocks": []
       }
+    ],
+    "not_updated": [
+      "super"
     ]
   },
   "dates": [
