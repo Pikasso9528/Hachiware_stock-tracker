@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-15",
+  "last_updated": "2026-10-16",
   "stocks": {
     "1203": {
       "name": "味王",
@@ -13973,6 +13973,26 @@
     },
     "2727": {
       "name": "王品",
+      "market": "TW",
+      "history": []
+    },
+    "3535": {
+      "name": "晶彩科",
+      "market": "TW",
+      "history": []
+    },
+    "6209": {
+      "name": "今國光",
+      "market": "TW",
+      "history": []
+    },
+    "3005": {
+      "name": "神基",
+      "market": "TW",
+      "history": []
+    },
+    "2059": {
+      "name": "川湖",
       "market": "TW",
       "history": []
     }
