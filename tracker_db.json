@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-21",
+  "last_updated": "2026-10-22",
   "stocks": {
     "1203": {
       "name": "味王",
@@ -720,6 +720,11 @@
           "date": "2026-10-21",
           "strength": "中立",
           "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -1116,7 +1121,7 @@
         },
         {
           "date": "2026-10-16",
-          "strength": "極強",
+          "strength": "偏強",
           "source": "super"
         },
         {
@@ -1132,6 +1137,11 @@
         {
           "date": "2026-10-21",
           "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "偏弱",
           "source": "super"
         }
       ],
@@ -1704,6 +1714,11 @@
           "date": "2026-10-21",
           "strength": "中立",
           "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2134,6 +2149,11 @@
           "date": "2026-10-21",
           "strength": "中立",
           "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -2517,6 +2537,46 @@
         {
           "date": "2026-10-07",
           "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-13",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-14",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-15",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-16",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-19",
+          "strength": "偏弱",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-20",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-21",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "極強",
           "source": "super"
         }
       ]
@@ -3530,6 +3590,11 @@
           "date": "2026-10-21",
           "strength": "中立",
           "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "偏弱",
+          "source": "super"
         }
       ],
       "pool": {
@@ -4002,6 +4067,11 @@
         },
         {
           "date": "2026-10-21",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-22",
           "strength": "中立",
           "source": "super"
         }
@@ -4660,6 +4730,11 @@
           "date": "2026-10-21",
           "strength": "未更新",
           "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "未更新",
+          "source": "missing"
         }
       ],
       "pool": {
@@ -4870,6 +4945,11 @@
         },
         {
           "date": "2026-10-21",
+          "strength": "未更新",
+          "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
           "strength": "未更新",
           "source": "missing"
         }
@@ -5124,6 +5204,11 @@
           "date": "2026-10-21",
           "strength": "中立",
           "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -5346,6 +5431,11 @@
           "date": "2026-10-21",
           "strength": "未更新",
           "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "未更新",
+          "source": "missing"
         }
       ],
       "pool": {
@@ -5556,6 +5646,11 @@
         },
         {
           "date": "2026-10-21",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-22",
           "strength": "中立",
           "source": "super"
         }
@@ -5770,6 +5865,11 @@
           "date": "2026-10-21",
           "strength": "中立",
           "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -5955,7 +6055,7 @@
         },
         {
           "date": "2026-10-13",
-          "strength": "偏弱",
+          "strength": "極弱",
           "source": "super"
         },
         {
@@ -5986,6 +6086,11 @@
         {
           "date": "2026-10-21",
           "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "偏弱",
           "source": "super"
         }
       ],
@@ -6157,6 +6262,11 @@
         },
         {
           "date": "2026-10-21",
+          "strength": "未更新",
+          "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
           "strength": "未更新",
           "source": "missing"
         }
@@ -6356,6 +6466,11 @@
           "date": "2026-10-21",
           "strength": "未更新",
           "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "未更新",
+          "source": "missing"
         }
       ],
       "pool": {
@@ -6546,6 +6661,11 @@
         },
         {
           "date": "2026-10-21",
+          "strength": "未更新",
+          "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
           "strength": "未更新",
           "source": "missing"
         }
@@ -6760,6 +6880,11 @@
           "date": "2026-10-21",
           "strength": "偏強",
           "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
@@ -6960,6 +7085,11 @@
         },
         {
           "date": "2026-10-21",
+          "strength": "未更新",
+          "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
           "strength": "未更新",
           "source": "missing"
         }
@@ -7174,6 +7304,11 @@
           "date": "2026-10-21",
           "strength": "極強",
           "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "未更新",
+          "source": "missing"
         }
       ],
       "pool": {
@@ -7344,6 +7479,11 @@
         },
         {
           "date": "2026-10-21",
+          "strength": "未更新",
+          "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
           "strength": "未更新",
           "source": "missing"
         }
@@ -7558,6 +7698,11 @@
           "date": "2026-10-21",
           "strength": "中立",
           "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "偏弱",
+          "source": "super"
         }
       ],
       "pool": {
@@ -7738,7 +7883,7 @@
         },
         {
           "date": "2026-10-13",
-          "strength": "極強",
+          "strength": "偏強",
           "source": "super"
         },
         {
@@ -7768,7 +7913,12 @@
         },
         {
           "date": "2026-10-21",
-          "strength": "極強",
+          "strength": "偏強",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "中立",
           "source": "super"
         }
       ],
@@ -7960,6 +8110,11 @@
         },
         {
           "date": "2026-10-21",
+          "strength": "未更新",
+          "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
           "strength": "未更新",
           "source": "missing"
         }
@@ -8348,7 +8503,7 @@
         },
         {
           "date": "2026-10-15",
-          "strength": "極強",
+          "strength": "偏強",
           "source": "super"
         },
         {
@@ -8368,14 +8523,20 @@
         },
         {
           "date": "2026-10-21",
-          "strength": "未更新",
-          "source": "missing"
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "中立",
+          "source": "super"
         }
       ],
       "pool": {
         "active": true,
         "warned": false,
-        "added_date": "2026-08-31"
+        "added_date": "2026-08-31",
+        "pinned": true
       }
     },
     "8103": {
@@ -9618,6 +9779,11 @@
         },
         {
           "date": "2026-10-21",
+          "strength": "中立",
+          "source": "super"
+        },
+        {
+          "date": "2026-10-22",
           "strength": "中立",
           "source": "super"
         }
@@ -11978,11 +12144,16 @@
           "date": "2026-10-21",
           "strength": "未更新",
           "source": "missing"
+        },
+        {
+          "date": "2026-10-22",
+          "strength": "未更新",
+          "source": "missing"
         }
       ],
       "pool": {
-        "active": true,
-        "warned": true,
+        "active": false,
+        "warned": false,
         "added_date": "2026-09-02"
       }
     },
@@ -14888,6 +15059,11 @@
     },
     "2328": {
       "name": "廣宇",
+      "market": "TW",
+      "history": []
+    },
+    "6467": {
+      "name": "泰合",
       "market": "TW",
       "history": []
     }
