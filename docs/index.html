@@ -389,18 +389,14 @@
     return found;
   }
 
-  function goldStarCount(stars) {
-    return (stars || []).filter(function (s) { return s.color === "gold"; }).length;
-  }
-
-  // 監控股池排序：①所選日期出現在越多分頁（α動能/股期/焦點/族群/回檔）越前面
-  // ②五日強度黃星（偏強/極強）越多越前面；都相同時維持原本順序（當日強度→代號）
+  // 監控股池排序：觀察中（pinned）股票排最前面，其餘接在後面；兩組內都維持原本順序
+  // （後端已依當日強度→代號排好，未更新排最後）
   function sortPoolList(list) {
     var keyed = list.map(function (stock, i) {
-      return { stock: stock, tabs: poolCrossTabs(stock.code).length, gold: goldStarCount(stock.stars), i: i };
+      return { stock: stock, pinned: stock.pinned ? 1 : 0, i: i };
     });
     keyed.sort(function (a, b) {
-      return (b.tabs - a.tabs) || (b.gold - a.gold) || (a.i - b.i);
+      return (b.pinned - a.pinned) || (a.i - b.i);
     });
     return keyed.map(function (k) { return k.stock; });
   }
