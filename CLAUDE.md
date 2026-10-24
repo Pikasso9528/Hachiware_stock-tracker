@@ -73,3 +73,14 @@ The sandbox shell parser intercepts and prompts the user on ANY command that con
 ## 3. Local Dashboard Preview Server
 
 At session start, if `http://localhost:8000/index.html` doesn't return `200`, start `python -m http.server 8000 --directory docs` with Bash `run_in_background`, and give the user the URL. Keep it running for the whole session; restart it if a notification says it stopped. (The `/exit` "background task" warning is this server — expected.)
+
+---
+
+## 4. Session Hygiene (Token Budget)
+
+The user keeps ONE long-lived session for remote access, so every past day's context is re-sent on each new turn. Keep the main context small:
+
+- **Screenshots never go into the main context.** All visual reading of screenshots (OCR-fail fallback, pre-run visual check, group `overall.jpg` / stock_future spot-checks) is delegated to ONE subagent per run (Explore or general-purpose). Give it the explicit file paths and ask it to return only compact text (e.g. `filename → code name`, `rank code pct`, `sector turnover pct`). Do NOT `Read` `.jpg`/`.png` files in the main conversation.
+- **No full reads/diffs of data files.** Never `Read` or `git diff` the whole `tracker_db.json`, `docs/today_summary.json`, or `docs/history/*.json`. Use `git diff --stat`, or a `.scratch/` script that prints only the changed codes/dates.
+- **Don't re-read code during routine updates.** Only open `data_processor.py` / `docs/index.html` when a `[WARN]`/error actually needs debugging, and read only the relevant range.
+- **End of each date:** after that date is committed and pushed, finish the report with one line: `可輸入 /compact 或 /clear 再跑下一個日期`. All durable state (rules, pins, date semantics) lives in git, skills and memory, so clearing loses nothing. Don't rewind/resume to replay older days.

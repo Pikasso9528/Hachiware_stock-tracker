@@ -25,6 +25,17 @@ description: Run a full 台股強勢股分析儀表板 refresh — updates all s
 3. 這一步在底層依序執行的其實就是 `update-focus` → `update-alpha` → `update-pullback` → `update-super` → `update_stock_future` → `update-group` → `update-pool` 各自的處理邏輯，最後統一寫出 `docs/history/<日期>.json` 與 `docs/today_summary.json`。
 4. 執行完畢後，彙整回報七個分頁各自的檔數（焦點監控／α動能／回檔型／當日Super／股期／族群／監控股池），以及過程中出現的 `[WARN]` 警告（OCR 失敗、代號無法辨識、族群名稱辨識失敗等）。
 5. 若這次有用到 `update/` 補漏截圖：該日期資料 commit 並 push 到 GitHub 之後，清空 `update/` 裡的截圖檔（規則同 update-pool 技能第 5 步）。
+6. 回報最後一行固定附上：`可輸入 /compact 或 /clear 再跑下一個日期`（使用者為了遠端連線會沿用同一個 session，清掉前一天的 context 才不會每輪重送舊紀錄，見 CLAUDE.md 第 4 節）。
+
+## 截圖視覺判讀一律交給 subagent
+
+執行前的截圖視覺覆核、OCR 失敗補救、族群／股期抽查，都**不要在主對話用 Read 開圖**（圖片會留在 context，之後每一輪都重送）。改成把需要看的截圖路徑一次交給**一個** subagent（Explore 或 general-purpose），請它只回傳精簡文字結果，例如：
+- super／update：`檔名 → 代號 名稱`
+- focus／alpha／pullback 清單：每張圖的代號清單
+- stock_future：`排名 代號 期漲幅`
+- group overall.jpg：`族群名稱 成交金額 漲跌幅`
+
+主對話拿到文字結果後，再照原本流程（改檔名、`.scratch/` 包裝腳本、`[VISUAL FIX]` 對照）處理。
 
 ## 何時改用單一分頁技能
 
