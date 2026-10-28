@@ -666,14 +666,14 @@
     return found;
   }
 
-  // 監控股池排序：觀察中（pinned）股票排最前面，其餘接在後面；兩組內都維持原本順序
-  // （後端已依當日強度→代號排好，未更新排最後）
+  // 監控股池排序：所選日期有出現訊號（至少一個分頁標籤）的股票排最前面，沒有的接在後面；
+  // 兩組內都維持原本順序（後端已依當日強度→代號排好，未更新排最後）
   function sortPoolList(list) {
     var keyed = list.map(function (stock, i) {
-      return { stock: stock, pinned: stock.pinned ? 1 : 0, i: i };
+      return { stock: stock, signal: poolCrossTabs(stock.code).length > 0 ? 1 : 0, i: i };
     });
     keyed.sort(function (a, b) {
-      return (b.pinned - a.pinned) || (a.i - b.i);
+      return (b.signal - a.signal) || (a.i - b.i);
     });
     return keyed.map(function (k) { return k.stock; });
   }
