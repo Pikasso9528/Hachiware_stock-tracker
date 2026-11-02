@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T23:39:18",
+  "generated_at": "2026-11-03T00:02:15",
   "date": "2026-11-02",
   "tabs": {
     "focus": [
@@ -1894,55 +1894,83 @@
       },
       {
         "rank": 9,
+        "code": "6271",
+        "name": "同欣電",
+        "market": "TW",
+        "pct_change": 9.85
+      },
+      {
+        "rank": 10,
+        "code": "5483",
+        "name": "中美晶",
+        "market": "TWO",
+        "pct_change": 0.87
+      },
+      {
+        "rank": 11,
+        "code": "2882",
+        "name": "國泰金",
+        "market": "TW",
+        "pct_change": 0.43
+      },
+      {
+        "rank": 12,
+        "code": "2317",
+        "name": "鴻海",
+        "market": "TW",
+        "pct_change": 2.44
+      },
+      {
+        "rank": 13,
         "code": "1605",
         "name": "華新",
         "market": "TW",
         "pct_change": 4.72
       },
       {
-        "rank": 10,
+        "rank": 14,
         "code": "6505",
         "name": "台塑化",
         "market": "TW",
         "pct_change": 5.18
       },
       {
-        "rank": 11,
+        "rank": 15,
         "code": "1303",
         "name": "南亞",
         "market": "TW",
         "pct_change": 2.71
       },
       {
-        "rank": 12,
+        "rank": 16,
         "code": "3673",
         "name": "TPK-KY",
         "market": "TW",
         "pct_change": 4.63
       },
       {
-        "rank": 13,
+        "rank": 17,
         "code": "2337",
         "name": "旺宏",
         "market": "TW",
         "pct_change": 0.52
       },
       {
-        "rank": 14,
+        "rank": 18,
         "code": "1326",
         "name": "台化",
         "market": "TW",
         "pct_change": 2.35
       },
       {
-        "rank": 15,
+        "rank": 19,
         "code": "3711",
         "name": "日月光投控",
         "market": "TW",
         "pct_change": 0.15
       },
       {
-        "rank": 16,
+        "rank": 20,
         "code": "2408",
         "name": "南亞科",
         "market": "TW",
