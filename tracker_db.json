@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-02",
+  "last_updated": "2026-11-03",
   "stocks": {
     "1203": {
       "name": "味王",
@@ -15884,6 +15884,11 @@
     },
     "3004": {
       "name": "豐達科",
+      "market": "TW",
+      "history": []
+    },
+    "1109": {
+      "name": "信大",
       "market": "TW",
       "history": []
     }
